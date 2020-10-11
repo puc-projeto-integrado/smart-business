@@ -12,6 +12,4 @@ npm-debug.log
 yarn-error.log
 .idea
 .DS_Store
-
-db_data
-db_data/*
+./**/.DS_Store
