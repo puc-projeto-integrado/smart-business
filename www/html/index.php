@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meus Fornecedores</title>
-    <link rel="stylesheet" href="./bootstrap-4.5.2/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="./assets/css/localbusiness.css">
+    <!-- <link rel="stylesheet" href="./bootstrap-4.5.2/dist/css/bootstrap.min.css" /> -->
+    <link rel="stylesheet" href="./assets/css/dist/bootstrap-min.css" />
+    <link rel="stylesheet" href="./assets/css/localbusiness.css" />
+    <link rel="stylesheet" href="./assets/fontawesome-free-5.15.1-web/css/all.min.css" />
 </head>
 <body>
 
@@ -18,6 +20,7 @@
                 <? require './inc-home-search.php';?>
 
                 <? require './business-post-highlight.php';?>
+                <img src="./assets/images/google-ads-1.png" alt="">
                 <? require './business-post-highlight.php';?>
 
             </div>
@@ -26,6 +29,40 @@
                 <? require './inc-home-column.php';?>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-12">
+            <h3 class="mt-5">Mais Recentes</h3>
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <? require './business-post.php';?>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <? require './business-post.php';?>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <? require './business-post.php';?>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <? require './business-post.php';?>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <? require './business-post.php';?>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <? require './business-post.php';?>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
     </main>
 </body>
 </html>

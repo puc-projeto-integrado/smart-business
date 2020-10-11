@@ -1,7 +1,8 @@
 <aside>
 <span>ANÚNCIO</span>
+<img src="./assets/images/anuncio.jpg" alt="">
 
-<ul>
+<ul class="column-submenu">
     <li>
         <a href="">IMPORTAÇÃO DE ROUPAS</a>
     </li>
