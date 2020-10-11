@@ -1,0 +1,34 @@
+version: '2'
+
+services:
+  webserver:
+    container_name: puc-webserver
+    build: ./
+    image: php
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./www:/var/www/html
+    links:
+      - db
+
+  db:
+    image: mysql:5.7
+    container_name: puc-database
+    command: --disable-partition-engine-check
+    ports: 
+      - "3306:3306"
+    expose:
+      - "3306"
+    volumes:
+      - ./db_data:/var/lib/mysql
+      - ./dump:/docker-entrypoint-initdb.d
+    environment:
+      - MYSQL_ROOT_PASSWORD=web123
+      - MYSQL_DATABASE=meusfornecedores
+
+volumes:
+  db_data: {}
+
+ 
