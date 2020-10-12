@@ -12,15 +12,17 @@
 
 <div class="submenu">
     <div class="container">
-        <a href="">Brindes</a>
-        <a href="">Comunicação</a>
-        <a href="">Saúde</a>
-        <a href="">Webdesign</a>
-        <a href="">Gráficas</a>
-        <a href="">Vestuário</a>
-        <a href="">Alimentação</a>
-        <a href="">Fotografia</a>
-        <a href="">Tecnologia</a>
+        <ul>
+            <li><a href="#">Brindes</a></li>
+            <li><a href="#">Comunicação</a></li>
+            <li><a href="#">Saúde</a></li>
+            <li><a href="#">Webdesign</a></li>
+            <li><a href="#">Gráficas</a></li>
+            <li><a href="#">Vestuário</a></li>
+            <li><a href="#">Alimentação</a></li>
+            <li><a href="#">Fotografia</a></li>
+            <li><a href="#">Tecnologia</a></li>
+        </ul>
     </div>
 </div>
 
