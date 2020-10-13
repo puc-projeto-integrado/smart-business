@@ -1,0 +1,94 @@
+$bright: #ffffff;
+$gray-1: #f7f7f7;
+$gray-2: #cccccc;
+$gray-3: #dddddd;
+$gray-4: #999999;
+$gray-5: #666666;
+$blue-1: #00AEEF;
+$red-1: #EF4136;
+$def-spacing:10px;
+
+.gray-3{ color: $gray-3;}
+.gray-4{ color: $gray-4;}
+.gray-5{ color: $gray-5;}
+
+.light{ font-weight: 300 !important;}
+.txt-1{ font-size: 1rem;}
+.txt-2{ font-size: 1.2rem;}
+.center{ text-align: center;}
+.header {
+    overflow: hidden;
+    background-color: $gray-1;
+    padding: $def-spacing*2 $def-spacing;
+}
+
+.header a {
+    float: left;
+    color: black;
+    text-align: center;
+    padding: 13px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    line-height: $def-spacing*2;
+    border-radius: 4px;
+}
+
+.header a.logo:hover {
+    background: none;
+}
+
+.header a:hover {
+    background-color: $gray-2;
+    color: black;
+}
+.header a.logo img{ height: $def-spacing*5;}
+
+.header a.active {
+    background-color: $blue-1;
+    color: $bright;
+}
+
+/* Float the link section to the right */
+.header-right {
+    margin-top: $def-spacing*2;
+    float: right;
+}
+
+.visibleWhenMobile{ display: none;}
+.hiddenWhenMobile{ display: block;}
+
+.submenu{ min-height: 30px; padding: $def-spacing 0px; background-color: $red-1; text-align: center;}
+.submenu a{ margin:0px 20px 0px 0px; color: $bright;}
+.submenu a:hover { text-decoration: none;}
+.submenu ul,li { list-style-type: none; margin:0px; padding: 0px;;}
+.submenu li { display: inline-block;}
+.column-submenu .fa{ color: $gray-4 !important; margin-right:10px;}
+
+.business-post{ border: 1px solid $gray-3; border-radius:$def-spacing; padding:$def-spacing*2; margin: $def-spacing*2 0px;}
+.business-post.highlight{ background-color: $gray-1; border:0px;}
+.info{ text-decoration: none; font-family: sans-serif;}
+img{ max-width:100%;}
+aside img{ margin: 0px 0px $def-spacing*3 0px;}
+
+aside{ padding:0px;}
+aside .column-submenu{ margin: $def-spacing*3 0px 0px 0px; padding: 0px 0px 0px $def-spacing*1;}
+aside .column-submenu li{ font-size:1.1rem; list-style-type: none; margin: 0px 0px 10px 0px; padding: 0px;}
+
+footer{ min-height: 100px; background: $blue-1; padding: $def-spacing*3 0px $def-spacing*2 0px;}
+footer ul,li{ list-style-type: none; font-size: 1.2rem;}
+footer ul li a { color: $bright;}
+.form-control::placeholder { color: $gray-4 !important;}
+
+@media screen and (max-width: 500px) {
+.header a {
+    float: none;
+    display: block;
+    text-align: left;
+}
+.header-right {
+    float: none;
+}
+
+.visibleWhenMobile{ display: block;}
+.hiddenWhenMobile{ display: none !important;}
+}
