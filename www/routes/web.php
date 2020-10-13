@@ -42,3 +42,8 @@ Route::get('/pass-grant-auth', function(){
     $tokens = json_decode((string) $response->getBody(), true);
     print_r($tokens);
 });
+
+Route::group(['prefix'=>'api', 'namespace'=>'Api'],
+    function(){
+        Route::resource('city', 'CityController');
+    });
