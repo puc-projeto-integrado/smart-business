@@ -51,5 +51,8 @@ $app->singleton(
 | from the actual running of the application and sending responses.
 |
 */
+$app->singleton(
+    App\Http\Middleware\CorsMiddleware::class
+);
 
 return $app;

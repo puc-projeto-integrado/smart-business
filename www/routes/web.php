@@ -53,7 +53,7 @@ Route::group(['prefix'=>'api', 'namespace'=>'Api'],
     
 Route::group(['prefix'=>'api/business/', 'namespace'=>'Api'],
     function(){
-        Route::get('/', 'BusinessController@index')->name('bus');
+        Route::get('/', 'BusinessController@index')->name('bus')->middleware('cors');
         Route::get('/state/{id}', 'BusinessController@byState')->name('bus');
         Route::get('/city/{id}', 'BusinessController@byCity')->name('bus');
     });      
