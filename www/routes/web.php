@@ -22,8 +22,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 //Route::get('dashboard', 'App\Http\Controllers\UserController@dashboard')->middleware('auth');
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
 Route::get('/pass-grant-auth', function(){
     $http = new GuzzleHttp\Client;
 
@@ -47,3 +45,16 @@ Route::group(['prefix'=>'api', 'namespace'=>'Api'],
     function(){
         Route::resource('city', 'CityController');
     });
+
+Route::group(['prefix'=>'api', 'namespace'=>'Api'],
+    function(){
+        Route::resource('state', 'StateController');
+    });  
+    
+Route::group(['prefix'=>'api/business/', 'namespace'=>'Api'],
+    function(){
+        Route::get('/', 'BusinessController@index')->name('bus');
+        Route::get('/state/{id}', 'BusinessController@byState')->name('bus');
+        Route::get('/city/{id}', 'BusinessController@byCity')->name('bus');
+    });      
+    
