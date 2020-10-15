@@ -1,17 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import './App.css';
+import Header from './components/Header';
+import Loading from './components/Loading';
+import Home from './components/Home';
+import Footer from './components/Footer';
 
 const baseUrl = 'http://localhost/public/api/business';
-
-const Loading = ()=>{
-  return (
-      <div className="App">
-          <header className="App-header">
-              <div>LOADING...</div>
-          </header>
-      </div>
-  )
-}
 
 const App = ()=>{
 
@@ -24,7 +17,12 @@ const App = ()=>{
   },[]);
 
   if(businessData){
-    return(<div>Done</div>)
+    return (
+      <div>
+        <Header/>
+        <Home/>
+        <Footer/>
+      </div>)
   }else{
     return <Loading/>
   }
