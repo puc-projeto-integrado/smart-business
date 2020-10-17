@@ -1,26 +1,28 @@
 import React from 'react';
 
-const Business = ()=>{
+const Business = (props) => {
+    console.log(props.data)
     return (
-        <div class="business-post">
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <h4 class="gray-4">BANHO E TOSA EM CURITIBA</h4>
-                    <p>A Protapete é uma empresa formada para atender todos nossos clientes com atendimento personalizado e de qualidade, atuamos de forma segura, com responsabilidade social e ambiental, nas atividades de Lavagens e Impermeabilizações residenciais e comerciais.</p>
+        <div className="col-md-6 col-sm-12">
+            <div className="business-post">
+                <div className="row">
+                    <div className="col-md-12 col-sm-12">
+                        <h4 className="gray-4">{props.data.name}</h4>
+                        <p>{props.data.description.substr(0,160)}</p>
 
-                    <div class="row">
-                        <div class="col-6">
-                            <button type="button" class="btn btn-outline-primary btn-block"><span class="fas fa-star"></span> Adicionar aos Favoritos</button>
-                        </div>
-                        <div class="col-6">
-                            <button type="button" class="btn btn-outline-primary btn-block"><span class="fas fa-eye"></span> Ver Detalhes</button>
+                        <div className="row">
+                            <div className="col-6">
+                                <button type="button" className="btn btn-outline-primary btn-block"><span className="fas fa-star"></span> Adicionar aos Favoritos</button>
+                            </div>
+                            <div className="col-6">
+                                <button type="button" className="btn btn-outline-primary btn-block"><span className="fas fa-eye"></span> Ver Detalhes</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
     )
 }
-  
+
 export default Business;

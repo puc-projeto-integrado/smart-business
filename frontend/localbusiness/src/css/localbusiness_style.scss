@@ -64,7 +64,7 @@ $def-spacing:10px;
 .submenu li { display: inline-block;}
 .column-submenu .fa{ color: $gray-4 !important; margin-right:10px;}
 
-.business-post{ border: 1px solid $gray-3; border-radius:$def-spacing; padding:$def-spacing*2; margin: $def-spacing*2 0px;}
+.business-post{ border: 1px solid $gray-3; border-radius:$def-spacing; padding:$def-spacing*2; margin: $def-spacing*2 0px; min-height: 210px;}
 .business-post.highlight{ background-color: $gray-1; border:0px;}
 .info{ text-decoration: none; font-family: sans-serif;}
 img{ max-width:100%;}

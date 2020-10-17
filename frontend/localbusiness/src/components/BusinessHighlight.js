@@ -1,24 +1,26 @@
 import React from 'react';
 
-const BusinessHighlight = ()=>{
+const BusinessHighlight = (props) => {
+    console.log(props.data)
+    let data = props.data;
     return (
         <div>
-            <div class="business-post highlight">
-            <div class="row">
-                <div class="col-4 image-holder d-none d-sm-block">
+            <div className="business-post highlight">
+            <div className="row">
+                <div className="col-4 image-holder d-none d-sm-block">
                     <img src="./assets/images/thumb-limpeza.jpg" alt=""/>
                 </div>
-                <div class="col-md-8 col-sm-12">
-                    <a href="#" class="info"><span class="fas fa-map-marker-alt"></span> Manutenção & Limpeza em Porto Alegre</a>
-                    <h4 class="gray-5">PROTAPETE LAVAGEM DE TAPETES EM PORTO ALEGRE</h4>
-                    <p class="gray-5">A Protapete é uma empresa formada para atender todos nossos clientes com atendimento personalizado e de qualidade, atuamos de forma segura, com responsabilidade social e ambiental, nas atividades de Lavagens e Impermeabilizações residenciais e comerciais.</p>
+                <div className="col-md-8 col-sm-12">
+                    <a href="http://localhost" className="info"><span className="fas fa-map-marker-alt"></span> {data.category_name} em {data.city_name}</a>
+                        <h4 className="gray-5">{data.name}</h4>
+                    <p className="gray-5">{data.description}</p>
 
-                    <div class="row">
-                        <div class="col-6">
-                            <button type="button" class="btn btn-outline-primary btn-block"><span class="fas fa-star"></span> Adicionar aos Favoritos</button>
+                    <div className="row">
+                        <div className="col-6">
+                            <button type="button" className="btn btn-outline-primary btn-block"><span className="fas fa-star"></span> Adicionar aos Favoritos</button>
                         </div>
-                        <div class="col-6">
-                            <button type="button" class="btn btn-outline-primary btn-block"><span class="fas fa-eye"></span> Ver Detalhes</button>
+                        <div className="col-6">
+                            <button type="button" className="btn btn-outline-primary btn-block"><span className="fas fa-eye"></span> Ver Detalhes</button>
                         </div>
                     </div>
 

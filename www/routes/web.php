@@ -49,12 +49,13 @@ Route::group(['prefix'=>'api', 'namespace'=>'Api'],
 Route::group(['prefix'=>'api', 'namespace'=>'Api'],
     function(){
         Route::resource('state', 'StateController');
-    });  
-    
+    });
+
 Route::group(['prefix'=>'api/business/', 'namespace'=>'Api'],
     function(){
-        Route::get('/', 'BusinessController@index')->name('bus')->middleware('cors');
-        Route::get('/state/{id}', 'BusinessController@byState')->name('bus');
-        Route::get('/city/{id}', 'BusinessController@byCity')->name('bus');
-    });      
-    
+        Route::get('/', 'BusinessController@index')->name('business')->middleware('cors');
+        Route::get('/state/{id}', 'BusinessController@byState')->name('businessByState')->middleware('cors');
+        Route::get('/city/{id}', 'BusinessController@byCity')->name('businessByCity')->middleware('cors');
+        Route::get('/highlight', 'BusinessController@highlights')->name('businessHighlights')->middleware('cors');
+    });
+
