@@ -1,16 +1,5 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -54,8 +43,10 @@ Route::group(['prefix'=>'api', 'namespace'=>'Api'],
 Route::group(['prefix'=>'api/business/', 'namespace'=>'Api'],
     function(){
         Route::get('/', 'BusinessController@index')->name('business')->middleware('cors');
+        Route::get('/highlight', 'BusinessController@highlights')->name('businessHighlights')->middleware('cors');
+        Route::get('/{id}', 'BusinessController@show')->name('businessDetail')->middleware('cors');
         Route::get('/state/{id}', 'BusinessController@byState')->name('businessByState')->middleware('cors');
         Route::get('/city/{id}', 'BusinessController@byCity')->name('businessByCity')->middleware('cors');
-        Route::get('/highlight', 'BusinessController@highlights')->name('businessHighlights')->middleware('cors');
+
     });
 

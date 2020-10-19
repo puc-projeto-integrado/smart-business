@@ -1,7 +1,7 @@
 import React from 'react';
 
-const Business = (props) => {
-    console.log(props.data)
+const BusinessItem = (props) => {
+
     return (
         <div className="col-md-6 col-sm-12">
             <div className="business-post">
@@ -12,10 +12,10 @@ const Business = (props) => {
 
                         <div className="row">
                             <div className="col-6">
-                                <button type="button" className="btn btn-outline-primary btn-block"><span className="fas fa-star"></span> Adicionar aos Favoritos</button>
+                                <a href="/" className="btn btn-outline-primary btn-block"><span className="fas fa-star"></span> Adicionar aos Favoritos</a>
                             </div>
                             <div className="col-6">
-                                <button type="button" className="btn btn-outline-primary btn-block"><span className="fas fa-eye"></span> Ver Detalhes</button>
+                                <a href={`/business-detail/${props.data.id}`} className="btn btn-outline-primary btn-block"><span className="fas fa-eye"></span> Ver Detalhes</a>
                             </div>
                         </div>
                     </div>
@@ -25,4 +25,4 @@ const Business = (props) => {
     )
 }
 
-export default Business;
+export default BusinessItem;

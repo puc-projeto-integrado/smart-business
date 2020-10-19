@@ -1,6 +1,6 @@
 import React from 'react';
 
-const BusinessHighlight = (props) => {
+const BusinessItemHighlight = (props) => {
     console.log(props.data)
     let data = props.data;
     return (
@@ -17,10 +17,10 @@ const BusinessHighlight = (props) => {
 
                     <div className="row">
                         <div className="col-6">
-                            <button type="button" className="btn btn-outline-primary btn-block"><span className="fas fa-star"></span> Adicionar aos Favoritos</button>
+                            <a href="/" className="btn btn-outline-primary btn-block"><span className="fas fa-star"></span> Adicionar aos Favoritos</a>
                         </div>
                         <div className="col-6">
-                            <button type="button" className="btn btn-outline-primary btn-block"><span className="fas fa-eye"></span> Ver Detalhes</button>
+                            <a href={`/business-detail/${props.data.id}`} className="btn btn-outline-primary btn-block"><span className="fas fa-eye"></span> Ver Detalhes</a>
                         </div>
                     </div>
 
@@ -32,4 +32,4 @@ const BusinessHighlight = (props) => {
     )
 }
   
-export default BusinessHighlight;
+export default BusinessItemHighlight;

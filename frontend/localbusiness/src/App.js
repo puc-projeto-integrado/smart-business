@@ -1,24 +1,24 @@
-import React from 'react';
-import Header from './components/Header';
-import Home from './components/Home';
-import Footer from './components/Footer';
+import React from 'react'
+import Header from './components/Header'
+import Footer from './components/Footer'
+import Routing from './components/Routing';
 
 const App = () => {
+  // const baseUrl = 'http://localhost/public/'
 
-  const baseUrl = 'http://localhost/public/';
-  
-  const envVars = {  
-    'endPoints': {
-      'highlightsUrl': `${baseUrl}api/business/highlight`
-    }
-  };
+  // const envVars = {
+  //   endPoints: {
+  //     highlightsUrl: `${baseUrl}api/business/highlight`
+  //   }
+  // }
 
   return (
-    <div>
-      <Header/>
-      <Home/>
-      <Footer/>
-    </div>)
+    <div key="1">
+      <Header />
+      <Routing/>
+      <Footer />
+    </div>
+  )
 }
 
-export default App;
+export default App

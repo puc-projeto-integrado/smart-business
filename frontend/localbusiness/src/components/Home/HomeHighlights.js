@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import BusinessHighlight from './BusinessHighlight';
-import Loading from './Loading';
+import BusinessItemHighlight from './../Business/BusinessItemHighlight';
+import Loading from './../Loading';
 
 const HomeHighlights = () => {
 
@@ -21,7 +21,7 @@ const HomeHighlights = () => {
                 {
                     highlights.map((item) => {
                         numHighlights++;
-                        return numHighlights < 3 ? <BusinessHighlight data={item} key={numHighlights}/> : ''
+                        return numHighlights < 3 ? <BusinessItemHighlight data={item} key={numHighlights}/> : ''
                     })
                 }
             </div>

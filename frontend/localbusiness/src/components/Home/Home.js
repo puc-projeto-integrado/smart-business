@@ -1,6 +1,5 @@
 import React from 'react';
-import Business from './Business';
-import Column from './Column';
+import Column from './../Column';
 import HomeHighlights from './HomeHighlights';
 import HomeBusiness from './HomeBusiness';
 
@@ -8,8 +7,6 @@ const Home = () => {
     
     return (
         <main className="container">
-            
-            
             <div className="row">
                 <div className="col-sm-12 col-md-8  pt-5">
                     <HomeHighlights/>
@@ -22,22 +19,7 @@ const Home = () => {
             <div className="row">
                 <div className="col-12">
                     <h3 className="mt-5">Mais Recentes</h3>
-                    
-                        <HomeBusiness />
-
-
-                    {/* <div className="row">
-                        <Business />
-                        <Business />
-                    </div>
-                    <div className="row">
-                        <Business />
-                        <Business />
-                    </div>
-                    <div className="row">
-                        <Business />
-                        <Business />
-                    </div> */}
+                    <HomeBusiness />
                 </div>
             </div>
         </main>

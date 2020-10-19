@@ -5,7 +5,7 @@ const Header = () => {
       <div>
         <div className="header">
           <div className="container">
-              <a href="#default" className="logo"><img src="./assets/images/logo.png" alt="Local Business"/></a>
+              <a href="#default" className="logo"><img src="/assets/images/logo.png" alt="Local Business"/></a>
               <div className="header-right">
                   <a className="hiddenWhenMobile" href="#home">HOME</a>
                   <a className="" href="#contact">CADASTRE SUA EMPRESA</a>

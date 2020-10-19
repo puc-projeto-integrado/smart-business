@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Business from './Business';
-import Loading from './Loading';
+import BusinessItem from './../Business/BusinessItem';
+import Loading from './../Loading';
 
 const HomeBusiness = () => {
 
@@ -21,12 +21,7 @@ const HomeBusiness = () => {
                 {
                     business.map((item) => {
                         numHighlights++;
-                        if (numHighlights < 7) {
-                            return <Business data={item} key={numHighlights} />;
-
-                        } else {
-                            return false;
-                        }
+                        return (numHighlights < 7) ? <BusinessItem data={item} key={numHighlights} /> : false;
                     })
                 }
             </div>
