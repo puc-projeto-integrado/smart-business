@@ -37,4 +37,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function oauthClient()
+    {
+        return $this->hasOne('App\OauthClient', 'password_client');
+    }
 }

@@ -1,7 +1,7 @@
 <?php
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('stranger');
 });
 
 Auth::routes(['register' => false]);
@@ -18,17 +18,19 @@ Route::get('/pass-grant-auth', function(){
         'form_params' => [
             'grant_type' => 'password',
             'client_id' => 3,
-            'client_secret' => '3cIiPSBkeRnbPgoXuzDRqio4EOXLYwbrjMAJARPW',
+            'client_secret' => 'ZqlcdTkBMgzFb7X747aefPmKQGk86TEFIxtn2rOt',
             'username' => 'gab@gab.com',
             'password' => 'admin123',
             'scope' => '*',
-            'redirect_uri' => 'http://localhost',
+            //'redirect_uri' => 'http://localhost',
         ],
     ]);
 
     $tokens = json_decode((string) $response->getBody(), true);
     print_r($tokens);
 });
+
+Route::post('/auth-token', 'AuthController@getToken')->name('auth-token')->middleware('cors');
 
 Route::group(['prefix'=>'api', 'namespace'=>'Api'],
     function(){
@@ -40,13 +42,4 @@ Route::group(['prefix'=>'api', 'namespace'=>'Api'],
         Route::resource('state', 'StateController');
     });
 
-Route::group(['prefix'=>'api/business/', 'namespace'=>'Api'],
-    function(){
-        Route::get('/', 'BusinessController@index')->name('business')->middleware('cors');
-        Route::get('/highlight', 'BusinessController@highlights')->name('businessHighlights')->middleware('cors');
-        Route::get('/{id}', 'BusinessController@show')->name('businessDetail')->middleware('cors');
-        Route::get('/state/{id}', 'BusinessController@byState')->name('businessByState')->middleware('cors');
-        Route::get('/city/{id}', 'BusinessController@byCity')->name('businessByCity')->middleware('cors');
-
-    });
 

@@ -1,8 +1,7 @@
 import React from 'react';
 import Home from './Home/Home';
 import Login from './Login';
-import {
-    BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import BusinessDetail from './Business/BusinessDetail';
 
 const Routing = () => {

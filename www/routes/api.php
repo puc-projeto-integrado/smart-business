@@ -2,21 +2,26 @@
 
 use Illuminate\Http\Request;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
-
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/foo', function () {
-    return 'welcome';
-});
+Route::group(['prefix'=>'business/', 'namespace'=>'Api', 'middleware'=>['cors']],
+    function(){
+        Route::get('/hey', 'AuthController@foo')->name('foo');
+        //Route::get('/', 'BusinessController@index')->name('business')->middleware('auth:api');
+        Route::get('/', 'BusinessController@index')->name('business');
+        Route::get('/highlight', 'BusinessController@highlights')->name('businessHighlights');
+        Route::get('/{id}', 'BusinessController@show')->name('businessDetail');
+        Route::get('/state/{id}', 'BusinessController@byState')->name('businessByState');
+        Route::get('/city/{id}', 'BusinessController@byCity')->name('businessByCity');
+    });
+
+
+
+Route::group(['namespace'=>'Api', 'middleware'=>['cors']],
+    function() {
+        Route::post('/login/', 'AuthController@login')->name('login')->middleware('cors');
+//        Route::get('/foo/', 'AuthController@foo')->name('foos')->middleware('cors');
+        Route::get('/foo', 'AuthController@foo')->name('foos');
+    });
