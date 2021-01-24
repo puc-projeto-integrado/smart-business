@@ -9,21 +9,30 @@ const Routing = (props) => {
 
     let isAuthenticated = props.isAuthenticated;
     const loginRoute = '/login';
-    console.log('isAuthenticated', isAuthenticated);
 
     return (
         <Router>
+            { props.mustRedirect ? <Redirect to={props.mustRedirect} /> : ''}
             <Switch>
+
                 <Route path='/login'>
-                    <Login />
+                    <Login functionRefs={props.functionRefs}/>
                 </Route>
+
+                <Route path='/logout'>
+                    {props.functionRefs.logout}
+                </Route>
+
                 <Route path='/business-detail/:id' children={<BusinessDetail />}/>
+
                 <Route path='/favorites'>
                     { isAuthenticated ? <Favorites /> : <Redirect to={loginRoute} /> }
                 </Route>
+
                 <Route path='/'>
                     <Home />
                 </Route>
+
             </Switch>
         </Router>
     );

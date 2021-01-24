@@ -1,38 +1,28 @@
-import React, {useEffect, useState} from 'react';
-import {read_cookie, delete_cookie} from "sfcookies";
-import { BrowserRouter as Redirect } from 'react-router-dom';
+import React from 'react';
+import {read_cookie} from "sfcookies";
 
-const Header = () => {
+const Header = (props) => {
+    console.log('->', props.functionRefs)
+    let isAuthenticated = props.isAuthenticated;
+    let name = null;
 
-    const [mustRedirect, setMustRedirect] = useState(false);
-    const cookie = read_cookie('credentials');
-    let name = cookie ? cookie.name : '';
-
-    const logout = ()=>{
-        console.log('Loggin out')
-        delete_cookie('credentials')
-            setMustRedirect(true);
-            console.log('deleted...')
-            console.log(cookie)
-
-    }
-
-    if(mustRedirect){
-        console.log('Must redirect...')
-        return <Redirect to="/login"/>
+    if(isAuthenticated){
+        const credentials = read_cookie('credentials');
+        name = credentials.name;
     }
 
     return (
       <div>
         <div className="header">
           <div className="container">
-              <a href="#default" className="logo"><img src="/assets/images/logo.png" alt="Local Business"/></a>
-              {cookie ? <div className="user-info-bar"><strong>Olá, {name}.</strong> Caso não seja {name}, <a href="#">clique aqui</a>.</div> : ''}
+              <a href="/" className="logo"><img src="/assets/images/logo.png" alt="Local Business"/></a>
+              {isAuthenticated ? <div className="user-info-bar"><strong>Olá, {name}.</strong> Caso não seja {name}, <a href="/logout">clique aqui</a>.</div> : ''}
               <div className="header-right">
 
-                  <a className="hiddenWhenMobile" href="#home">HOME</a>
-                  <a className="" href="#contact">CADASTRE SUA EMPRESA</a>
-                  {!cookie ? (<a className="active" href="/login"><span className="fa fa-key"></span> LOGIN</a>) : (<a className="logout" onClick={logout}>LOGOUT</a>)}
+                  <a className="hiddenWhenMobile" href="/">HOME</a>
+                  <a className="" href="/">CADASTRE SUA EMPRESA</a>
+                  {isAuthenticated ? (<a className="" href="/favorites"><span className="fa fa-heart"></span> FAVORITOS</a>) : ''}
+                  {!isAuthenticated ? (<a className="active" href="/login"><span className="fa fa-key"></span> LOGIN</a>) : (<a href="/logout" className="logout">LOGOUT</a>)}
 
               </div>
           </div>

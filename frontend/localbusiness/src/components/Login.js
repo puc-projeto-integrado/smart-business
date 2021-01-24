@@ -1,15 +1,15 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import { bake_cookie, read_cookie, delete_cookie } from 'sfcookies';
 
 const urlLogin = 'http://localhost/public/api/login';
 
-const Login = () => {
+const Login = (props) => {
 
     const [email, setEmail] = useState('gab@gab.com');
     const [password, setPassword] = useState('admin123');
     const [feedbackActive, setFeedbackActive] = useState(false);
     const [feedbackMessage, setFeedbackMessage] = useState('');
-    const [responseData, setResponseData] = useState(null);
+    //const [responseData, setResponseData] = useState(null);
 
     const handleChange = (event) => {
         setFeedbackActive(false)
@@ -46,7 +46,7 @@ const Login = () => {
     }
 
     const setMyStates = (response)=>{
-        setResponseData(response)
+        //setResponseData(response)
 
         if(response.status!==200){
             setEmail('');
@@ -61,8 +61,7 @@ const Login = () => {
             }
 
             bake_cookie('credentials', response.body);
-
-            console.log('COOKIE', read_cookie('credentials'));
+            props.functionRefs.redirect('/favorites');
         }
     }
 

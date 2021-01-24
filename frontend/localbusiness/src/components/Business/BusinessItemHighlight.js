@@ -1,8 +1,10 @@
 import React from 'react';
+import AddToFavorites from '../Partials/AddToFavorites';
 
 const BusinessItemHighlight = (props) => {
     console.log(props.data)
     let data = props.data;
+
     return (
         <div>
             <div className="business-post highlight">
@@ -17,7 +19,7 @@ const BusinessItemHighlight = (props) => {
 
                     <div className="row">
                         <div className="col-6">
-                            <a href="/" className="btn btn-outline-primary btn-block"><span className="fas fa-star"></span> Adicionar aos Favoritos</a>
+                            <AddToFavorites businessId={props.data.id}/>
                         </div>
                         <div className="col-6">
                             <a href={`/business-detail/${props.data.id}`} className="btn btn-outline-primary btn-block"><span className="fas fa-eye"></span> Ver Detalhes</a>

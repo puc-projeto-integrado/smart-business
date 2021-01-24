@@ -12,7 +12,7 @@ class BusinessController extends Controller
     private $defaultFields = [
         'businesses.id', 'businesses.name', 'businesses.cnpj', 'businesses.email', 'businesses.website', 'businesses.description', 'businesses.facebook_address', 'businesses.twitter_address', 'businesses.address', 'businesses.district', 'businesses.category_id', 'businesses.ip', 'businesses.newsletter', 'businesses.phone', 'businesses.highlight', 'businesses.created_at', 'categories.name as category_name', 'cities.id as city_id', 'cities.name as city_name'];
 
-    function index(Request $request){
+    public function index(Request $request){
         $business = Business::where('highlight','!=','S')
         ->select($this->defaultFields)
         ->join('cities', 'businesses.city_id', '=', 'cities.id')
@@ -21,7 +21,7 @@ class BusinessController extends Controller
         return $this->jsonResponseinUtf8($business);
     }
 
-    function show(Request $request, $id){
+    public function show(Request $request, $id){
         $business = Business::where('businesses.id', $id)
         ->select($this->defaultFields)
         ->join('cities', 'businesses.city_id', '=', 'cities.id')
@@ -30,7 +30,7 @@ class BusinessController extends Controller
         return $this->jsonResponseinUtf8($business);
     }
 
-    function byState(Request $request, $id){
+    public function byState(Request $request, $id){
         $business = Business::where('category_id',$id)
         ->select($this->defaultFields)
         ->join('cities', 'businesses.city_id', '=', 'cities.id')
@@ -39,7 +39,7 @@ class BusinessController extends Controller
         return $this->jsonResponseinUtf8($business);
     }
 
-    function byCity(Request $request, $id){
+    public function byCity(Request $request, $id){
         $business = Business::where('city_id',$id)
         ->select($this->defaultFields)
         ->join('cities', 'businesses.city_id', '=', 'cities.id')
@@ -48,7 +48,7 @@ class BusinessController extends Controller
         return $this->jsonResponseinUtf8($business);
     }
 
-    function highlights(Request $request){
+    public function highlights(Request $request){
         $business = Business::where('highlight','S')
         ->select($this->defaultFields)
         ->join('cities', 'businesses.city_id', '=', 'cities.id')
@@ -56,4 +56,5 @@ class BusinessController extends Controller
         ->orderBy('businesses.id', 'DESC')->paginate(20);
         return $this->jsonResponseinUtf8($business);
     }
+
 }

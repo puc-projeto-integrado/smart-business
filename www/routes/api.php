@@ -8,8 +8,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(['prefix'=>'business/', 'namespace'=>'Api', 'middleware'=>['cors']],
     function(){
-        Route::get('/hey', 'AuthController@foo')->name('foo');
-        //Route::get('/', 'BusinessController@index')->name('business')->middleware('auth:api');
         Route::get('/', 'BusinessController@index')->name('business');
         Route::get('/highlight', 'BusinessController@highlights')->name('businessHighlights');
         Route::get('/{id}', 'BusinessController@show')->name('businessDetail');
@@ -17,11 +15,13 @@ Route::group(['prefix'=>'business/', 'namespace'=>'Api', 'middleware'=>['cors']]
         Route::get('/city/{id}', 'BusinessController@byCity')->name('businessByCity');
     });
 
-
+Route::group(['prefix'=>'favorites/', 'namespace'=>'Api', 'middleware'=>['cors']],
+    function(){
+        Route::get('/{id}', 'FavoritesController@show')->name('favoritesShow');
+        Route::post('/add', 'FavoritesController@add')->name('favoritesAdd');
+    });
 
 Route::group(['namespace'=>'Api', 'middleware'=>['cors']],
     function() {
         Route::post('/login/', 'AuthController@login')->name('login')->middleware('cors');
-//        Route::get('/foo/', 'AuthController@foo')->name('foos')->middleware('cors');
-        Route::get('/foo', 'AuthController@foo')->name('foos');
     });
