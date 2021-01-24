@@ -17,8 +17,8 @@ Route::group(['prefix'=>'business/', 'namespace'=>'Api', 'middleware'=>['cors']]
 
 Route::group(['prefix'=>'favorites/', 'namespace'=>'Api', 'middleware'=>['cors']],
     function(){
-        Route::get('/{id}', 'FavoritesController@show')->name('favoritesShow');
-        Route::post('/add', 'FavoritesController@add')->name('favoritesAdd');
+        Route::get('/{id}', 'FavoriteController@show')->name('favoritesShow');
+        Route::post('/add', 'FavoriteController@add')->name('favoritesAdd');
     });
 
 Route::group(['namespace'=>'Api', 'middleware'=>['cors']],
