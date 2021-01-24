@@ -7,6 +7,7 @@ $gray-5: #666666;
 $blue-1: #00AEEF;
 $red-1: #EF4136;
 $def-spacing:10px;
+$font-unit:1rem;
 
 .gray-3{ color: $gray-3;}
 .gray-4{ color: $gray-4;}
@@ -78,6 +79,9 @@ footer{ min-height: 100px; background: $blue-1; padding: $def-spacing*3 0px $def
 footer ul,li{ list-style-type: none; font-size: 1.2rem;}
 footer ul li a { color: $bright;}
 .form-control::placeholder { color: $gray-4 !important;}
+.user-info-bar { font-size: $font-unit; text-align:right; color:$gray-4; padding-right: 15px;}
+.user-info-bar a{ font-size: $font-unit !important; color:$blue-1; text-decoration: underline; float: none; padding: 0px;}
+.user-info-bar a:hover{ background: none; }
 
 @media screen and (max-width: 500px) {
 .header a {

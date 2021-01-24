@@ -2,6 +2,7 @@ import React from 'react'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Routing from './components/Routing';
+import {isAuthenticated} from './components/Utils';
 
 const App = () => {
   // const baseUrl = 'http://localhost/public/'
@@ -15,7 +16,7 @@ const App = () => {
   return (
     <div key="1">
       <Header />
-      <Routing/>
+      <Routing isAuthenticated={isAuthenticated()}/>
       <Footer />
     </div>
   )
