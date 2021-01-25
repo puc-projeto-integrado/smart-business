@@ -15,11 +15,12 @@ Route::group(['prefix'=>'business/', 'namespace'=>'Api', 'middleware'=>['cors']]
         Route::get('/city/{id}', 'BusinessController@byCity')->name('businessByCity');
     });
 
-Route::group(['prefix'=>'favorites/', 'namespace'=>'Api', 'middleware'=>['cors']],
+Route::group(['prefix'=>'favorites/', 'namespace'=>'Api', 'middleware'=>['cors', 'auth']],
     function(){
         Route::get('/{id}', 'FavoriteController@show')->name('favoritesShow');
         Route::post('/add', 'FavoriteController@add')->name('favoritesAdd');
     });
+
 
 Route::group(['namespace'=>'Api', 'middleware'=>['cors']],
     function() {

@@ -6,25 +6,32 @@ use App\Business;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Favorite;
+use Illuminate\Support\Facades\Response;
 
 class FavoriteController extends Controller{
 
-    public function show(int $id){
-        $favorite = new Favorite();
-        $favoritesUser = $favorite->favoritesFromUser(1);
-        var_dump($favoritesUser);
-        $content = new \stdClass();
-        $content->status = 'Ok';
+    public function show(int $userId){
+        $favoritesUser = Favorite::favoritesUser($userId);
+        $content = ["data" => $favoritesUser];
         return $this->jsonResponseinUtf8($content);
     }
 
     public function add(Request $request){
 
-        $userId = $request->userId;
-        $businessItemId = $request->businessItemId;
+        $userId = $request->user_id;
+        $businessItemId = $request->business_id;
 
-        $content = new \stdClass();
-        $content->status = 'O!';
-        return $this->jsonResponseinUtf8($content);
+        $favoriteExists = Favorite::favoriteExists($userId, $businessItemId);
+
+        if(count($favoriteExists)){
+            return Response::json([], 422);
+        }
+
+        $favorite = new Favorite;
+        $favorite->user_id = $userId;
+        $favorite->business_id = $businessItemId;
+        $favorite->save();
+
+        return Response::json(['status'=>'saved'], 200);
     }
 }

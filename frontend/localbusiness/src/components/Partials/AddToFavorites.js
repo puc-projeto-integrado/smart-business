@@ -4,11 +4,11 @@ const AddToFavorites = (props)=>{
 
     console.log(props)
     const addToFavorites = ()=>{
-
+        console.log("addToFavorites")
     }
 
     return (
-        <button href="/" className="btn btn-outline-primary btn-block"><span className="fas fa-star"></span> Adicionar aos Favoritos</button>
+        <button onClick={addToFavorites} className="btn btn-outline-primary btn-block"><span className="fas fa-star"></span> Adicionar aos Favoritos</button>
     )
 }
 
