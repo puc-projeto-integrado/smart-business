@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import AddToFavorites from '../Partials/AddToFavorites';
-import RemoveFavorite from "../Partials/removeFavorite";
+import AddFavorites from '../Partials/AddFavorites';
+import RemoveFavorite from "../Partials/RemoveFavorite";
 
 const BusinessItemHighlight = (props) => {
     //console.log('BusinessItemHighlight', props.favoritesData)
@@ -32,7 +32,7 @@ const BusinessItemHighlight = (props) => {
 
                     <div className="row">
                         <div className="col-6">
-                        {!isFavoriteState ? <AddToFavorites funcRefs={setIsFavorite} businessId={id}/> : <RemoveFavorite funcRefs={setIsFavorite}/>}
+                        {!isFavoriteState ? <AddFavorites funcRefs={setIsFavorite} businessId={id}/> : <RemoveFavorite funcRefs={setIsFavorite}/>}
                         </div>
                         <div className="col-6">
                             <a href={`/business-detail/${id}`} className="btn btn-outline-primary btn-block"><span className="fas fa-eye"></span> Ver Detalhes</a>

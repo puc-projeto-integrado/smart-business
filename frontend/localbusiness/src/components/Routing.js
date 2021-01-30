@@ -4,6 +4,7 @@ import Favorites from './User/Favorites';
 import Login from './Login';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import BusinessDetail from './Business/BusinessDetail';
+import BusinessRegister from "./BusinessRegister";
 
 const Routing = (props) => {
 
@@ -27,6 +28,10 @@ const Routing = (props) => {
 
                 <Route path='/favorites'>
                     { isAuthenticated ? <Favorites /> : <Redirect to={loginRoute} /> }
+                </Route>
+
+                <Route path='/register'>
+                    { <BusinessRegister />  }
                 </Route>
 
                 <Route path='/'>

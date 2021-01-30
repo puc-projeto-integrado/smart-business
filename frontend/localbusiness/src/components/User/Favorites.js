@@ -3,7 +3,7 @@ import { read_cookie } from 'sfcookies';
 import BusinessItem from "../Business/BusinessItem";
 import Column from "../Column";
 
-const Favorites = (props)=>{
+const Favorites = ()=>{
 
     const [favorites, setFavorites] = useState(null);
     const cookie = read_cookie('credentials');
@@ -26,7 +26,7 @@ const Favorites = (props)=>{
                 .then(data => setFavorites(data.data))
                 .catch(error => console.log('error', error));
         }
-    }, [url, requestOptions]);
+    }, [url, requestOptions, favorites]);
 
 
     if(favorites){

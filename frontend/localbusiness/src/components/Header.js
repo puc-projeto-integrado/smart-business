@@ -20,7 +20,7 @@ const Header = (props) => {
               <div className="header-right">
 
                   <a className="hiddenWhenMobile" href="/">HOME</a>
-                  <a className="" href="/">CADASTRE SUA EMPRESA</a>
+                  <a className="" href="/register">CADASTRE SUA EMPRESA</a>
                   {isAuthenticated ? (<a className="" href="/favorites"><span className="fa fa-heart"></span> FAVORITOS</a>) : ''}
                   {!isAuthenticated ? (<a className="active" href="/login"><span className="fa fa-key"></span> LOGIN</a>) : (<a href="/logout" className="logout">LOGOUT</a>)}
 

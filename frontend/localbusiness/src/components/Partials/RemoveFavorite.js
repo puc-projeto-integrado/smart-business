@@ -3,7 +3,7 @@ import {read_cookie} from "sfcookies";
 
 const RemoveFavorite = (props)=>{
 
-    console.log(props)
+    console.log('Remove props ', props)
 
     const removeFavorite = ()=>{
         console.log("removeFavorite...")

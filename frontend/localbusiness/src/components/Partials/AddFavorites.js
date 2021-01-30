@@ -1,12 +1,10 @@
 import React from "react";
 import {read_cookie} from "sfcookies";
 
-const AddToFavorites = (props)=>{
+const AddFavorites = (props)=>{
 
     const addToFavorites = ()=>{
         console.log("addToFavorites")
-
-        //const [favorites, setFavorites] = useState(null);
 
         const cookie = read_cookie('credentials');
         const userId = cookie.id;
@@ -41,4 +39,4 @@ const AddToFavorites = (props)=>{
     )
 }
 
-export default AddToFavorites;
+export default AddFavorites;

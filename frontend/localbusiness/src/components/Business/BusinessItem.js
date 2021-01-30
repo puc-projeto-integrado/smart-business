@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import AddToFavorites from "../Partials/AddToFavorites";
-import RemoveFavorite from "../Partials/removeFavorite";
+import AddFavorites from "../Partials/AddFavorites";
+import RemoveFavorite from "../Partials/RemoveFavorite";
 
 const BusinessItem = (props) => {
 
@@ -39,7 +39,7 @@ const BusinessItem = (props) => {
                             <div className="row">
                                 <div className="col-6">
                                     { (props.hideAddFavorites) ?
-                                        <RemoveFavorite funcRefs={setIsFavorite}/> : (!isFavoriteState) ? <AddToFavorites funcRefs={setIsFavorite} businessId={props.data.id}/> : <RemoveFavorite funcRefs={setIsFavorite}/>}
+                                        <RemoveFavorite funcRefs={setIsFavorite} businessId={props.data.id}/> : (!isFavoriteState) ? <AddFavorites funcRefs={setIsFavorite} businessId={props.data.id}/> : <RemoveFavorite funcRefs={setIsFavorite} businessId={props.data.id}/>}
                                 </div>
                                 <div className="col-6">
                                     <a href={`/business-detail/${id}`}

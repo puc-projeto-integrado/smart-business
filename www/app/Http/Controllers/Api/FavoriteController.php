@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Business;
 use App\Http\Controllers\Controller;
+use Doctrine\DBAL\Query\QueryException;
 use Illuminate\Http\Request;
 use App\Favorite;
 use Illuminate\Support\Facades\Response;
@@ -36,6 +37,17 @@ class FavoriteController extends Controller{
     }
 
     public function delete(Request $request){
-        return Response::json(['status'=>'deleted'], 200);
+
+        $userId = $request->user_id;
+        $businessItemId = $request->business_id;
+        try {
+            Favorite::where('user_id', $userId)
+                ->where('business_id', $businessItemId)
+                ->forceDelete();
+            return Response::json(['status'=>'deleteds'], 200);
+        }catch(QueryException $e){
+            return Response::json(['status'=>'failed', 'reason'=>$e->getMessage()], 422);
+        }
+
     }
 }
