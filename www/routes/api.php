@@ -13,6 +13,7 @@ Route::group(['prefix'=>'business/', 'namespace'=>'Api', 'middleware'=>['cors']]
         Route::get('/{id}', 'BusinessController@show')->name('businessDetail');
         Route::get('/state/{id}', 'BusinessController@byState')->name('businessByState');
         Route::get('/city/{id}', 'BusinessController@byCity')->name('businessByCity');
+
     });
 
 Route::group(['prefix'=>'favorites/', 'namespace'=>'Api', 'middleware'=>['cors', 'auth']],
@@ -26,4 +27,5 @@ Route::group(['prefix'=>'favorites/', 'namespace'=>'Api', 'middleware'=>['cors',
 Route::group(['namespace'=>'Api', 'middleware'=>['cors']],
     function() {
         Route::post('/login/', 'AuthController@login')->name('login')->middleware('cors');
+        Route::get('/state', 'StateController@index')->name('state');
     });

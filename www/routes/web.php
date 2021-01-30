@@ -16,8 +16,3 @@ Route::group(['prefix'=>'api', 'namespace'=>'Api'],
     function(){
         Route::resource('city', 'CityController');
     });
-
-Route::group(['prefix'=>'api', 'namespace'=>'Api'],
-    function(){
-        Route::resource('state', 'StateController');
-    });
