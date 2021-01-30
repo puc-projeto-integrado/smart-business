@@ -34,4 +34,8 @@ class FavoriteController extends Controller{
 
         return Response::json(['status'=>'saved'], 200);
     }
+
+    public function delete(Request $request){
+        return Response::json(['status'=>'deleted'], 200);
+    }
 }

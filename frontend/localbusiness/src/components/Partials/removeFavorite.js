@@ -1,18 +1,18 @@
-import React from "react";
+import React from 'react';
 import {read_cookie} from "sfcookies";
 
-const AddToFavorites = (props)=>{
+const RemoveFavorite = (props)=>{
 
-    const addToFavorites = ()=>{
-        console.log("addToFavorites")
+    console.log(props)
 
-        //const [favorites, setFavorites] = useState(null);
+    const removeFavorite = ()=>{
+        console.log("removeFavorite...")
 
         const cookie = read_cookie('credentials');
         const userId = cookie.id;
         const businessId = props.businessId;
         const accessToken = cookie.access_token;
-        const url =  `http://localhost/public/api/favorites/add`;
+        const url =  `http://localhost/public/api/favorites/delete`;
 
         var myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${accessToken}`);
@@ -22,7 +22,7 @@ const AddToFavorites = (props)=>{
         urlencoded.append("business_id", businessId);
 
         var requestOptions = {
-            method: 'POST',
+            method: 'DELETE',
             headers: myHeaders,
             body: urlencoded,
             redirect: 'follow'
@@ -31,14 +31,13 @@ const AddToFavorites = (props)=>{
         fetch(url, requestOptions)
             .then(response => response.text())
             .then(result => console.log(result))
-            .then(props.funcRefs(true))
+            .then(props.funcRefs(false))
             .catch(error => console.log('error', error));
 
     }
 
-    return (
-        <button onClick={addToFavorites} className="btn btn-outline-primary btn-block"><span className="fas fa-heart"></span> Adicionar Favorito</button>
-    )
+    return <button href="#" onClick={removeFavorite} className="btn btn-danger favorito"><em className="fa fa-heart"></em> Remover Favorito </button>
 }
 
-export default AddToFavorites;
+export default RemoveFavorite;
+

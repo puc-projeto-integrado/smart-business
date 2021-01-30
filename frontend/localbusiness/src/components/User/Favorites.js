@@ -3,7 +3,7 @@ import { read_cookie } from 'sfcookies';
 import BusinessItem from "../Business/BusinessItem";
 import Column from "../Column";
 
-const Favorites = ()=>{
+const Favorites = (props)=>{
 
     const [favorites, setFavorites] = useState(null);
     const cookie = read_cookie('credentials');
@@ -20,11 +20,14 @@ const Favorites = ()=>{
     };
 
     useEffect(() => {
-        fetch(url, requestOptions)
-            .then(response => response.json())
-            .then(data => setFavorites(data.data))
-            .catch(error => console.log('error', error));
-    }, []);
+        if(!favorites) {
+            fetch(url, requestOptions)
+                .then(response => response.json())
+                .then(data => setFavorites(data.data))
+                .catch(error => console.log('error', error));
+        }
+    }, [url, requestOptions]);
+
 
     if(favorites){
         let numItems = 0;
@@ -36,7 +39,7 @@ const Favorites = ()=>{
                     {
                         favorites.map((item) => {
                             numItems++;
-                            return (numItems < 10) ? <BusinessItem size="full" showAddFavorites={false} data={item} key={numItems} /> : false;
+                            return (numItems < 50) ? <BusinessItem size="full" fromFavoritesPage={true} hideAddFavorites={true} data={item} key={numItems} /> : false;
                         })
                     }
                 </div>

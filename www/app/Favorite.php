@@ -13,7 +13,7 @@ class Favorite extends Model
             'cities.name as city_name',
             'states.name as state_name',
             'categories.name as category_name',
-            'businesses.id as business_id',
+            'businesses.id as id',
             'businesses.name as name',
             'businesses.website as website',
             'businesses.phone as phone',

@@ -82,6 +82,7 @@ footer ul li a { color: $bright;}
 .user-info-bar { font-size: $font-unit; text-align:right; color:$gray-4; padding-right: 15px;}
 .user-info-bar a{ font-size: $font-unit !important; color:$blue-1; text-decoration: underline; float: none; padding: 0px;}
 .user-info-bar a:hover{ background: none; }
+.favorito{ width:100%;}
 
 @media screen and (max-width: 500px) {
 .header a {

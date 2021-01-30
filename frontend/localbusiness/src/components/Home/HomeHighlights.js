@@ -2,17 +2,19 @@ import React, { useState, useEffect } from 'react';
 import BusinessItemHighlight from './../Business/BusinessItemHighlight';
 import Loading from './../Loading';
 
-const HomeHighlights = () => {
+const HomeHighlights = (props) => {
 
-    const urlBusinessHighlights = 'http://localhost/public/api/business/highlight';
-    const [highlights, setHighlights] = useState(null);    
+    const url = 'http://localhost/public/api/business/highlight';
+    const [highlights, setHighlights] = useState(null);
 
     useEffect(() => {
-        fetch(`${urlBusinessHighlights}`)
-            .then(response => response.json())            
+        fetch(`${url}`)
+            .then(response => response.json())
             .then(data => setHighlights(data.data))
-    }, []);  
-    
+            .catch(error => console.log('errors', error));
+
+    }, []);
+
     let numHighlights = 0; 
 
     if (highlights) {
@@ -21,7 +23,7 @@ const HomeHighlights = () => {
                 {
                     highlights.map((item) => {
                         numHighlights++;
-                        return numHighlights < 3 ? <BusinessItemHighlight data={item} key={numHighlights}/> : ''
+                        return numHighlights < 3 ? <BusinessItemHighlight queryIsFavorite={props.queryIsFavorite} data={item} key={numHighlights}/> : ''
                     })
                 }
             </div>

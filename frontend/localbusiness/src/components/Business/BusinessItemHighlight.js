@@ -1,9 +1,22 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import AddToFavorites from '../Partials/AddToFavorites';
+import RemoveFavorite from "../Partials/removeFavorite";
 
 const BusinessItemHighlight = (props) => {
-    console.log(props.data)
+    //console.log('BusinessItemHighlight', props.favoritesData)
+    const [isFavoriteState, setIsFavoriteState] = useState(false);
     let data = props.data;
+    let id = props.data.id;
+
+    useEffect(() => {
+        if(props.queryIsFavorite){
+            setIsFavoriteState(props.queryIsFavorite(id));
+        }
+    }, [props, id]);
+
+    const setIsFavorite=(status)=>{
+        setIsFavoriteState(status)
+    }
 
     return (
         <div>
@@ -19,10 +32,10 @@ const BusinessItemHighlight = (props) => {
 
                     <div className="row">
                         <div className="col-6">
-                            <AddToFavorites businessId={props.data.id}/>
+                        {!isFavoriteState ? <AddToFavorites funcRefs={setIsFavorite} businessId={id}/> : <RemoveFavorite funcRefs={setIsFavorite}/>}
                         </div>
                         <div className="col-6">
-                            <a href={`/business-detail/${props.data.id}`} className="btn btn-outline-primary btn-block"><span className="fas fa-eye"></span> Ver Detalhes</a>
+                            <a href={`/business-detail/${id}`} className="btn btn-outline-primary btn-block"><span className="fas fa-eye"></span> Ver Detalhes</a>
                         </div>
                     </div>
 

@@ -1,36 +1,61 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import AddToFavorites from "../Partials/AddToFavorites";
+import RemoveFavorite from "../Partials/removeFavorite";
 
 const BusinessItem = (props) => {
 
-    let columSizeStyle = 'col-md-6 col-sm-12';
+    const [isFavoriteState, setIsFavoriteState] = useState(false);
+    const [mustUnload, setMustUnload] = useState(false);
+    const id = props.data.id;
 
-    if(props.size==='full'){
-        columSizeStyle = 'col-md-12 col-sm-12'
+    useEffect(() => {
+        if(props.queryIsFavorite){
+            setIsFavoriteState(props.queryIsFavorite(id));
+        }
+    }, [props, id]);
+
+    const setIsFavorite=(status)=>{
+        console.log('changing status to '+status)
+
+        if(props.fromFavoritesPage){
+            setMustUnload(true)
+        }else {
+            setIsFavoriteState(status);
+        }
     }
 
-    return (
+    let columSizeStyle = props.size==='full' ? 'col-md-12 col-sm-12' : 'col-md-6 col-sm-12';
 
-        <div className={columSizeStyle}>
-            <div className="business-post">
-                <div className="row">
-                    <div className="col-md-12 col-sm-12">
-                        <a href="http://localhost" className="info"><span className="fas fa-map-marker-alt"></span> {props.data.category_name} em {props.data.city_name}</a>
-                        <h4 className="gray-4">{props.data.name}</h4>
-                        <p>{props.data.description.substr(0,160)}</p>
+    if(!mustUnload){
+        return (
+            <div className={columSizeStyle}>
+                <div className="business-post">
+                    <div className="row">
+                        <div className="col-md-12 col-sm-12">
+                            <a href="http://localhost" className="info"><span className="fas fa-map-marker-alt"/> {props.data.category_name} em {props.data.city_name}</a>
+                            <h4 className="gray-4">{props.data.name}</h4>
+                            <p>{props.data.description.substr(0, 160)}</p>
 
-                        <div className="row">
-                            {(props.showAddFavorites) ? <div className="col-6"><AddToFavorites businessId={props.data.id} /></div>: '' }
-
-                            <div className="col-6">
-                                <a href={`/business-detail/${props.data.id}`} className="btn btn-outline-primary btn-block"><span className="fas fa-eye"></span> Ver Detalhes</a>
+                            <div className="row">
+                                <div className="col-6">
+                                    { (props.hideAddFavorites) ?
+                                        <RemoveFavorite funcRefs={setIsFavorite}/> : (!isFavoriteState) ? <AddToFavorites funcRefs={setIsFavorite} businessId={props.data.id}/> : <RemoveFavorite funcRefs={setIsFavorite}/>}
+                                </div>
+                                <div className="col-6">
+                                    <a href={`/business-detail/${id}`}
+                                       className="btn btn-outline-primary btn-block"><span
+                                        className="fas fa-eye"></span> Ver Detalhes</a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    )
+        )
+    }else{
+        return null;
+    }
+
 }
 
 export default BusinessItem;
