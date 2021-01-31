@@ -63,7 +63,7 @@ class BusinessController extends Controller
     public function add(Request $request){
 
         $business = new Business;
-        $exceptionalFields = ['id', ];
+        $exceptionalFields = ['id'];
 
         foreach ($_POST as $key => $value) {
             if (!in_array($key, $exceptionalFields, true)) {
@@ -76,9 +76,13 @@ class BusinessController extends Controller
             return Response::json(['status'=>'saved'], 200);
 
         }catch (QueryException | Exception $e){
-            var_dump($e);
             return Response::json(['status'=>'failed', 'reason'=>$e->getMessage()], 422);
         }
+    }
+
+    public function byUser(int $id){
+        $result = Business::where('user_id', $id)->orderBy('created_at')->first();
+        return $this->jsonResponseinUtf8($result);
     }
 
 }

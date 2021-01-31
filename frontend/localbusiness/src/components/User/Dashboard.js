@@ -1,8 +1,8 @@
 import React from "react";
-import InputText from "../Partials/InputText";
-import InputSelect from "../Partials/InputSelect";
 
-const Dashboard = ()=>{
+const Dashboard = (props)=>{
+    console.log(props)
+    const urlBusiness = `/business-detail/${props.userBusiness.id}`;
     return (
         <div className="container">
             <div className="row">
@@ -14,7 +14,8 @@ const Dashboard = ()=>{
                         <a href="/favorites" className="btn btn-primary btn-block mt-3">Favoritos</a>
                     </div>
                     <div>
-                        <a href="/register" className="btn btn-primary btn-block mt-3">Cadastre sua empresa</a>
+                        {!props.userBusiness.id ? <a href="/register" className="btn btn-primary btn-block mt-3">Cadastre sua empresa</a> : <a href={urlBusiness} className="btn btn-primary btn-block mt-3">Ver Empresa</a>}
+
                     </div>
 
 

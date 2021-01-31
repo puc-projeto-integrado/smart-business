@@ -32,11 +32,11 @@ const Routing = (props) => {
                 </Route>
 
                 <Route path='/register'>
-                    { isAuthenticated ? <BusinessRegister /> : <Redirect to={loginRoute} /> }
+                    { isAuthenticated ? <BusinessRegister userBusiness={props.userBusiness} /> : <Redirect to={loginRoute} /> }
                 </Route>
 
                 <Route path='/dashboard'>
-                    { isAuthenticated ? <Dashboard /> : <Redirect to={loginRoute} /> }
+                    { isAuthenticated ? <Dashboard userBusiness={props.userBusiness}/> : <Redirect to={loginRoute} /> }
                 </Route>
 
                 <Route path='/'>

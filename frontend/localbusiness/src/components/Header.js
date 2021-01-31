@@ -1,15 +1,19 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {read_cookie} from "sfcookies";
 
 const Header = (props) => {
-    console.log('->', props.functionRefs)
+
     let isAuthenticated = props.isAuthenticated;
     let name = null;
+    const [userHasBusiness, setUserHasBusiness] = useState()
 
     if(isAuthenticated){
         const credentials = read_cookie('credentials');
         name = credentials.name;
     }
+
+    //setUserHasBusiness(!!props.userBusiness.id);
+    const urlBusiness = `/business-detail/${props.userBusiness.id}`;
 
     return (
       <div>
@@ -18,7 +22,7 @@ const Header = (props) => {
               <a href="/" className="logo"><img src="/assets/images/logo.png" alt="Local Business"/></a>
               {isAuthenticated ? <div className="user-info-bar"><strong>Olá, {name}.</strong> Caso não seja {name}, <a href="/logout">clique aqui</a>.</div> : ''}
               <div className="header-right">
-                  <a className="" href="/register">CADASTRE SUA EMPRESA</a>
+                  {!props.userBusiness.id ? <a className="" href="/register">CADASTRE SUA EMPRESA</a> : <a className="" href={urlBusiness}>DADOS DA EMPRESA</a>}
                   {isAuthenticated ? (<a className="" href="/favorites"><span className="fa fa-heart red"></span> FAVORITOS</a>) : ''}
                   {!isAuthenticated ? (<a className="active" href="/login"><span className="fa fa-key"></span> LOGIN</a>) : (<a href="/logout" className="logout">LOGOUT</a>)}
               </div>

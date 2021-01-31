@@ -3,7 +3,7 @@ import InputText from "./Partials/InputText";
 import InputSelect from "./Partials/InputSelect";
 import {read_cookie} from "sfcookies";
 
-const BusinessRegister = ()=>{
+const BusinessRegister = (props)=>{
 
     const cookie = read_cookie('credentials');
     const userId = cookie.id;
@@ -18,15 +18,14 @@ const BusinessRegister = ()=>{
     const [categories, setCategories] = useState(null);
     const [cities, setCities] = useState(null);
     const [selectedUfId, setSelectedUfId] = useState(null);
+    const [selectedCityId, setSelectedCityId] = useState(null);
+    const [selectedCategoryId, setSelectedCategoryId] = useState(null);
+    var requestOptions = { method: 'GET', };
 
     useEffect(() => {
         console.log('Render register...')
         const urlUf =  `http://localhost/public/api/state`;
         const urlCategories =  `http://localhost/public/api/category`;
-
-        var requestOptions = {
-            method: 'GET',
-        };
 
         if(!uf) {
             fetch(urlUf, requestOptions)
@@ -44,11 +43,6 @@ const BusinessRegister = ()=>{
     }, [uf]);
 
     if(selectedUfId && !cities){
-
-        var requestOptions = {
-            method: 'GET',
-        };
-
         fetch(`http://localhost/public/api/state/${selectedUfId}`, requestOptions)
             .then(response => response.json())
             .then(data => setCities(data))
@@ -56,7 +50,6 @@ const BusinessRegister = ()=>{
     }
 
     const handleChange = (event) => {
-        console.log('handleChange... ', event.target)
         const { name, value } = event.target;
         setState(prevState => ({ ...prevState, [name]: value }));
 
@@ -64,6 +57,8 @@ const BusinessRegister = ()=>{
             setCities(null)
             setSelectedUfId(value);
         }
+        if(name==='city_id'){ setSelectedCityId(value); }
+        if(name==='category_id'){ setSelectedCategoryId(value); }
     }
 
     const handleSubmit = (event)=>{
@@ -98,60 +93,60 @@ const BusinessRegister = ()=>{
 
     const setMyStates = (result)=>{
         console.log('Setting states after success ', result)
-
         if(result.status === 'saved'){
             setIsSubmitted(true)
             console.log('Updated stats')
         }
     }
 
-    if(!isSubmitted) {
+    const FormInputs = ()=>{
+        return (
+            <div>
+                {categories ? <InputSelect selectedOption={selectedCategoryId} label="Categoria" name="category_id" handleChange={handleChange} options={categories}/> : ''}
+                <InputText label="Nome" name="name" value={state.name} handleChange={handleChange}/>
+                <InputText label="CNPJ" name="cnpj" value={state.cnpj} handleChange={handleChange}/>
+                <InputText label="Email" name="email" value={state.email} handleChange={handleChange}/>
+                <InputText label="Website" name="website" value={state.website} handleChange={handleChange}/>
+                {uf ? <InputSelect selectedOption={selectedUfId} label="Estado" name="uf" handleChange={handleChange} options={uf}/> : ''}
+                {cities ? <InputSelect selectedOption={selectedCityId} label="Cidade" name="city_id" handleChange={handleChange} options={cities}/> : ''}
+                <InputText label="Endereço" name="address" value={state.address} handleChange={handleChange}/>
+                <InputText label="Bairro" name="district" value={state.district} handleChange={handleChange}/>
+
+                <div className="mt-3">
+                    <label htmlFor="description">Descrição</label>
+                    <textarea name="description" id="description" className="form-control" onChange={handleChange} value={state.description ?? ''} />
+                </div>
+
+                <button onClick={handleSubmit} className="btn btn-primary mt-3">SALVAR</button>
+            </div>
+        )
+    }
+
+    if(props.userBusiness && !props.userBusiness.id){
         return (
             <div className="container">
                 <div className="row">
                     <div className="col-sm-12 col-md-8 pt-5 offset-md-2">
-
                         <h2>Cadastre sua empresa</h2>
-
-                        {categories ? <InputSelect label="Categoria" name="category_id" handleChange={handleChange}
-                                                   options={categories}/> : ''}
-                        <InputText label="Nome" name="name" value={state.name} handleChange={handleChange}/>
-                        <InputText label="CNPJ" name="cnpj" value={state.cnpj} handleChange={handleChange}/>
-                        <InputText label="Email" name="email" value={state.email} handleChange={handleChange}/>
-                        <InputText label="Website" name="website" value={state.website} handleChange={handleChange}/>
-
-                        {uf ? <InputSelect label="Estado" name="uf" handleChange={handleChange} options={uf}/> : ''}
-                        {cities ? <InputSelect label="Cidade" name="city_id" handleChange={handleChange}
-                                               options={cities}/> : ''}
-
-                        <InputText label="Endereço" name="address" value={state.address} handleChange={handleChange}/>
-                        <InputText label="Bairro" name="district" value={state.district} handleChange={handleChange}/>
-
-                        <div className="mt-3">
-                            <label htmlFor="description">Descrição</label>
-                            <textarea name="description" id="description" className="form-control"
-                                      onChange={handleChange}>{state.description ?? ''}</textarea>
-                        </div>
-
-                        <button onClick={handleSubmit} className="btn btn-primary mt-3">SALVAR</button>
+                        {(!isSubmitted) ? <FormInputs/> : <p>Sua empresa foi cadastrada com sucesso!</p>}
 
                     </div>
-
                 </div>
             </div>
         )
-    }else{
+    }else {
         return (
             <div className="container">
                 <div className="row">
                     <div className="col-sm-12 col-md-8 pt-5 offset-md-2">
                         <h2>Cadastre sua empresa</h2>
-                        <p>Sua empresa foi cadastrada com sucesso!</p>
+                        <p>Você já tem uma empresa cadastrada.</p>
                     </div>
                 </div>
             </div>
         )
     }
+
 }
 
 export default BusinessRegister;
