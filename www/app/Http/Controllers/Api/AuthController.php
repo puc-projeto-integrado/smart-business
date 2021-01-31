@@ -30,6 +30,11 @@ class AuthController
 
         if (Auth::attempt($request->only('email', 'password'))) {
             $credentials = $this->getCredentials($request->email);
+
+            if(!$credentials){
+                return $this->sendHttpStatusCode(401, 'Unauthorized.');
+            }
+
             $content = $this->getBearerToken($credentials['oauthClientId'], $credentials['secret'], $request->email, $request->password);
             $content = json_decode($content, false);
             $content->name = $credentials['name'];
@@ -67,18 +72,24 @@ class AuthController
                 ->select('users.*', 'oauth_clients.id as oauth_client_id', 'oauth_clients.secret')
                 ->join('oauth_clients', 'password_client', '=', 'users.id')->get();
         } catch (QueryException $queryException) {
-            return $this->sendHttpStatusCode(422, 'Invalid query.');
+            return null;
         }
-        return [
-            'oauthClientId' => $result[0]->oauth_client_id,
-            'secret' => $result[0]->secret,
-            'name' => $result[0]->name,
-            'id' => $result[0]->id
-        ];
+
+        if(count($result->toArray())!==0) {
+            return [
+                'oauthClientId' => $result[0]->oauth_client_id,
+                'secret' => $result[0]->secret,
+                'name' => $result[0]->name,
+                'id' => $result[0]->id
+            ];
+        }
+
+        return null;
     }
 
     private function getBearerToken($oauthClientId, $secret, $email, $password): String
     {
+
         $client = new Client();
 
         try {
@@ -91,6 +102,7 @@ class AuthController
                     'password' => $password
                 ]
             ]);
+
         } catch (ClientException $clientException) {
             return $this->clientExceptionHandler($clientException);
         }

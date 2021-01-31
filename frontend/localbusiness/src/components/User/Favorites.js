@@ -28,20 +28,30 @@ const Favorites = ()=>{
         }
     }, [url, requestOptions, favorites]);
 
+    const ShowFavorites = ()=>{
+        let numItems = 0;
+
+        if(favorites.length>0) {
+            return (
+                favorites.map((item) => {
+                    numItems++;
+                    return (numItems < 50) ?
+                        <BusinessItem size="full" fromFavoritesPage={true} hideAddFavorites={true} data={item}
+                                      key={numItems}/> : false;
+                })
+            )
+        }else{
+            return <div>Você ainda não tem favoritos cadastrados...</div>
+        }
+    }
 
     if(favorites){
-        let numItems = 0;
         return (
             <div className="container">
             <div className="row">
                 <div className="col-sm-12 col-md-8  pt-5">
-                    <h2>Favorites</h2>
-                    {
-                        favorites.map((item) => {
-                            numItems++;
-                            return (numItems < 50) ? <BusinessItem size="full" fromFavoritesPage={true} hideAddFavorites={true} data={item} key={numItems} /> : false;
-                        })
-                    }
+                    <h2>Favoritos</h2>
+                    <ShowFavorites />
                 </div>
                 <div className="col-4 d-none d-sm-block pt-5">
                     <Column />

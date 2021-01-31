@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Business;
 use App\Http\Controllers\Controller;
+use Doctrine\DBAL\Query\QueryException;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 
 class BusinessController extends Controller
 {
@@ -55,6 +58,27 @@ class BusinessController extends Controller
         ->join('categories', 'businesses.category_id', '=', 'categories.id')
         ->orderBy('businesses.id', 'DESC')->paginate(20);
         return $this->jsonResponseinUtf8($business);
+    }
+
+    public function add(Request $request){
+
+        $business = new Business;
+        $exceptionalFields = ['id', ];
+
+        foreach ($_POST as $key => $value) {
+            if (!in_array($key, $exceptionalFields, true)) {
+                $business->$key = $value;
+            }
+        }
+
+        try{
+            $business->save();
+            return Response::json(['status'=>'saved'], 200);
+
+        }catch (QueryException | Exception $e){
+            var_dump($e);
+            return Response::json(['status'=>'failed', 'reason'=>$e->getMessage()], 422);
+        }
     }
 
 }

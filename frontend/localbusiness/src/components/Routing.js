@@ -5,6 +5,7 @@ import Login from './Login';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import BusinessDetail from './Business/BusinessDetail';
 import BusinessRegister from "./BusinessRegister";
+import Dashboard from "./User/Dashboard";
 
 const Routing = (props) => {
 
@@ -31,7 +32,11 @@ const Routing = (props) => {
                 </Route>
 
                 <Route path='/register'>
-                    { <BusinessRegister />  }
+                    { isAuthenticated ? <BusinessRegister /> : <Redirect to={loginRoute} /> }
+                </Route>
+
+                <Route path='/dashboard'>
+                    { isAuthenticated ? <Dashboard /> : <Redirect to={loginRoute} /> }
                 </Route>
 
                 <Route path='/'>

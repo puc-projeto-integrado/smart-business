@@ -9,7 +9,6 @@ const Login = (props) => {
     const [password, setPassword] = useState('admin123');
     const [feedbackActive, setFeedbackActive] = useState(false);
     const [feedbackMessage, setFeedbackMessage] = useState('');
-    //const [responseData, setResponseData] = useState(null);
 
     const handleChange = (event) => {
         setFeedbackActive(false)
@@ -46,7 +45,6 @@ const Login = (props) => {
     }
 
     const setMyStates = (response)=>{
-        //setResponseData(response)
 
         if(response.status!==200){
             setEmail('');
@@ -61,30 +59,28 @@ const Login = (props) => {
             }
 
             bake_cookie('credentials', response.body);
-            props.functionRefs.redirect('/favorites');
+            props.functionRefs.redirect('/dashboard');
         }
     }
 
     return (
         <div className="container mt-5">
             <div className="row">
-                <div className="col-md-6">
-                    <h1>LOGIN</h1>
-                </div>
-            </div>
-            <form onSubmit={handleSubmit}>
-                <Feedback active={feedbackActive} message={feedbackMessage}/>
-                <div className="row mt-3">
+                <div className="col-md-8 offset-md-2">
 
-                    <div className="col-md-6">
+                    <h1 className="mb-5">LOGIN</h1>
+
+                    <form onSubmit={handleSubmit}>
+                        <Feedback active={feedbackActive} message={feedbackMessage}/>
                         <label htmlFor="email">Email:</label>
                         <input type="email" name="email" className="form-control" value={email} onChange={handleChange}/>
                         <label htmlFor="password" className="mt-3" >Senha:</label>
                         <input type="password" name="password" className="form-control" value={password} onChange={handleChange}/>
-                        <button type="submit" className="mt-3">ENVIAR</button>
-                    </div>
+                        <button type="submit" className="btn btn-primary btn-block mt-3">ENVIAR</button>
+                    </form>
+
                 </div>
-            </form>
+            </div>
         </div>
     )
 }

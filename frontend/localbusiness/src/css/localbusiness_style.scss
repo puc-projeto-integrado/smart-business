@@ -16,6 +16,8 @@ $font-unit:1rem;
 .light{ font-weight: 300 !important;}
 .txt-1{ font-size: 1rem;}
 .txt-2{ font-size: 1.2rem;}
+.red{color:$red-1;}
+
 .center{ text-align: center;}
 .header {
     overflow: hidden;
@@ -54,12 +56,13 @@ $font-unit:1rem;
     margin-top: $def-spacing*2;
     float: right;
 }
+.header-right a{ font-size:1rem;}
 
 .visibleWhenMobile{ display: none;}
 .hiddenWhenMobile{ display: block;}
 
 .submenu{ min-height: 30px; padding: $def-spacing 0px; background-color: $red-1; text-align: center;}
-.submenu a{ margin:0px 20px 0px 0px; color: $bright;}
+.submenu a{ margin:0px 20px 0px 0px; color: $bright; font-size:1rem;}
 .submenu a:hover { text-decoration: none;}
 .submenu ul,li { list-style-type: none; margin:0px; padding: 0px;;}
 .submenu li { display: inline-block;}

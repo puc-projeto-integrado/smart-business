@@ -22,7 +22,7 @@ class Favorite extends Model
 
        return DB::table('favorites')
             ->select($fields)
-            ->where('user_id', '=', $userId)
+            ->where('favorites.user_id', '=', $userId)
             ->leftJoin('users', 'users.id', '=', 'favorites.user_id')
             ->leftJoin('businesses', 'businesses.id', '=', 'favorites.business_id')
             ->leftJoin('cities', 'businesses.city_id', '=', 'cities.id')

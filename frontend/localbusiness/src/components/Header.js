@@ -18,12 +18,9 @@ const Header = (props) => {
               <a href="/" className="logo"><img src="/assets/images/logo.png" alt="Local Business"/></a>
               {isAuthenticated ? <div className="user-info-bar"><strong>Olá, {name}.</strong> Caso não seja {name}, <a href="/logout">clique aqui</a>.</div> : ''}
               <div className="header-right">
-
-                  <a className="hiddenWhenMobile" href="/">HOME</a>
                   <a className="" href="/register">CADASTRE SUA EMPRESA</a>
-                  {isAuthenticated ? (<a className="" href="/favorites"><span className="fa fa-heart"></span> FAVORITOS</a>) : ''}
+                  {isAuthenticated ? (<a className="" href="/favorites"><span className="fa fa-heart red"></span> FAVORITOS</a>) : ''}
                   {!isAuthenticated ? (<a className="active" href="/login"><span className="fa fa-key"></span> LOGIN</a>) : (<a href="/logout" className="logout">LOGOUT</a>)}
-
               </div>
           </div>
         </div>
