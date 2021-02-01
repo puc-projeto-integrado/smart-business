@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import Home from './Home/Home';
 import Favorites from './User/Favorites';
 import Login from './Login';
@@ -6,10 +6,13 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 import BusinessDetail from './Business/BusinessDetail';
 import BusinessRegister from "./BusinessRegister";
 import Dashboard from "./User/Dashboard";
+import Category from "./Business/Category";
+import { BaseContext } from './ContextProviders/BaseContextProvider';
 
 const Routing = (props) => {
 
-    let isAuthenticated = props.isAuthenticated;
+    const [base] = useContext(BaseContext);
+    let isAuthenticated = base.isAuthenticated();
     const loginRoute = '/login';
 
     return (
@@ -25,18 +28,24 @@ const Routing = (props) => {
                     {props.functionRefs.logout}
                 </Route>
 
-                <Route path='/business-detail/:id' children={<BusinessDetail />}/>
+                <Route path='/business/:id'>
+                    <BusinessDetail />
+                </Route>
+
+                <Route path='/category/:id'>
+                    <Category />
+                </Route>
 
                 <Route path='/favorites'>
                     { isAuthenticated ? <Favorites /> : <Redirect to={loginRoute} /> }
                 </Route>
 
                 <Route path='/register'>
-                    { isAuthenticated ? <BusinessRegister userBusiness={props.userBusiness} /> : <Redirect to={loginRoute} /> }
+                    { isAuthenticated ? <BusinessRegister /> : <Redirect to={loginRoute} /> }
                 </Route>
 
                 <Route path='/dashboard'>
-                    { isAuthenticated ? <Dashboard userBusiness={props.userBusiness}/> : <Redirect to={loginRoute} /> }
+                    { isAuthenticated ? <Dashboard /> : <Redirect to={loginRoute} /> }
                 </Route>
 
                 <Route path='/'>

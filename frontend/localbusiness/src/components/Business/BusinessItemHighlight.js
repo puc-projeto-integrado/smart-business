@@ -35,7 +35,7 @@ const BusinessItemHighlight = (props) => {
                         {!isFavoriteState ? <AddFavorites funcRefs={setIsFavorite} businessId={id}/> : <RemoveFavorite funcRefs={setIsFavorite}/>}
                         </div>
                         <div className="col-6">
-                            <a href={`/business-detail/${id}`} className="btn btn-outline-primary btn-block"><span className="fas fa-eye"></span> Ver Detalhes</a>
+                            <a href={`/business/${id}`} className="btn btn-outline-primary btn-block"><span className="fas fa-eye"></span> Ver Detalhes</a>
                         </div>
                     </div>
 

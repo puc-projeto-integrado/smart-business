@@ -1,39 +1,18 @@
-import React, {useEffect, useState} from "react";
-import { read_cookie } from 'sfcookies';
+import React, {useContext} from "react";
 import BusinessItem from "../Business/BusinessItem";
 import Column from "../Column";
+import { BaseContext } from '../ContextProviders/BaseContextProvider';
 
 const Favorites = ()=>{
 
-    const [favorites, setFavorites] = useState(null);
-    const cookie = read_cookie('credentials');
-    const userId = cookie.id;
-    const accessToken = cookie.access_token;
-    const url =  `http://localhost/public/api/favorites/${userId}`;
-
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${accessToken}`);
-
-    var requestOptions = {
-        method: 'GET',
-        headers: myHeaders
-    };
-
-    useEffect(() => {
-        if(!favorites) {
-            fetch(url, requestOptions)
-                .then(response => response.json())
-                .then(data => setFavorites(data.data))
-                .catch(error => console.log('error', error));
-        }
-    }, [url, requestOptions, favorites]);
+    const [base] = useContext(BaseContext);
 
     const ShowFavorites = ()=>{
         let numItems = 0;
 
-        if(favorites.length>0) {
+        if(base.favorites.length>0) {
             return (
-                favorites.map((item) => {
+                base.favorites.map((item) => {
                     numItems++;
                     return (numItems < 50) ?
                         <BusinessItem size="full" fromFavoritesPage={true} hideAddFavorites={true} data={item}
@@ -45,7 +24,7 @@ const Favorites = ()=>{
         }
     }
 
-    if(favorites){
+    if(base.favorites){
         return (
             <div className="container">
             <div className="row">

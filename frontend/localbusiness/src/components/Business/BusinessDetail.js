@@ -17,7 +17,7 @@ const BusinessDetail = () => {
     }, [url]);
 
     if (business) {
-        console.log('done', business)
+        //console.log('done', business)
         return (
             <main className="container">
                 <div className="row">

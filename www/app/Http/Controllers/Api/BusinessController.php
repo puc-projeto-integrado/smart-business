@@ -51,6 +51,32 @@ class BusinessController extends Controller
         return $this->jsonResponseinUtf8($business);
     }
 
+    public function byUser($id){
+        $result = Business::where('user_id', $id)->orderBy('created_at')->first();
+
+        if($result){
+            return $this->jsonResponseinUtf8($result);
+        }
+
+        return Response::json(['status'=>'failed', 'reason'=>'empty'], 204);
+
+    }
+
+    public function byCategory($id){
+
+        $result = Business::where('category_id', $id)
+            ->select($this->defaultFields)
+            ->join('cities', 'businesses.city_id', '=', 'cities.id')
+            ->join('categories', 'businesses.category_id', '=', 'categories.id')
+            ->orderBy('businesses.id', 'DESC')->paginate(20);
+
+        return $this->jsonResponseinUtf8($result);
+    }
+
+    public function foo($id){
+        return $id;
+    }
+
     public function highlights(Request $request){
         $business = Business::where('highlight','S')
         ->select($this->defaultFields)
@@ -80,9 +106,6 @@ class BusinessController extends Controller
         }
     }
 
-    public function byUser(int $id){
-        $result = Business::where('user_id', $id)->orderBy('created_at')->first();
-        return $this->jsonResponseinUtf8($result);
-    }
+
 
 }

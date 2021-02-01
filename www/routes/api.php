@@ -15,6 +15,8 @@ Route::group(['prefix'=>'business/', 'namespace'=>'Api', 'middleware'=>['cors']]
         Route::get('/{id}', 'BusinessController@show')->name('businessDetail');
         Route::get('/state/{id}', 'BusinessController@byState')->name('businessByState');
         Route::get('/city/{id}', 'BusinessController@byCity')->name('businessByCity');
+        Route::get('/category/{id}', 'BusinessController@byCategory')->name('businessByCategory');
+        Route::get('/foo/{id}', 'BusinessController@foo')->name('businessFoo');
 
     });
 
@@ -32,5 +34,5 @@ Route::group(['namespace'=>'Api', 'middleware'=>['cors']],
         Route::get('/state', 'StateController@index')->name('state');
         Route::get('/state/{id}', 'CityController@citiesByState')->name('citiesByState');
         Route::get('/city', 'CityController@index')->name('city');
-        Route::get('/category', 'CategoryController@index')->name('city');
+        Route::get('/category', 'CategoryController@index')->name('category');
     });

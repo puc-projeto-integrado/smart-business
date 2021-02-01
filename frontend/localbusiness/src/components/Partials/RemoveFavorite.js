@@ -3,10 +3,10 @@ import {read_cookie} from "sfcookies";
 
 const RemoveFavorite = (props)=>{
 
-    console.log('Remove props ', props)
+    // console.log('Remove props ', props)
 
     const removeFavorite = ()=>{
-        console.log("removeFavorite...")
+        //console.log("removeFavorite...")
 
         const cookie = read_cookie('credentials');
         const userId = cookie.id;

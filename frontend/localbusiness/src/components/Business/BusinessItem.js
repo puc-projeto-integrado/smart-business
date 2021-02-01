@@ -1,18 +1,21 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import AddFavorites from "../Partials/AddFavorites";
 import RemoveFavorite from "../Partials/RemoveFavorite";
+import { BaseContext } from '../ContextProviders/BaseContextProvider';
 
 const BusinessItem = (props) => {
-
+    const [base] = useContext(BaseContext);
     const [isFavoriteState, setIsFavoriteState] = useState(false);
     const [mustUnload, setMustUnload] = useState(false);
     const id = props.data.id;
 
+    //console.log(props.data)
+
     useEffect(() => {
-        if(props.queryIsFavorite){
-            setIsFavoriteState(props.queryIsFavorite(id));
+        if(base.isFavorite){
+            setIsFavoriteState(base.isFavorite(id));
         }
-    }, [props, id]);
+    }, [props, id, base]);
 
     const setIsFavorite=(status)=>{
         console.log('changing status to '+status)
@@ -42,9 +45,7 @@ const BusinessItem = (props) => {
                                         <RemoveFavorite funcRefs={setIsFavorite} businessId={props.data.id}/> : (!isFavoriteState) ? <AddFavorites funcRefs={setIsFavorite} businessId={props.data.id}/> : <RemoveFavorite funcRefs={setIsFavorite} businessId={props.data.id}/>}
                                 </div>
                                 <div className="col-6">
-                                    <a href={`/business-detail/${id}`}
-                                       className="btn btn-outline-primary btn-block"><span
-                                        className="fas fa-eye"></span> Ver Detalhes</a>
+                                    <a href={`/business/${id}`} className="btn btn-outline-primary btn-block"><span className="fas fa-eye"></span> Ver Detalhes</a>
                                 </div>
                             </div>
                         </div>

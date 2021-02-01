@@ -1,21 +1,17 @@
-import React, {useEffect, useState, useRef} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import InputText from "./Partials/InputText";
 import InputSelect from "./Partials/InputSelect";
-import {read_cookie} from "sfcookies";
+import { BaseContext } from './ContextProviders/BaseContextProvider';
 
-const BusinessRegister = (props)=>{
-
-    const cookie = read_cookie('credentials');
-    const userId = cookie.id;
-    const accessToken = cookie.access_token;
+const BusinessRegister = ()=>{
+    const [base] = useContext(BaseContext);
 
     // const formItems = { user_id: userId, category_id: "", name: "", cnpj: "", email: "", website: "", address: "", district: "", description: "", };
-    const formItems = { user_id: userId, category_id: "5", city_id: "454", name: "FooCia", cnpj: "123456", email: "foo@foo.com", website: "foo.com.br", address: "An simple address", district: "Fooland", description: "A simple description...", };
+    const formItems = { user_id: base.credentials.userId, category_id: "5", city_id: "454", name: "FooCia", cnpj: "123456", email: "foo@foo.com", website: "foo.com.br", address: "An simple address", district: "Fooland", description: "A simple description...", };
     const [state, setState] = useState(formItems);
     const [isSubmitted, setIsSubmitted] = useState(false);
 
     const [uf, setUf] = useState(null);
-    const [categories, setCategories] = useState(null);
     const [cities, setCities] = useState(null);
     const [selectedUfId, setSelectedUfId] = useState(null);
     const [selectedCityId, setSelectedCityId] = useState(null);
@@ -23,9 +19,8 @@ const BusinessRegister = (props)=>{
     var requestOptions = { method: 'GET', };
 
     useEffect(() => {
-        console.log('Render register...')
+        //console.log('Render register... ', props.categories)
         const urlUf =  `http://localhost/public/api/state`;
-        const urlCategories =  `http://localhost/public/api/category`;
 
         if(!uf) {
             fetch(urlUf, requestOptions)
@@ -34,13 +29,7 @@ const BusinessRegister = (props)=>{
                 .catch(error => console.log('error', error));
         }
 
-        if(!categories) {
-            fetch(urlCategories, requestOptions)
-                .then(response => response.json())
-                .then(data => setCategories(data))
-                .catch(error => console.log('error', error));
-        }
-    }, [uf]);
+    }, [uf, requestOptions]);
 
     if(selectedUfId && !cities){
         fetch(`http://localhost/public/api/state/${selectedUfId}`, requestOptions)
@@ -62,9 +51,8 @@ const BusinessRegister = (props)=>{
     }
 
     const handleSubmit = (event)=>{
-        // console.log('handleSubmit ', state)
         var myHeaders = new Headers();
-        myHeaders.append("Authorization", `Bearer ${accessToken}`);
+        myHeaders.append("Authorization", `Bearer ${base.credentials.accessToken}`);
         myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
         var urlencoded = new URLSearchParams();
@@ -86,23 +74,23 @@ const BusinessRegister = (props)=>{
 
         fetch("http://localhost/public/api/business/add", requestOptions)
             .then(response => response.json())
-            // .then(response => console.log('resp', response))
             .then(result => setMyStates(result))
             .catch(error => console.log('error', error));
     }
 
     const setMyStates = (result)=>{
-        console.log('Setting states after success ', result)
         if(result.status === 'saved'){
             setIsSubmitted(true)
-            console.log('Updated stats')
         }
     }
+
+    if(base)
+        console.log(base.categories)
 
     const FormInputs = ()=>{
         return (
             <div>
-                {categories ? <InputSelect selectedOption={selectedCategoryId} label="Categoria" name="category_id" handleChange={handleChange} options={categories}/> : ''}
+                {base.categories ? <InputSelect selectedOption={selectedCategoryId} label="Categoria" name="category_id" handleChange={handleChange} options={base.categories}/> : ''}
                 <InputText label="Nome" name="name" value={state.name} handleChange={handleChange}/>
                 <InputText label="CNPJ" name="cnpj" value={state.cnpj} handleChange={handleChange}/>
                 <InputText label="Email" name="email" value={state.email} handleChange={handleChange}/>
@@ -122,30 +110,35 @@ const BusinessRegister = (props)=>{
         )
     }
 
-    if(props.userBusiness && !props.userBusiness.id){
-        return (
-            <div className="container">
-                <div className="row">
-                    <div className="col-sm-12 col-md-8 pt-5 offset-md-2">
-                        <h2>Cadastre sua empresa</h2>
-                        {(!isSubmitted) ? <FormInputs/> : <p>Sua empresa foi cadastrada com sucesso!</p>}
+    if(base){
+        console.log(base)
+        if(base.userBusiness===null){
+            return (
+                <div className="container">
+                    <div className="row">
+                        <div className="col-sm-12 col-md-8 pt-5 offset-md-2">
+                            <h2>Cadastre sua empresa</h2>
+                            {(!isSubmitted) ? <FormInputs/> : <p>Sua empresa foi cadastrada com sucesso!</p>}
 
+                        </div>
                     </div>
                 </div>
-            </div>
-        )
-    }else {
-        return (
-            <div className="container">
-                <div className="row">
-                    <div className="col-sm-12 col-md-8 pt-5 offset-md-2">
-                        <h2>Cadastre sua empresa</h2>
-                        <p>Você já tem uma empresa cadastrada.</p>
+            )
+        }else {
+            return (
+                <div className="container">
+                    <div className="row">
+                        <div className="col-sm-12 col-md-8 pt-5 offset-md-2">
+                            <h2>Cadastre sua empresa</h2>
+                            <p>Você já tem uma empresa cadastrada.</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        )
+            )
+
+        }
     }
+
 
 }
 

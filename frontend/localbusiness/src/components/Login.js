@@ -35,12 +35,11 @@ const Login = (props) => {
             method: 'POST',
             headers: headers,
             body: urlencoded,
-            redirect: 'follow'
         };
 
         fetch(urlLogin, requestOptions)
             .then(response => response.json())
-            .then(response => setMyStates(response))
+            .then(data => setMyStates(data))
             .catch(error => console.log('error', error));
     }
 
