@@ -6,7 +6,7 @@ export const BaseContext = createContext();
 export const BaseContextProvider = props => {
 
     const cookie = read_cookie('credentials');
-    const baseUrl = 'http://localhost/public';
+    const baseUrlApi = 'http://localhost/public/api';
     const [favorites, setFavorites] = useState(null);
     const [userBusiness, setUserBusiness] = useState(null);
     const [categories, setCategories] = useState(null);
@@ -16,19 +16,17 @@ export const BaseContextProvider = props => {
         accessToken : cookie.access_token
     });
 
-    let businessUserDetail = null;
-    if(userBusiness){
-        businessUserDetail = `${baseUrl}/api/business/${userBusiness.id}`;
-    }
-
     const [urls, setUrls] = useState({
-        business: `${baseUrl}/api/business`,
-        category: `${baseUrl}/api/category`,
-        favorites: `${baseUrl}/api/favorites/${credentials.userId}`,
-        businessByUser: `${baseUrl}/api/business/user/${credentials.userId}`,
-        businessDetail: businessUserDetail,
-        businessCategory: `${baseUrl}/api/business/category`,
+        business: `${baseUrlApi}/business`,
+        category: `${baseUrlApi}/category`,
+        favorites: `${baseUrlApi}/favorites/${credentials.userId}`,
+        businessByUser: `${baseUrlApi}/business/user/${credentials.userId}`,
+        businessCategory: `${baseUrlApi}/business/category`,
     });
+
+    if(userBusiness && urls){
+        urls.businessUserDetail = `/business/${userBusiness.id}`;
+    }
 
     useEffect(() => {
 
@@ -47,7 +45,7 @@ export const BaseContextProvider = props => {
                 .catch(error => console.log('error', error));
         }
 
-        if (!userBusiness) {
+        if (!userBusiness && credentials.accessToken) {
             let businessHeaders = new Headers();
             businessHeaders.append("Authorization", `Bearer ${credentials.accessToken}`);
             businessHeaders.append("Content-Type", "application/x-www-form-urlencoded");

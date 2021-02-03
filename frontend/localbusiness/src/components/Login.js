@@ -78,6 +78,8 @@ const Login = (props) => {
                         <button type="submit" className="btn btn-primary btn-block mt-3">ENVIAR</button>
                     </form>
 
+                    <p className="mt-4"><em className="fa fa-user-circle gray-4"></em> <a href="/user/register">Criar uma conta gratuitamente agora.</a></p>
+
                 </div>
             </div>
         </div>

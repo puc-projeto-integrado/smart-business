@@ -23,7 +23,7 @@ const HomeHighlights = (props) => {
                 {
                     highlights.map((item) => {
                         numHighlights++;
-                        return numHighlights < 3 ? <BusinessItemHighlight queryIsFavorite={props.queryIsFavorite} data={item} key={numHighlights}/> : ''
+                        return numHighlights < 4 ? <BusinessItemHighlight queryIsFavorite={props.queryIsFavorite} data={item} key={numHighlights}/> : ''
                     })
                 }
             </div>

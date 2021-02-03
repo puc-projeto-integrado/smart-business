@@ -68,7 +68,7 @@ class BusinessController extends Controller
             ->select($this->defaultFields)
             ->join('cities', 'businesses.city_id', '=', 'cities.id')
             ->join('categories', 'businesses.category_id', '=', 'categories.id')
-            ->orderBy('businesses.id', 'DESC')->paginate(20);
+            ->orderBy('businesses.id', 'DESC')->paginate(40);
 
         return $this->jsonResponseinUtf8($result);
     }

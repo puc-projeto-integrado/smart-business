@@ -9,14 +9,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['prefix'=>'business/', 'namespace'=>'Api', 'middleware'=>['cors']],
     function(){
         Route::get('/', 'BusinessController@index')->name('business');
-        Route::post('/add', 'BusinessController@add')->name('businessAdd')->middleware('auth');
-        Route::get('/user/{id}', 'BusinessController@byUser')->name('businessByUser')->middleware('auth');
         Route::get('/highlight', 'BusinessController@highlights')->name('businessHighlights');
         Route::get('/{id}', 'BusinessController@show')->name('businessDetail');
         Route::get('/state/{id}', 'BusinessController@byState')->name('businessByState');
         Route::get('/city/{id}', 'BusinessController@byCity')->name('businessByCity');
         Route::get('/category/{id}', 'BusinessController@byCategory')->name('businessByCategory');
-        Route::get('/foo/{id}', 'BusinessController@foo')->name('businessFoo');
+        Route::post('/add', 'BusinessController@add')->name('businessAdd')->middleware('auth');
+        Route::get('/user/{id}', 'BusinessController@byUser')->name('businessByUser')->middleware('auth');
 
     });
 
@@ -35,4 +34,9 @@ Route::group(['namespace'=>'Api', 'middleware'=>['cors']],
         Route::get('/state/{id}', 'CityController@citiesByState')->name('citiesByState');
         Route::get('/city', 'CityController@index')->name('city');
         Route::get('/category', 'CategoryController@index')->name('category');
+    });
+
+Route::group(['prefix'=>'user/', 'namespace'=>'Api', 'middleware'=>['cors']],
+    function() {
+        Route::post('/add/', 'AuthController@addUser')->name('addUser');
     });

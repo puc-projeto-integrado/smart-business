@@ -22,7 +22,7 @@ const Home = () => {
             <div className="row">
                 <div className="col-12">
                     <h3 className="mt-5">Mais Recentes</h3>
-                    <BusinessGrid queryIsFavorite={base.isFavorite} favoritesData={base.favorites} />
+                    <BusinessGrid hideFilter={true} queryIsFavorite={base.isFavorite} favoritesData={base.favorites} />
                 </div>
             </div>
         </main>

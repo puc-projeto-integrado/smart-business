@@ -8,6 +8,7 @@ import BusinessRegister from "./BusinessRegister";
 import Dashboard from "./User/Dashboard";
 import Category from "./Business/Category";
 import { BaseContext } from './ContextProviders/BaseContextProvider';
+import UserRegister from "./User/UserRegister";
 
 const Routing = (props) => {
 
@@ -42,6 +43,10 @@ const Routing = (props) => {
 
                 <Route path='/register'>
                     { isAuthenticated ? <BusinessRegister /> : <Redirect to={loginRoute} /> }
+                </Route>
+
+                <Route path='/user/register'>
+                    { <UserRegister /> }
                 </Route>
 
                 <Route path='/dashboard'>

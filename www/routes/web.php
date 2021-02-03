@@ -1,7 +1,7 @@
 <?php
 
 Route::get('/', function () {
-    return view('stranger');
+    return view('home');
 });
 
 Auth::routes(['register' => false]);

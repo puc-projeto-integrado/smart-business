@@ -9,6 +9,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 
@@ -16,11 +17,6 @@ class AuthController
 {
 
     const URL_TOKEN = 'http://localhost/public/oauth/token';
-
-    public function foo()
-    {
-        return $this->sendHttpStatusCode(400, 'Invalid request.');
-    }
 
     public function login(Request $request): JsonResponse
     {
@@ -120,5 +116,18 @@ class AuthController
             return $this->sendHttpStatusCode('ERROR', $exception->getResponse()->getStatusCode(), $exception->getResponse()->getReasonPhrase());
         }
         return $this->sendHttpStatusCode(422, 'Unprocessable Entity.', $exception->getMessage());
+    }
+
+    public function addUser(Request $request){
+
+        $name = 'FOO';
+        $email = 'foo@foo.com';
+
+        $user = new User();
+        $user->password = Hash::make($request->password);
+        $user->role_id = 2;
+
+
+        return [];
     }
 }

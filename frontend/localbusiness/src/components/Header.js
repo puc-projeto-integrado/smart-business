@@ -13,12 +13,11 @@ const Header = () => {
         name = credentials.name;
     }
 
-    //const urlBusiness = `/business-detail/${props.userBusiness.id}`;
     const max = 6;
     let count = 0;
 
     if(base) {
-
+        console.log('urls ', base.urls.businessUserDetail)
         return (
             <div>
                 <div className="header">
@@ -26,7 +25,7 @@ const Header = () => {
                         <a href="/" className="logo"><img src="/assets/images/logo.png" alt="Local Business"/></a>
                         {isAuthenticated ? <div className="user-info-bar"><strong>Olá, {name}.</strong> Caso não seja {name}, <a href="/logout">clique aqui</a>.</div> : ''}
                         <div className="header-right">
-                            {base.userBusiness === null ? <a className="" href="/register">CADASTRE SUA EMPRESA</a> : <a className="" href={base.userBusiness}>DADOS DA EMPRESA</a>}
+                            {!base.urls.businessUserDetail ? <a href="/register">CADASTRE SUA EMPRESA</a> : <a href={base.urls.businessUserDetail}>DADOS DA EMPRESA</a>}
                             {isAuthenticated ? (<a className="" href="/favorites"><span className="fa fa-heart red"></span> FAVORITOS</a>) : ''}
                             {!isAuthenticated ? (<a className="active" href="/login"><span className="fa fa-key"></span> LOGIN</a>) : (<a href="/logout" className="logout">LOGOUT</a>)}
                         </div>

@@ -1,24 +1,29 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import { BaseContext } from './ContextProviders/BaseContextProvider';
 
 const Column = ()=>{
-    return (
-        <aside>
-            <span className="gray-3">ANÚNCIO</span>
-            <img src="/assets/images/anuncio.jpg" alt="Local Business"/>
 
-            <ul className="column-submenu">
-                <li><a href="http://localhost"><span className="fa fa-check"></span> IMPORTAÇÃO DE ROUPAS</a></li>
-                <li><a href="http://localhost"><span className="fa fa-check"></span> GRÁFICAS EM SÃO PAULO</a></li>
-                <li><a href="http://localhost"><span className="fa fa-check"></span> GRÁFICAS NO RIO DE JANEIRO</a></li>
-                <li><a href="http://localhost"><span className="fa fa-check"></span> IMPRESSÃO DE PANFLETOS</a></li>
-                <li><a href="http://localhost"><span className="fa fa-check"></span> CRIAÇÃO DE SITES</a></li>
-                <li><a href="http://localhost"><span className="fa fa-check"></span> FORNECEDORES DE BRINDES</a></li>
-                <li><a href="http://localhost"><span className="fa fa-check"></span> FORNECEDORES DE COMUNICAÇÃO</a></li>
-                <li><a href="http://localhost"><span className="fa fa-check"></span> FORNECEDORES DE INFORMÁTICA</a></li>
-            </ul>
-        </aside>
+    const [base] = useContext(BaseContext);
+    const max = 25;
+    let count = 0;
 
-    )
+    if(base) {
+        return (
+            <aside>
+                {/*<span className="gray-3">ANÚNCIO</span>*/}
+                {/*<img src="/assets/images/anuncio.jpg" alt="Local Business"/>*/}
+
+                <ul className="column-submenu">
+                    {base.categories ? base.categories.map((item) => {
+                        count++;
+                        let urlCategory = `/category/${item.id}`;
+                        let title = `Fornecedores de ${item.name}`;
+                        return (count < max) ? <li key={item.id}><a href={urlCategory} title={title}><span className="fa fa-check"></span> {item.name}</a></li> : ''
+                    }) : 'Carregando categorias...'}
+                </ul>
+            </aside>
+        )
+    }
 }
   
 export default Column;
