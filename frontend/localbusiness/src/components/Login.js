@@ -53,9 +53,9 @@ const Login = (props) => {
         }else{
             setFeedbackActive(false);
 
-            if(read_cookie('credentials')){
+            //if(read_cookie('credentials')){
                 delete_cookie('credentials')
-            }
+            //}
 
             bake_cookie('credentials', response.body);
             props.functionRefs.redirect('/dashboard');

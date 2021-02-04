@@ -11,12 +11,12 @@ export const BaseContextProvider = props => {
     const [userBusiness, setUserBusiness] = useState(null);
     const [categories, setCategories] = useState(null);
 
-    const [credentials, setCredentials] = useState({
+    const [credentials] = useState({
         userId : cookie.id,
         accessToken : cookie.access_token
     });
 
-    const [urls, setUrls] = useState({
+    const [urls] = useState({
         business: `${baseUrlApi}/business`,
         category: `${baseUrlApi}/category`,
         favorites: `${baseUrlApi}/favorites/${credentials.userId}`,
@@ -26,6 +26,9 @@ export const BaseContextProvider = props => {
 
     if(userBusiness && urls){
         urls.businessUserDetail = `/business/${userBusiness.id}`;
+        console.log('USER BUSINESS ', userBusiness)
+    }else{
+        urls.businessUserDetail = null;
     }
 
     useEffect(() => {
@@ -43,9 +46,12 @@ export const BaseContextProvider = props => {
                 .then(response => response.json())
                 .then(response =>setFavorites(response.data))
                 .catch(error => console.log('error', error));
+        }else{
+            console.log('No creds yet...')
         }
 
         if (!userBusiness && credentials.accessToken) {
+            //setUserBusiness(null)
             let businessHeaders = new Headers();
             businessHeaders.append("Authorization", `Bearer ${credentials.accessToken}`);
             businessHeaders.append("Content-Type", "application/x-www-form-urlencoded");
@@ -54,11 +60,15 @@ export const BaseContextProvider = props => {
                 method: 'GET',
                 headers: businessHeaders,
             };
-
-            fetch(urls.businessByUser, requestOptionsUserBusiness)
-                .then(response => response.status!==200 ? setUserBusiness(null) : response.json())
-                .then(data => setUserBusiness(data))
-                .catch(error => console.log('error', error));
+            //ESTE TRECHO TEM UM BUG QUE CAUSA LOOP INFINITO
+            // fetch(urls.businessByUser, requestOptionsUserBusiness)
+            //     //.then(response => response.json())
+            //     //.then(data => console.log(data))
+            //     .then(response => response.status!==200 ? setUserBusiness(null) : response.json())
+            //     .then(data => setUserBusiness(data))
+            //     .catch(error => console.log('error', error));
+        }else{
+            console.log('Boooo')
         }
 
         if(!categories) {
@@ -82,10 +92,7 @@ export const BaseContextProvider = props => {
     }
 
     const isAuthenticated = () => {
-        if(typeof cookie === 'undefined' || cookie.length === 0){
-            return false;
-        }
-        return true;
+        return (typeof cookie === 'undefined' || cookie.length === 0) ? false : true;
     };
 
     let obj = {
@@ -99,9 +106,9 @@ export const BaseContextProvider = props => {
     }
 
     let setObj = {
-        setUrls : setUrls,
-        setCredentials : setCredentials,
-        setFavorites : setFavorites,
+        // setUrls : setUrls,
+        // setCredentials : setCredentials,
+        // setFavorites : setFavorites,
     }
 
     return (

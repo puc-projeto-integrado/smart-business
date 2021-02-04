@@ -5,19 +5,28 @@ import { BaseContext } from './ContextProviders/BaseContextProvider';
 const Header = () => {
 
     const [base] = useContext(BaseContext);
-    let isAuthenticated = base.isAuthenticated();
-    let name = null;
+    //let base = true;
 
-    if(isAuthenticated){
-        const credentials = read_cookie('credentials');
-        name = credentials.name;
-    }
+    if(base.urls) {
 
-    const max = 6;
-    let count = 0;
+        let isAuthenticated = base.isAuthenticated();
+        let name = null;
 
-    if(base) {
-        console.log('urls ', base.urls.businessUserDetail)
+        if(isAuthenticated){
+            const credentials = read_cookie('credentials');
+            name = credentials.name;
+        }
+
+        const max = 6;
+        let count = 0;
+
+        console.log('urls ', base.urls)
+        console.log('base ', base)
+        if(typeof base.userBusiness === 'undefined'){
+            console.log('HIT')
+        }else{
+            console.log('user business ', base.userBusiness)
+        }
         return (
             <div>
                 <div className="header">
@@ -25,7 +34,7 @@ const Header = () => {
                         <a href="/" className="logo"><img src="/assets/images/logo.png" alt="Local Business"/></a>
                         {isAuthenticated ? <div className="user-info-bar"><strong>Olá, {name}.</strong> Caso não seja {name}, <a href="/logout">clique aqui</a>.</div> : ''}
                         <div className="header-right">
-                            {!base.urls.businessUserDetail ? <a href="/register">CADASTRE SUA EMPRESA</a> : <a href={base.urls.businessUserDetail}>DADOS DA EMPRESA</a>}
+                            {typeof base.userBusiness === 'undefined' || base.userBusiness == null ? <a href="/register">CADASTRE SUA EMPRESA</a> : <a href={base.urls.businessUserDetail}>DADOS DA EMPRESA</a>}
                             {isAuthenticated ? (<a className="" href="/favorites"><span className="fa fa-heart red"></span> FAVORITOS</a>) : ''}
                             {!isAuthenticated ? (<a className="active" href="/login"><span className="fa fa-key"></span> LOGIN</a>) : (<a href="/logout" className="logout">LOGOUT</a>)}
                         </div>

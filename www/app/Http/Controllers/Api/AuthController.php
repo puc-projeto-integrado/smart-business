@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\OauthClient;
 use App\User;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
@@ -9,14 +10,21 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController
 {
 
-    const URL_TOKEN = 'http://localhost/public/oauth/token';
+    private $baseUrl;
+    private $tokenUrl = 'http://localhost/public/oauth/token';
+
+    public function __construct(){
+        $this->baseUrl = URL::to('/');
+    }
 
     public function login(Request $request): JsonResponse
     {
@@ -89,7 +97,7 @@ class AuthController
         $client = new Client();
 
         try {
-            $response = $client->post($this::URL_TOKEN, [
+            $response = $client->post($this->tokenUrl, [
                 'form_params' => [
                     'grant_type' => 'password',
                     'client_id' => $oauthClientId,
@@ -120,13 +128,44 @@ class AuthController
 
     public function addUser(Request $request){
 
-        $name = 'FOO';
-        $email = 'foo@foo.com';
+        $name = $request->name;
+        $email = $request->email;
+        $password = $request->password;
 
-        $user = new User();
-        $user->password = Hash::make($request->password);
-        $user->role_id = 2;
+        $hasUser = User::where('email', '=', $email)->get()->toArray();
+        if(count($hasUser)>0){
+            return $this->sendHttpStatusCode(422, 'Unprocessable Entity.', 'User already exists.');
+        }
 
+        //DB::transaction(function () use ($name, $email, $password) {
+            try {
+                $user = new User();
+                $user->name = $name;
+                $user->email = $email;
+                $user->password = Hash::make($password);
+                $user->role_id = 2;
+                $user->save();
+            } catch (QueryException $exception) {
+                return $this->sendHttpStatusCode(422, 'Unprocessable Entity.', $exception->getMessage());
+            }
+
+            $savedUser = User::where('email', '=', $email)->get();
+
+            try {
+                $oauthClient = new OauthClient();
+                $oauthClient->name = $name;
+                $oauthClient->secret = Hash::make($password);
+                $oauthClient->password_client = $savedUser[0]->id;
+                $oauthClient->redirect = $this->baseUrl;
+                $oauthClient->personal_access_client = 0;
+                $oauthClient->revoked = 0;
+
+                $oauthClient->save();
+
+            } catch (QueryException $exception) {
+                return $this->sendHttpStatusCode(422, 'Unprocessable Entity.', $exception->getMessage());
+            }
+        //});
 
         return [];
     }
