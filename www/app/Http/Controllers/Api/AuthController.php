@@ -132,12 +132,11 @@ class AuthController
         $email = $request->email;
         $password = $request->password;
 
-        $hasUser = User::where('email', '=', $email)->get()->toArray();
-        if(count($hasUser)>0){
+        if(count(User::where('email', '=', $email)->get()->toArray())>0){
             return $this->sendHttpStatusCode(422, 'Unprocessable Entity.', 'User already exists.');
         }
 
-        //DB::transaction(function () use ($name, $email, $password) {
+        DB::transaction(function () use ($name, $email, $password) {
             try {
                 $user = new User();
                 $user->name = $name;
@@ -145,6 +144,7 @@ class AuthController
                 $user->password = Hash::make($password);
                 $user->role_id = 2;
                 $user->save();
+
             } catch (QueryException $exception) {
                 return $this->sendHttpStatusCode(422, 'Unprocessable Entity.', $exception->getMessage());
             }
@@ -165,8 +165,8 @@ class AuthController
             } catch (QueryException $exception) {
                 return $this->sendHttpStatusCode(422, 'Unprocessable Entity.', $exception->getMessage());
             }
-        //});
+        });
 
-        return [];
+        return $this->sendHttpStatusCode(200, 'Success', 'User saved');
     }
 }

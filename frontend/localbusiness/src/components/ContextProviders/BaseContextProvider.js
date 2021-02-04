@@ -67,6 +67,13 @@ export const BaseContextProvider = props => {
             //     .then(response => response.status!==200 ? setUserBusiness(null) : response.json())
             //     .then(data => setUserBusiness(data))
             //     .catch(error => console.log('error', error));
+
+            fetch(urls.businessByUser, requestOptionsUserBusiness)
+                .then(response => response.json())
+                .then(data => console.log('DEBUG', data))
+                //.then(response => response.status!==200 ? setUserBusiness(null) : response.json())
+                .then(data => setUserBusiness(null))
+                .catch(error => console.log('error', error));
         }else{
             console.log('Boooo')
         }
