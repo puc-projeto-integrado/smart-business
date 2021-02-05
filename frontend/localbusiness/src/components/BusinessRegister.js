@@ -4,13 +4,9 @@ import InputSelect from "./Partials/InputSelect";
 import { BaseContext } from './ContextProviders/BaseContextProvider';
 
 const BusinessRegister = ()=>{
+
     const [base] = useContext(BaseContext);
-
-    // const formItems = { user_id: userId, category_id: "", name: "", cnpj: "", email: "", website: "", address: "", district: "", description: "", };
-    const formItems = { user_id: base.credentials.userId, category_id: "5", city_id: "454", name: "FooCia", cnpj: "123456", email: "foo@foo.com", website: "foo.com.br", address: "An simple address", district: "Fooland", description: "A simple description...", };
-    const [state, setState] = useState(formItems);
     const [isSubmitted, setIsSubmitted] = useState(false);
-
     const [uf, setUf] = useState(null);
     const [cities, setCities] = useState(null);
     const [selectedUfId, setSelectedUfId] = useState(null);
@@ -38,56 +34,62 @@ const BusinessRegister = ()=>{
             .catch(error => console.log('error', error));
     }
 
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        setState(prevState => ({ ...prevState, [name]: value }));
-
-        if(name==='uf'){
-            setCities(null)
-            setSelectedUfId(value);
-        }
-        if(name==='city_id'){ setSelectedCityId(value); }
-        if(name==='category_id'){ setSelectedCategoryId(value); }
-    }
-
-    const handleSubmit = (event)=>{
-        var myHeaders = new Headers();
-        myHeaders.append("Authorization", `Bearer ${base.credentials.accessToken}`);
-        myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-
-        var urlencoded = new URLSearchParams();
-        urlencoded.append("category_id", state.category_id);
-        urlencoded.append("user_id", state.user_id);
-        urlencoded.append("name", state.name);
-        urlencoded.append("cnpj", state.cnpj);
-        urlencoded.append("email", state.email);
-        urlencoded.append("website", state.website);
-        urlencoded.append("description", state.description);
-        if(state.city_id){ urlencoded.append("city_id", state.city_id) }
-
-        var requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: urlencoded,
-            redirect: 'follow'
-        };
-
-        fetch("http://localhost/public/api/business/add", requestOptions)
-            .then(response => response.json())
-            .then(result => setMyStates(result))
-            .catch(error => console.log('error', error));
-    }
-
-    const setMyStates = (result)=>{
-        if(result.status === 'saved'){
-            setIsSubmitted(true)
-        }
-    }
-
-    if(base)
-        console.log(base.categories)
-
     const FormInputs = ()=>{
+
+        //const formItems = { user_id: base.credentials.userId, category_id: "", name: "", cnpj: "", email: "", website: "", address: "", district: "", description: "", };
+        const formItems = { user_id: base.credentials.userId, category_id: "5", city_id: "454", name: "FooCia", cnpj: "123456", email: "foo@foo.com", website: "foo.com.br", address: "An simple address", district: "Fooland", description: "A simple description...", };
+        const [state, setState] = useState(formItems);
+
+        const handleChange = (event) => {
+            const { name, value } = event.target;
+            setState(prevState => ({ ...prevState, [name]: value }));
+        
+            
+            if(name==='uf'){
+                setCities(null)
+                setSelectedUfId(value);
+            }
+            if(name==='city_id'){ setSelectedCityId(value); }
+            if(name==='category_id'){ setSelectedCategoryId(value); }
+        }
+
+        const handleSubmit = (event)=>{
+            var myHeaders = new Headers();
+            myHeaders.append("Authorization", `Bearer ${base.credentials.accessToken}`);
+            myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+            var urlencoded = new URLSearchParams();
+            urlencoded.append("category_id", state.category_id);
+            urlencoded.append("user_id", state.user_id);
+            urlencoded.append("name", state.name);
+            urlencoded.append("cnpj", state.cnpj);
+            urlencoded.append("email", state.email);
+            urlencoded.append("website", state.website);
+            urlencoded.append("description", state.description);
+            if(state.city_id){ urlencoded.append("city_id", state.city_id) }
+
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: urlencoded
+            };
+
+            console.log(state.name)
+
+            fetch("http://localhost/public/api/business/add", requestOptions)
+                .then(response => response.status!==200 ? null : response.json())
+                .then(result => setMyStates(result))
+                // .then(response => response.json())
+                // .then(data => console.log(data))
+                .catch(error => console.log('error', error));
+        }
+
+        const setMyStates = (result)=>{
+            if(result.status === 'saved'){
+                setIsSubmitted(true)
+            }
+        }
+
         return (
             <div>
                 {base.categories ? <InputSelect selectedOption={selectedCategoryId} label="Categoria" name="category_id" handleChange={handleChange} options={base.categories}/> : ''}
@@ -111,7 +113,7 @@ const BusinessRegister = ()=>{
     }
 
     if(base){
-        console.log(base)
+        
         if(base.userBusiness===null){
             return (
                 <div className="container">
@@ -119,7 +121,6 @@ const BusinessRegister = ()=>{
                         <div className="col-sm-12 col-md-8 pt-5 offset-md-2">
                             <h2>Cadastre sua empresa</h2>
                             {(!isSubmitted) ? <FormInputs/> : <p>Sua empresa foi cadastrada com sucesso!</p>}
-
                         </div>
                     </div>
                 </div>
@@ -135,10 +136,8 @@ const BusinessRegister = ()=>{
                     </div>
                 </div>
             )
-
         }
     }
-
 
 }
 

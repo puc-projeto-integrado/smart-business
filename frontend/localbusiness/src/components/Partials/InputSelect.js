@@ -5,6 +5,7 @@ const InputSelect = (props)=>{
     const options = props.options;
 
     if(options) {
+        let counter = 0;
         return (
             <div className={props.className ? props.className : 'mt-4'}>
                 <label htmlFor="name">{props.label}</label>
@@ -12,7 +13,9 @@ const InputSelect = (props)=>{
                     <option value="">Selecione uma opção</option>
                     {
                         options.map((item) => {
-                            return <option  value={item.id} key={item.id}>{item.name}</option>
+                            // let key = 'inputKey-'+item.id;
+                            counter++
+                            return <option  value={item.id} key={counter}>{item.name}</option>
                         })
                     }
                 </select>

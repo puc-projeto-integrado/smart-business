@@ -5,7 +5,6 @@ import { BaseContext } from './ContextProviders/BaseContextProvider';
 const Header = () => {
 
     const [base] = useContext(BaseContext);
-    //let base = true;
 
     if(base.urls) {
 
@@ -20,13 +19,6 @@ const Header = () => {
         const max = 6;
         let count = 0;
 
-        console.log('urls ', base.urls)
-        console.log('base ', base)
-        if(typeof base.userBusiness === 'undefined'){
-            console.log('HIT')
-        }else{
-            console.log('user business ', base.userBusiness)
-        }
         return (
             <div>
                 <div className="header">

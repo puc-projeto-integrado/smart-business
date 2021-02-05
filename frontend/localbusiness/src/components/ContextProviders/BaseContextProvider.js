@@ -46,8 +46,6 @@ export const BaseContextProvider = props => {
                 .then(response => response.json())
                 .then(response =>setFavorites(response.data))
                 .catch(error => console.log('error', error));
-        }else{
-            console.log('No creds yet...')
         }
 
         if (!userBusiness && credentials.accessToken) {
@@ -60,22 +58,11 @@ export const BaseContextProvider = props => {
                 method: 'GET',
                 headers: businessHeaders,
             };
-            //ESTE TRECHO TEM UM BUG QUE CAUSA LOOP INFINITO
-            // fetch(urls.businessByUser, requestOptionsUserBusiness)
-            //     //.then(response => response.json())
-            //     //.then(data => console.log(data))
-            //     .then(response => response.status!==200 ? setUserBusiness(null) : response.json())
-            //     .then(data => setUserBusiness(data))
-            //     .catch(error => console.log('error', error));
 
             fetch(urls.businessByUser, requestOptionsUserBusiness)
-                .then(response => response.json())
-                .then(data => console.log('DEBUG', data))
-                //.then(response => response.status!==200 ? setUserBusiness(null) : response.json())
-                .then(data => setUserBusiness(null))
+                .then(response => response.status!==200 ? null : response.json())
+                .then(data => setUserBusiness(data))
                 .catch(error => console.log('error', error));
-        }else{
-            console.log('Boooo')
         }
 
         if(!categories) {
@@ -112,11 +99,7 @@ export const BaseContextProvider = props => {
         isFavorite : queryIsFavorite
     }
 
-    let setObj = {
-        // setUrls : setUrls,
-        // setCredentials : setCredentials,
-        // setFavorites : setFavorites,
-    }
+    let setObj = {};
 
     return (
         <BaseContext.Provider value={[obj, setObj]}>

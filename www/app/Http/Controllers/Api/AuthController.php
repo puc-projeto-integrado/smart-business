@@ -57,7 +57,7 @@ class AuthController
         return !$validator->fails();
     }
 
-    private function sendHttpStatusCode(int $status, $message = null, $body = null): JsonResponse
+    public function sendHttpStatusCode(int $status, $message = null, $body = null): JsonResponse
     {
         $params = ['status' => $status];
         if (!is_null($message)) {

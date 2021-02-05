@@ -8,6 +8,7 @@ use Doctrine\DBAL\Query\QueryException;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+use App\Http\Controllers\Api\AuthController;
 
 class BusinessController extends Controller
 {
@@ -99,10 +100,11 @@ class BusinessController extends Controller
 
         try{
             $business->save();
-            return Response::json(['status'=>'saved'], 200);
+            return Response::json(['message'=>'saved'], 200);
 
         }catch (QueryException | Exception $e){
-            return Response::json(['status'=>'failed', 'reason'=>$e->getMessage()], 422);
+            //return Response::json(['status'=>'saved'], 200);
+            return Response::json(['message'=>'failed', 'reason'=>$e->getMessage()], 422);
         }
     }
 

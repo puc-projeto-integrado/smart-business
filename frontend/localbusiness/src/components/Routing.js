@@ -9,6 +9,7 @@ import Dashboard from "./User/Dashboard";
 import Category from "./Business/Category";
 import { BaseContext } from './ContextProviders/BaseContextProvider';
 import UserRegister from "./User/UserRegister";
+import TestInps from './TestInps';
 
 const Routing = (props) => {
 
@@ -20,6 +21,10 @@ const Routing = (props) => {
         <Router>
             { props.mustRedirect ? <Redirect to={props.mustRedirect} /> : ''}
             <Switch>
+
+                <Route path='/test'>
+                    <TestInps functionRefs={props.functionRefs}/>
+                </Route>
 
                 <Route path='/login'>
                     <Login functionRefs={props.functionRefs}/>
