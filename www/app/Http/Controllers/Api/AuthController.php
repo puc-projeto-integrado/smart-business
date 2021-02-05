@@ -36,7 +36,7 @@ class AuthController
             $credentials = $this->getCredentials($request->email);
 
             if(!$credentials){
-                return $this->sendHttpStatusCode(401, 'Unauthorized.');
+                return $this->sendHttpStatusCode(401, 'Unauthorized - step 2.');
             }
 
             $content = $this->getBearerToken($credentials['oauthClientId'], $credentials['secret'], $request->email, $request->password);
@@ -45,7 +45,7 @@ class AuthController
             $content->id = $credentials['id'];
             return $this->sendHttpStatusCode(200, Null, $content);
         }
-        return $this->sendHttpStatusCode(401, 'Unauthorized.');
+        return $this->sendHttpStatusCode(401, 'Unauthorized - step 1.');
     }
 
     private function validate(Request $request): bool
@@ -141,7 +141,8 @@ class AuthController
                 $user = new User();
                 $user->name = $name;
                 $user->email = $email;
-                $user->password = Hash::make($password);
+                $password = Hash::make($password);
+                $user->password = $password;
                 $user->role_id = 2;
                 $user->save();
 
@@ -154,7 +155,7 @@ class AuthController
             try {
                 $oauthClient = new OauthClient();
                 $oauthClient->name = $name;
-                $oauthClient->secret = Hash::make($password);
+                $oauthClient->secret = $password;
                 $oauthClient->password_client = $savedUser[0]->id;
                 $oauthClient->redirect = $this->baseUrl;
                 $oauthClient->personal_access_client = 0;

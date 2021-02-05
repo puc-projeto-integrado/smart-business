@@ -4,12 +4,13 @@ import Favorites from './User/Favorites';
 import Login from './Login';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import BusinessDetail from './Business/BusinessDetail';
-import BusinessRegister from "./BusinessRegister";
+import BusinessRegister from "./Business/BusinessRegister";
 import Dashboard from "./User/Dashboard";
 import Category from "./Business/Category";
 import { BaseContext } from './ContextProviders/BaseContextProvider';
 import UserRegister from "./User/UserRegister";
 import TestInps from './TestInps';
+import UserBusiness from "./User/UserBusiness";
 
 const Routing = (props) => {
 
@@ -52,6 +53,10 @@ const Routing = (props) => {
 
                 <Route path='/user/register'>
                     { <UserRegister /> }
+                </Route>
+
+                <Route path='/user/business'>
+                    { <UserBusiness /> }
                 </Route>
 
                 <Route path='/dashboard'>

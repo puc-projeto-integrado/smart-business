@@ -17,6 +17,8 @@ export const BaseContextProvider = props => {
     });
 
     const [urls] = useState({
+        login: `${baseUrlApi}/login`,
+        userRegister: `${baseUrlApi}/user/add`,
         business: `${baseUrlApi}/business`,
         category: `${baseUrlApi}/category`,
         favorites: `${baseUrlApi}/favorites/${credentials.userId}`,

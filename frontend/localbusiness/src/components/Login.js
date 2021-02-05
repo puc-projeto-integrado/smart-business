@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
-import { bake_cookie, read_cookie, delete_cookie } from 'sfcookies';
-
-const urlLogin = 'http://localhost/public/api/login';
+import React, {useContext, useState} from 'react';
+import { bake_cookie, delete_cookie } from 'sfcookies';
+import { BaseContext } from './ContextProviders/BaseContextProvider';
 
 const Login = (props) => {
 
+    const [base] = useContext(BaseContext);
     const [email, setEmail] = useState('gab@gab.com');
     const [password, setPassword] = useState('admin123');
     const [feedbackActive, setFeedbackActive] = useState(false);
@@ -37,7 +37,7 @@ const Login = (props) => {
             body: urlencoded,
         };
 
-        fetch(urlLogin, requestOptions)
+        fetch(base.urls.login, requestOptions)
             .then(response => response.json())
             .then(data => setMyStates(data))
             .catch(error => console.log('error', error));
@@ -52,42 +52,40 @@ const Login = (props) => {
             setFeedbackMessage('Erro de autenticação.');
         }else{
             setFeedbackActive(false);
-
-            //if(read_cookie('credentials')){
-                delete_cookie('credentials')
-            //}
-
+            delete_cookie('credentials')
             bake_cookie('credentials', response.body);
             props.functionRefs.redirect('/dashboard');
         }
     }
 
-    return (
-        <div className="container mt-5">
-            <div className="row">
-                <div className="col-md-8 offset-md-2">
+    if(base) {
+        return (
+            <div className="container mt-5">
+                <div className="row">
+                    <div className="col-md-8 offset-md-2">
 
-                    <h1 className="mb-5">LOGIN</h1>
+                        <h1 className="mb-5">LOGIN</h1>
 
-                    <form onSubmit={handleSubmit}>
-                        <Feedback active={feedbackActive} message={feedbackMessage}/>
-                        <label htmlFor="email">Email:</label>
-                        <input type="email" name="email" className="form-control" value={email} onChange={handleChange}/>
-                        <label htmlFor="password" className="mt-3" >Senha:</label>
-                        <input type="password" name="password" className="form-control" value={password} onChange={handleChange}/>
-                        <button type="submit" className="btn btn-primary btn-block mt-3">ENVIAR</button>
-                    </form>
+                        <form onSubmit={handleSubmit}>
+                            <Feedback active={feedbackActive} message={feedbackMessage}/>
+                            <label htmlFor="email">Email:</label>
+                            <input type="email" name="email" className="form-control" value={email} onChange={handleChange}/>
+                            <label htmlFor="password" className="mt-3">Senha:</label>
+                            <input type="password" name="password" className="form-control" value={password} onChange={handleChange}/>
+                            <button type="submit" className="btn btn-primary btn-block mt-3">ENVIAR</button>
+                        </form>
 
-                    <p className="mt-4"><em className="fa fa-user-circle gray-4"></em> <a href="/user/register">Criar uma conta gratuitamente agora.</a></p>
+                        <p className="mt-4"><em className="fa fa-user-circle gray-4"></em> <a href="/user/register">Criar uma conta gratuitamente agora.</a></p>
 
+                    </div>
                 </div>
             </div>
-        </div>
-    )
+        )
+    }
 }
 
 const Feedback = (props)=>{
-    return props.active ? <div>{props.message}</div> : <div></div>;
+    return props.active ? <div className="alert alert-danger" role="alert">{props.message}</div> : <div></div>;
 }
 
 export default Login;

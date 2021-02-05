@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
-import InputText from "./Partials/InputText";
-import InputSelect from "./Partials/InputSelect";
-import { BaseContext } from './ContextProviders/BaseContextProvider';
+import InputText from "../Partials/InputText";
+import InputSelect from "../Partials/InputSelect";
+import { BaseContext } from '../ContextProviders/BaseContextProvider';
 
 const BusinessRegister = ()=>{
 
@@ -79,8 +79,6 @@ const BusinessRegister = ()=>{
             fetch("http://localhost/public/api/business/add", requestOptions)
                 .then(response => response.status!==200 ? null : response.json())
                 .then(result => setMyStates(result))
-                // .then(response => response.json())
-                // .then(data => console.log(data))
                 .catch(error => console.log('error', error));
         }
 
