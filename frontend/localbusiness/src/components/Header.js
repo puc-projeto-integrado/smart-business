@@ -26,7 +26,7 @@ const Header = () => {
                         <a href="/" className="logo"><img src="/assets/images/logo.png" alt="Local Business"/></a>
                         {isAuthenticated ? <div className="user-info-bar"><strong>Olá, {name}.</strong> Caso não seja {name}, <a href="/logout">clique aqui</a>.</div> : ''}
                         <div className="header-right">
-                            {typeof base.userBusiness === 'undefined' || base.userBusiness == null ? <a href="/register">CADASTRE SUA EMPRESA</a> : <a href={base.urls.businessUserDetail}>DADOS DA EMPRESA</a>}
+                            {typeof base.userBusiness === 'undefined' || base.userBusiness == null ? <a href="/register">CADASTRE SUA EMPRESA</a> : <a href="/user/business">DADOS DA EMPRESA</a>}
                             {isAuthenticated ? (<a className="" href="/favorites"><span className="fa fa-heart red"></span> FAVORITOS</a>) : ''}
                             {!isAuthenticated ? (<a className="active" href="/login"><span className="fa fa-key"></span> LOGIN</a>) : (<a href="/logout" className="logout">LOGOUT</a>)}
                         </div>
@@ -40,7 +40,7 @@ const Header = () => {
                                 count++;
                                 let urlCategory = `/category/${item.id}`;
                                 return (count < max) ? <li key={item.id}><a href={urlCategory}>{item.name}</a></li> : ''
-                            }) : 'Carregando categorias...'}
+                            }) : "Carregando..."}
                         </ul>
                     </div>
                 </div>

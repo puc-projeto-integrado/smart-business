@@ -9,7 +9,6 @@ import Dashboard from "./User/Dashboard";
 import Category from "./Business/Category";
 import { BaseContext } from './ContextProviders/BaseContextProvider';
 import UserRegister from "./User/UserRegister";
-import TestInps from './TestInps';
 import UserBusiness from "./User/UserBusiness";
 
 const Routing = (props) => {
@@ -17,15 +16,11 @@ const Routing = (props) => {
     const [base] = useContext(BaseContext);
     let isAuthenticated = base.isAuthenticated();
     const loginRoute = '/login';
-
+    
     return (
         <Router>
             { props.mustRedirect ? <Redirect to={props.mustRedirect} /> : ''}
             <Switch>
-
-                <Route path='/test'>
-                    <TestInps functionRefs={props.functionRefs}/>
-                </Route>
 
                 <Route path='/login'>
                     <Login functionRefs={props.functionRefs}/>
@@ -56,7 +51,7 @@ const Routing = (props) => {
                 </Route>
 
                 <Route path='/user/business'>
-                    { <UserBusiness /> }
+                    { <UserBusiness functionRefs={props.functionRefs}/> }
                 </Route>
 
                 <Route path='/dashboard'>

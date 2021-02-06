@@ -1,56 +1,92 @@
 import React, {useContext, useEffect, useState} from "react";
 import Column from "../Column";
 import Loading from "../Loading";
-import {useParams} from "react-router";
 import {BaseContext} from "../ContextProviders/BaseContextProvider";
+import BusinessItemDetail from "../Business/BusinessItemDetail";
 
-const UserBusiness = ()=>{
-
-    let {id} = useParams();
+const UserBusiness = (props)=>{
 
     const [base] = useContext(BaseContext);
-    const url = `http://localhost/public/api/business/${id}`;
     const [business, setBusiness] = useState(null);
-
-    if(base) {
-    console.log(base.urls)
-    }
 
     useEffect(() => {
         if(base.urls) {
-            fetch(base.urls.businessByUser)
-                .then(response => response.json())
-                .then(data => setMyStates(data))
-        }
-    }, [url]);
 
-    const setMyStates = (data)=>{
-        //setBusiness(data[0]
-        console.log("FOO-> ", data)
+            let businessHeaders = new Headers();
+            businessHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+            businessHeaders.append("Authorization", `Bearer ${base.credentials.accessToken}`);
+
+            let requestOptions = {
+                method: 'GET',
+                headers: businessHeaders,
+            };
+
+            fetch(base.urls.businessByUser, requestOptions)
+                .then(response => response.json())
+                .then(data => fetchBusinessPost(data))
+        }
+    }, [base]);
+
+    const fetchBusinessPost = (data)=>{
+        if(data){
+            setBusiness(data)
+        }
     }
 
+    const removeBusiness = ()=>{
+            console.log('Removing...')
+            var myHeaders = new Headers();
+            myHeaders.append("Authorization", `Bearer ${base.credentials.accessToken}`);
+
+            var urlencoded = new URLSearchParams();
+            urlencoded.append("user_id", base.credentials.userId);
+            urlencoded.append("business_id", business.id);
+
+            var requestOptions = {
+                method: 'DELETE',
+                headers: myHeaders,
+                body: urlencoded,
+                redirect: 'follow'
+            };
+
+            fetch(base.urls.businessDelete, requestOptions)
+                .then(response => response.json())
+                .then(data => removeBusinnessPost(data))
+                .catch(error => console.log('error', error));
+    }
+
+    const removeBusinnessPost = (data)=>{
+        console.log(data)
+        props.functionRefs.redirect('/dashboard');
+    }    
+
     if (business) {
-        //console.log('done', business)
+        
+        let propsObj = {
+            categoryName : business.category_name,
+            cityName : business.city_name,
+            name : business.name,
+            description : business.description,
+            address : business.address,
+            website : business.website,
+        }
+
         return (
             <main className="container">
                 <div className="row">
                     <div className="col-sm-12 col-md-8 pt-5">
-                        <h3>{business.category_name} em {business.city_name}</h3>
-                        <h1>{business.name}</h1>
-                        <p>{business.description}</p>
-
-                        <span>Como chegar?</span>
-                        <h4>Endereço de {business.name}</h4>
-                        {business.address}
-                        <h4>Website</h4>
-                        <a href="{business.website}">{business.website}</a>
+                        <BusinessItemDetail business={propsObj}/>
+                        <div className="mt-5">
+                            <button type="button" onClick={removeBusiness} className="btn btn-danger ml-3"><em className="fa fa-times"></em> Remover Empresa</button>
+                        </div>
                     </div>
                     <div className="col-4 d-none d-sm-block pt-5">
                         <Column />
                     </div>
                 </div>
             </main>
-        )
+        )        
+
     } else {
         return (
             <main className="container">

@@ -15,8 +15,8 @@ const BusinessRegister = ()=>{
     var requestOptions = { method: 'GET', };
 
     useEffect(() => {
-        //console.log('Render register... ', props.categories)
-        const urlUf =  `http://localhost/public/api/state`;
+        
+        const urlUf =  base.urls.uf;
 
         if(!uf) {
             fetch(urlUf, requestOptions)
@@ -25,10 +25,10 @@ const BusinessRegister = ()=>{
                 .catch(error => console.log('error', error));
         }
 
-    }, [uf, requestOptions]);
+    }, [uf, requestOptions, base]);
 
     if(selectedUfId && !cities){
-        fetch(`http://localhost/public/api/state/${selectedUfId}`, requestOptions)
+        fetch(`${base.urls.uf}/${selectedUfId}`, requestOptions)
             .then(response => response.json())
             .then(data => setCities(data))
             .catch(error => console.log('error', error));
@@ -76,7 +76,7 @@ const BusinessRegister = ()=>{
 
             console.log(state.name)
 
-            fetch("http://localhost/public/api/business/add", requestOptions)
+            fetch(base.urls.businessAdd, requestOptions)
                 .then(response => response.status!==200 ? null : response.json())
                 .then(result => setMyStates(result))
                 .catch(error => console.log('error', error));

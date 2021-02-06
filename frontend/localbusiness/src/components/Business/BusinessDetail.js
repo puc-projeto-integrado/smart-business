@@ -1,36 +1,43 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import {useParams} from "react-router";
 import Column from '../Column';
 import Loading from '../Loading';
+import BusinessItemDetail from "../Business/BusinessItemDetail";
+import { BaseContext } from '../ContextProviders/BaseContextProvider';
 
 const BusinessDetail = () => {
 
-    let {id} = useParams();
-
-    const url = `http://localhost/public/api/business/${id}`;
+    const {id} = useParams();
+    const [base] = useContext(BaseContext);
+    const url = `${base.urls.businessDetail}/${id}`;
     const [business, setBusiness] = useState(null);    
 
     useEffect(() => {
         fetch(url)
             .then(response => response.json())            
-            .then(data => setBusiness(data[0]))
+            .then(data => setMyStates(data))
     }, [url]);
 
+    const setMyStates = (data)=>{
+        setBusiness(data[0])
+    }
+
     if (business) {
-        //console.log('done', business)
+        
+        let propsObj = {
+            categoryName : business.category_name,
+            cityName : business.city_name,
+            name : business.name,
+            description : business.description,
+            address : business.address,
+            website : business.website,
+        }
+
         return (
             <main className="container">
                 <div className="row">
                     <div className="col-sm-12 col-md-8 pt-5">
-                        <h3>{business.category_name} em {business.city_name}</h3>
-                        <h1>{business.name}</h1>
-                        <p>{business.description}</p>
-
-                        <span>Como chegar?</span>
-                        <h4>Endereço de {business.name}</h4>
-                        {business.address}
-                        <h4>Website</h4>
-                        <a href="{business.website}">{business.website}</a>
+                        <BusinessItemDetail business={propsObj}/>
                     </div>
                     <div className="col-4 d-none d-sm-block pt-5">
                         <Column />

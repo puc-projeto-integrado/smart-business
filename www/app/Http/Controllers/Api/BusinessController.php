@@ -53,7 +53,11 @@ class BusinessController extends Controller
     }
 
     public function byUser($id){
-        $result = Business::where('user_id', $id)->orderBy('created_at')->first();
+        $result = Business::where('user_id', $id)
+        ->select($this->defaultFields)
+        ->join('cities', 'businesses.city_id', '=', 'cities.id')
+        ->join('categories', 'businesses.category_id', '=', 'categories.id')
+        ->orderBy('created_at')->first();
 
         if($result){
             return $this->jsonResponseinUtf8($result);
@@ -104,6 +108,19 @@ class BusinessController extends Controller
 
         }catch (QueryException | Exception $e){
             //return Response::json(['status'=>'saved'], 200);
+            return Response::json(['message'=>'failed', 'reason'=>$e->getMessage()], 422);
+        }
+    }
+
+    public function delete(Request $request){
+        $userId = $request->user_id;
+        $businessItemId = $request->business_id;
+        try {
+            Business::where('user_id', $userId)
+                ->where('id', $businessItemId)
+                ->forceDelete();
+            return Response::json(['message'=>'deleted'], 200);
+        }catch(QueryException $e){
             return Response::json(['message'=>'failed', 'reason'=>$e->getMessage()], 422);
         }
     }

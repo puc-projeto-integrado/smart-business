@@ -1,5 +1,4 @@
 import React, {useState, useContext} from "react";
-import {bake_cookie, delete_cookie} from "sfcookies";
 import { BaseContext } from '../ContextProviders/BaseContextProvider';
 
 const UserRegister = (props)=>{
@@ -31,6 +30,7 @@ const UserRegister = (props)=>{
         })
 
         if(canProceed){
+            
             let headers = new Headers();
             headers.append("Content-Type", "application/x-www-form-urlencoded");
 
@@ -70,49 +70,47 @@ const UserRegister = (props)=>{
         setState(prevState => ({ ...prevState, [name]: value }));
     }
 
-    if(base) {
-        if(!accountCreated) {
-            return (
-                <div className="container mt-5">
-                    <div className="row">
-                        <div className="col-md-8 offset-md-2">
+    
+    if(!accountCreated) {
+        return (
+            <div className="container mt-5">
+                <div className="row">
+                    <div className="col-md-8 offset-md-2">
 
-                            <h1 className="mb-5">CRIE SUA CONTA</h1>
+                        <h1 className="mb-5">CRIE SUA CONTA</h1>
 
-                            <form onSubmit={handleSubmit}>
-                                <Feedback active={feedbackActive} message={feedbackMessage}/>
+                        <form onSubmit={handleSubmit}>
+                            <Feedback active={feedbackActive} message={feedbackMessage}/>
 
-                                <label htmlFor="name">Nome:</label>
-                                <input type="text" name="name" className="form-control" value={state.name} onChange={handleChange}/>
+                            <label htmlFor="name">Nome:</label>
+                            <input type="text" name="name" className="form-control" value={state.name} onChange={handleChange}/>
 
-                                <label htmlFor="email" className="mt-3">Email:</label>
-                                <input required={true} type="email" name="email" className="form-control" value={state.email} onChange={handleChange}/>
+                            <label htmlFor="email" className="mt-3">Email:</label>
+                            <input required={true} type="email" name="email" className="form-control" value={state.email} onChange={handleChange}/>
 
-                                <label htmlFor="password" className="mt-3">Senha:</label>
-                                <input required={true} type="password" name="password" className="form-control" value={state.password} onChange={handleChange}/>
+                            <label htmlFor="password" className="mt-3">Senha:</label>
+                            <input required={true} type="password" name="password" className="form-control" value={state.password} onChange={handleChange}/>
 
-                                <button type="submit" className="btn btn-primary btn-block mt-3">ENVIAR</button>
-                            </form>
+                            <button type="submit" className="btn btn-primary btn-block mt-3">ENVIAR</button>
+                        </form>
 
-                        </div>
                     </div>
                 </div>
-            )
-        }else{
-            return (
-                <div className="container mt-5">
-                    <div className="row">
-                        <div className="col-md-8 offset-md-2">
-                            <h1 className="mb-5">CRIE SUA CONTA</h1>
-                            <div className="alert alert-success" role="alert">Conta criada com sucesso!</div>
-                        </div>
-                    </div>
-                </div>
-            )
-        }
+            </div>
+        )
     }else{
-        return null;
+        return (
+            <div className="container mt-5">
+                <div className="row">
+                    <div className="col-md-8 offset-md-2">
+                        <h1 className="mb-5">CRIE SUA CONTA</h1>
+                        <div className="alert alert-success" role="alert">Conta criada com sucesso!</div>
+                    </div>
+                </div>
+            </div>
+        )
     }
+    
 }
 
 export default UserRegister;

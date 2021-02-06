@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import BusinessItemHighlight from './../Business/BusinessItemHighlight';
 import Loading from './../Loading';
+import { BaseContext } from '../ContextProviders/BaseContextProvider';
 
 const HomeHighlights = (props) => {
 
-    const url = 'http://localhost/public/api/business/highlight';
+    const [base] = useContext(BaseContext);
+    const url = base.urls.businessHighlight;
     const [highlights, setHighlights] = useState(null);
 
     useEffect(() => {
@@ -13,7 +15,7 @@ const HomeHighlights = (props) => {
             .then(data => setHighlights(data.data))
             .catch(error => console.log('errors', error));
 
-    }, []);
+    }, [url]);
 
     let numHighlights = 0; 
 

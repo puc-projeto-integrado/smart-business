@@ -3,7 +3,7 @@ import AddFavorites from '../Partials/AddFavorites';
 import RemoveFavorite from "../Partials/RemoveFavorite";
 
 const BusinessItemHighlight = (props) => {
-    //console.log('BusinessItemHighlight', props.favoritesData)
+
     const [isFavoriteState, setIsFavoriteState] = useState(false);
     let data = props.data;
     let id = props.data.id;

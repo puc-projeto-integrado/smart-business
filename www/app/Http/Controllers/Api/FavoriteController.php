@@ -44,7 +44,7 @@ class FavoriteController extends Controller{
             Favorite::where('user_id', $userId)
                 ->where('business_id', $businessItemId)
                 ->forceDelete();
-            return Response::json(['status'=>'deleteds'], 200);
+            return Response::json(['status'=>$businessItemId], 200);
         }catch(QueryException $e){
             return Response::json(['status'=>'failed', 'reason'=>$e->getMessage()], 422);
         }

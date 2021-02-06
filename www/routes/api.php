@@ -16,7 +16,7 @@ Route::group(['prefix'=>'business/', 'namespace'=>'Api', 'middleware'=>['cors']]
         Route::get('/category/{id}', 'BusinessController@byCategory')->name('businessByCategory');
         Route::post('/add', 'BusinessController@add')->name('businessAdd')->middleware('auth');
         Route::get('/user/{id}', 'BusinessController@byUser')->name('businessByUser')->middleware('auth');
-
+        Route::delete('/delete', 'BusinessController@delete')->name('businessDelete')->middleware('auth');
     });
 
 Route::group(['prefix'=>'favorites/', 'namespace'=>'Api', 'middleware'=>['cors', 'auth']],

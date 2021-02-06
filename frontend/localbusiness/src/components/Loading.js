@@ -1,13 +1,8 @@
 import React from 'react';
+import ReactLoading from 'react-loading';
 
-const Loading = ()=>{
-    return (
-        <div className="App">
-            <header className="App-header">
-                <div>LOADING...</div>
-            </header>
-        </div>
-    )
-}
+const Loading = ({color, height, width}) => (
+	<ReactLoading type={'bars'} color={'#ef4136'} height={50} width={70} />
+);
   
 export default Loading;

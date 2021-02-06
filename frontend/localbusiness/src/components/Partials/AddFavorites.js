@@ -1,16 +1,17 @@
-import React from "react";
-import {read_cookie} from "sfcookies";
+import React, {useContext} from "react";
+import { BaseContext } from '../ContextProviders/BaseContextProvider';
 
 const AddFavorites = (props)=>{
+    
+    const [base] = useContext(BaseContext);
 
-    const addToFavorites = ()=>{
+    const addToFavoritesDo = ()=>{
         console.log("addToFavorites")
 
-        const cookie = read_cookie('credentials');
-        const userId = cookie.id;
+        const userId = base.credentials.userId;
         const businessId = props.businessId;
-        const accessToken = cookie.access_token;
-        const url =  `http://localhost/public/api/favorites/add`;
+        const accessToken = base.credentials.accessToken;
+        const url =  base.urls.favoritesAdd;
 
         var myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${accessToken}`);
@@ -28,14 +29,17 @@ const AddFavorites = (props)=>{
 
         fetch(url, requestOptions)
             .then(response => response.text())
-            .then(result => console.log(result))
-            .then(props.funcRefs(true))
+            .then(data => addFavoritesDoPost(data))
             .catch(error => console.log('error', error));
+    }
 
+    const addFavoritesDoPost = (data)=>{
+        console.log(data);
+        props.funcRefs(true);
     }
 
     return (
-        <button onClick={addToFavorites} className="btn btn-outline-primary btn-block"><span className="fas fa-heart"></span> Adicionar Favorito</button>
+        <button onClick={addToFavoritesDo} className="btn btn-outline-primary btn-block"><span className="fas fa-heart"></span> Adicionar Favorito</button>
     )
 }
 
