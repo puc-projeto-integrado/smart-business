@@ -1,13 +1,15 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import BusinessItem from './../Business/BusinessItem';
 import Loading from './../Loading';
-import { BaseContext } from '../ContextProviders/BaseContextProvider';
+import {BaseContext} from '../ContextProviders/BaseContextProvider';
 import InputSelect from "../Partials/InputSelect";
+import CustomModal from "../Partials/CustomModal";
 
 const BusinessGrid = (props) => {
 
     const [base] = useContext(BaseContext);
     const [business, setBusiness] = useState(null);
+    const [showModal, setShowModal] = useState(false);
     const [filteredBusiness, setFilteredBusiness] = useState(null);
     const [citiesInBusiness, setCitiesInBusiness] = useState([]);
     const maxItems = props.maxItems ? props.maxItems : 7;
@@ -28,6 +30,12 @@ const BusinessGrid = (props) => {
             .then(response => response.json())            
             .then(data => setMyStates(data))
     }, [urlRequest, props]);
+
+    const handleShowModal = ()=>{
+        console.log('Fired')
+        setShowModal(true);
+        console.log(showModal)
+    }
 
     const getCities = (data)=>{
         let cities = [];
@@ -72,6 +80,9 @@ const BusinessGrid = (props) => {
 
         return (
             <div>
+
+                <CustomModal title="Atenção!" description="Para adicionar um favorito você precisa estar logado."/>
+
                 {!props.hideFilter ? <FilterSelect/> : ''}
 
                 <div className="row">
@@ -81,6 +92,7 @@ const BusinessGrid = (props) => {
                             return (numHighlights < maxItems) ? <BusinessItem
                                 data={item}
                                 size={props.itemSize}
+                                handleShowModal={handleShowModal}
                                 key={numHighlights} /> : false;
                         })
                     }

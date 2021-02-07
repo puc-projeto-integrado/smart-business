@@ -40,7 +40,6 @@ const BusinessItemDetail = (props)=>{
     }
 
     const BlockMessage = (props)=>{
-        console.log(props.message)
         return (
             <div className="mt-3 alert alert-warning" role="alert">{props.message}</div>
         )

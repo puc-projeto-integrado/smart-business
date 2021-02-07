@@ -36,33 +36,20 @@ $font-unit:1rem;
     border-radius: 4px;
 }
 
-.header a.logo:hover {
-    background: none;
-}
-
-.header a:hover {
-    background-color: $gray-2;
-    color: black;
-}
+.header a.logo:hover { background: none;}
+.header a:hover { background-color: $gray-2; color: black;}
 .header a.logo img{ height: $def-spacing*5;}
-
-.header a.active {
-    background-color: $blue-1;
-    color: $bright;
-}
+.header a.active { background-color: $blue-1; color: $bright; }
 
 /* Float the link section to the right */
-.header-right {
-    margin-top: $def-spacing*2;
-    float: right;
-}
+.header-right { margin-top: $def-spacing*2; float: right; }
 .header-right a{ font-size:1rem;}
 
 .visibleWhenMobile{ display: none;}
 .hiddenWhenMobile{ display: block;}
 
-.submenu{ min-height: 30px; padding: $def-spacing 0px; background-color: $red-1; text-align: center;}
-.submenu a{ margin:0px 20px 0px 0px; color: $bright; font-size:1rem;}
+.submenu{ min-height: 30px; padding: $def-spacing*2+5px 0px $def-spacing 0px; background-color: $red-1; text-align: center;}
+.submenu a{ margin:0px 20px 0px 0px; color: $bright; font-size:1.1rem;}
 .submenu a:hover { text-decoration: none;}
 .submenu ul,li { list-style-type: none; margin:0px; padding: 0px;;}
 .submenu li { display: inline-block;}
@@ -79,8 +66,12 @@ aside .column-submenu{ margin: $def-spacing*3 0px 0px 0px; padding: 0px 0px 0px 
 aside .column-submenu li{ font-size:1.1rem; list-style-type: none; margin: 0px 0px 10px 0px; padding: 0px;}
 
 footer{ min-height: 100px; background: $blue-1; padding: $def-spacing*3 0px $def-spacing*2 0px;}
-footer ul,li{ list-style-type: none; font-size: 1.2rem;}
-footer ul li a { color: $bright;}
+footer ul,li{ list-style-type: none; font-size: 1.1rem; margin-bottom:15px;}
+footer ul li em{font-size: 0.8rem;}
+footer ul li a { color: $bright; }
+footer h5{ color:#ffffff !important;}
+footer .credits {color:#ffffff !important; text-align: center; padding: 40px 0px 20px 0px;}
+footer .credits a {color:#ffffff !important; text-decoration: underline;}
 .form-control::placeholder { color: $gray-4 !important;}
 .user-info-bar { font-size: $font-unit; text-align:right; color:$gray-4; padding-right: 15px;}
 .user-info-bar a{ font-size: $font-unit !important; color:$blue-1; text-decoration: underline; float: none; padding: 0px;}

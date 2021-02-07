@@ -53,6 +53,7 @@ const Login = (props) => {
         }else{
             setFeedbackActive(false);
             delete_cookie('credentials')
+            console.log('-> ', response.body)
             bake_cookie('credentials', response.body);
             props.functionRefs.redirect('/dashboard');
         }
@@ -64,7 +65,7 @@ const Login = (props) => {
                 <div className="row">
                     <div className="col-md-8 offset-md-2">
 
-                        <h1 className="mb-5">LOGINs</h1>
+                        <h1 className="mb-5">LOGIN</h1>
 
                         <form onSubmit={handleSubmit}>
                             <Feedback active={feedbackActive} message={feedbackMessage}/>

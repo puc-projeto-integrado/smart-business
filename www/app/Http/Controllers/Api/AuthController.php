@@ -20,10 +20,13 @@ class AuthController
 {
 
     private $baseUrl;
-    private $tokenUrl = 'http://localhost/public/oauth/token';
+    //private $tokenUrl = 'http://localhost/public/oauth/token';
+    //http://puc-api.gabrielguerra.me
+    private $tokenUrl;
 
     public function __construct(){
         $this->baseUrl = URL::to('/');
+        $this->tokenUrl = $this->baseUrl.'/oauth/token';
     }
 
     public function login(Request $request): JsonResponse
@@ -43,6 +46,7 @@ class AuthController
             $content = json_decode($content, false);
             $content->name = $credentials['name'];
             $content->id = $credentials['id'];
+            $content->roleId = $credentials['roleId'];
             return $this->sendHttpStatusCode(200, Null, $content);
         }
         return $this->sendHttpStatusCode(401, 'Unauthorized - step 1.');
@@ -84,7 +88,8 @@ class AuthController
                 'oauthClientId' => $result[0]->oauth_client_id,
                 'secret' => $result[0]->secret,
                 'name' => $result[0]->name,
-                'id' => $result[0]->id
+                'id' => $result[0]->id,
+                'roleId' => $result[0]->role_id,
             ];
         }
 

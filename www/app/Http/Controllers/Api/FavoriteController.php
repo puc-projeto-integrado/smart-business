@@ -25,7 +25,7 @@ class FavoriteController extends Controller{
         $favoriteExists = Favorite::favoriteExists($userId, $businessItemId);
 
         if(count($favoriteExists)){
-            return Response::json([], 422);
+            return Response::json(['status'=>'failed', 'reason'=>'Already exists.'], 422);
         }
 
         $favorite = new Favorite;

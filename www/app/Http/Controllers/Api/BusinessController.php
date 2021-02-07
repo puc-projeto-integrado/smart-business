@@ -104,7 +104,7 @@ class BusinessController extends Controller
 
         try{
             $business->save();
-            return Response::json(['message'=>'saved'], 200);
+            return Response::json(['status'=>200, 'message'=>'saved'], 200);
 
         }catch (QueryException | Exception $e){
             //return Response::json(['status'=>'saved'], 200);
@@ -119,7 +119,7 @@ class BusinessController extends Controller
             Business::where('user_id', $userId)
                 ->where('id', $businessItemId)
                 ->forceDelete();
-            return Response::json(['message'=>'deleted'], 200);
+            return Response::json(['userID'=>$userId, 'status'=>200, 'message'=>'deleted'], 200);
         }catch(QueryException $e){
             return Response::json(['message'=>'failed', 'reason'=>$e->getMessage()], 422);
         }

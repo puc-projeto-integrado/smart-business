@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.7.31)
 # Database: meusfornecedores
-# Generation Time: 2021-02-06 05:09:08 +0000
+# Generation Time: 2021-02-07 01:31:32 +0000
 # ************************************************************
 
 
@@ -36,8 +36,8 @@ CREATE TABLE `businesses` (
   `twitter_address` varchar(120) CHARACTER SET utf8 DEFAULT NULL,
   `address` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `district` varchar(90) CHARACTER SET utf8 DEFAULT NULL,
-  `city_id` mediumint(11) unsigned DEFAULT NULL,
-  `category_id` int(11) DEFAULT NULL,
+  `city_id` mediumint(11) unsigned NOT NULL,
+  `category_id` int(11) NOT NULL,
   `ip` varchar(30) CHARACTER SET utf8 DEFAULT NULL,
   `newsletter` char(1) CHARACTER SET utf8 NOT NULL DEFAULT 'N' COMMENT 'Recebe newsletters?',
   `phone` varchar(255) CHARACTER SET utf8 NOT NULL DEFAULT '',
@@ -4506,7 +4506,7 @@ VALUES
 	(6267,'MuitosFornecedores.com.br','','dtmodaspoa@gmail.com','https://www.muitosfornecedores.com.br','Nosso site: www.muitosfornecedores.com.br\r\n\r\nSão mais de 850 fornecedores organizados e catalogados! Uma lista enorme, com mais de 140 páginas, prática, eficaz e sem enrolações!\r\n\r\nA MELHOR Lista de Fornecedores, feita por quem entende o que os lojistas passam de dificuldade para encontrar bons fornecedores!\r\n\r\nSão 20 categorias de produtos! A variedade que seu cliente procura! Atacado e varejo! (feminino, masculino, infantil, calçados, tenis, celulares, relógios, óculos, bonés, esportivo, praia, plus size, lingerie, eletrônicos, evangélico e muito mais).\r\n\r\nTudo catalogado e organizado para FACILITAR ainda mais a sua vida! Pesquisa DETALHADA e feita a dedo por mim, @sergiofavero, autor da lista!\r\n\r\nA lista acompanha TRINTA BÔNUS! Além das dicas que vou lhe dar, tem MAIS de 30 itens entre planilhas organizacionais e financeiras, além de materiais para ENRIQUECER seu conhecimento e tornar você um MESTRE em vendas!\r\n\r\nSão 8 planilhas e 22 e-books totalmente GRATUITOS para você!','https://www.facebook.com/muitosfornecedores','https://twitter.com/sergiofavero','','Moinhos de Vento',9053,24,'201.21.108.216','N','51984108578','','2020-10-06 23:05:35',NULL,NULL),
 	(6268,'Limpeza de filtro anaeróbio Curitiba - desentupidoraamerica.com.br','','america59@jkg.com.br','http://www.desentupidoraamerica.com.br','Desentupidora Curitiba (41) 3082-8283. Serviço de limpeza de filtros anaeróbios em Curitiba, limpa fossa Curitiba, limpeza de fossa séptica Curitiba, telefone de limpa fossa, empresa de limpa fossa, serviço de limpa fossa Curitiba, desentupimento Curitiba, desentupimento de fossa Curitiba, desentupir fossa de esgoto Curitiba - http://www.desentupidoraamerica.com.br/desentupimento-e-limpeza-de-filtro-anaerobio-curitiba/ - Desentupidora Curitiba América (41) 3082-8283 - https://www.desentupidoraamerica.com.br/\r\n','','','','Centro',7273,3,'187.5.24.185','N','','','2020-10-06 23:27:18',NULL,NULL),
 	(6269,'Desentupimento de Ralo Curitiba - desentupidoraamerica.com.br','','america58@jkg.com.br','http://www.desentupidoraamerica.com.br','Desentupidora Curitiba (41) 3082-8283. Desentupimento Curitiba, desentupidora de esgoto Curitiba, desentupir ralo de banheiro Curitiba, Desentupimento de ralos, Desentupidora de Ralo Curitiba, Desentupimento de ralos de banheiro, Desentupimento de ralos de lavanderia, Desentupimento de bocas de lobo, Desentupimento de bueiro Curitiba, Desentupimento de drenos: http://www.desentupidoraamerica.com.br/desentupimento-de-ralo-curitiba/ - Desentupidora Curitiba América (41) 3082-8283 - https://www.desentupidoraamerica.com.br/\r\n','','','','Centro',7273,3,'187.5.24.24','N','','','2020-10-12 21:42:48',NULL,NULL),
-	(6274,'FooCia','123456','foo@foo.com','foo.com.br','A simple description...',NULL,NULL,NULL,NULL,454,5,NULL,'N','','','2021-02-06 03:53:49',1,'2021-02-06 03:53:49');
+	(6297,'ads','ad','asd','asd','asd',NULL,NULL,'asd','asd',3035,12,NULL,'N','','','2021-02-07 01:14:34',1,'2021-02-07 01:14:34');
 
 /*!40000 ALTER TABLE `businesses` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -14656,7 +14656,8 @@ VALUES
 	(6,1,6229,'2021-02-06 04:07:00','2021-02-06 04:07:00'),
 	(7,1,6260,'2021-02-06 04:07:19','2021-02-06 04:07:19'),
 	(8,1,6232,'2021-02-06 04:14:45','2021-02-06 04:14:45'),
-	(9,1,6227,'2021-02-06 04:14:48','2021-02-06 04:14:48');
+	(9,1,6227,'2021-02-06 04:14:48','2021-02-06 04:14:48'),
+	(11,1,6297,'2021-02-07 01:23:37','2021-02-07 01:23:37');
 
 /*!40000 ALTER TABLE `favorites` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -14833,6 +14834,7 @@ VALUES
 	('998a65cdf8f92c0a65d8cca0c6d350cb2553da12099ea3af6f5c5a01986649c4152cb014eae047ea',1,3,NULL,'[]',0,'2021-01-18 00:05:06','2021-01-18 00:05:06','2022-01-18 00:05:06'),
 	('9a3757b85e0d64f8e591637354282f035d397dc898e67744051c64efb62477d40cb241c0d6a2ea85',1,3,NULL,'[]',0,'2021-02-04 18:33:29','2021-02-04 18:33:29','2022-02-04 18:33:29'),
 	('9af63798739a2dee505e1dd210ab5c8679b20c4114e1ea8acfa228ac361736b366267fa3dbcc0746',1,3,NULL,'[]',0,'2021-01-23 23:52:13','2021-01-23 23:52:13','2022-01-23 23:52:13'),
+	('9c63f6a7f86baf9dcfc8249a33b07320d7f5762b00215438555c0983834ef053043c81d36644f76a',1,3,NULL,'[]',0,'2021-02-06 17:25:26','2021-02-06 17:25:26','2022-02-06 17:25:26'),
 	('9d69f8032d2023e8eafaefdf8d65cf864b041b7e034cf99d741f7c8c8d10c94c8e20b45b2893f2d3',1,3,NULL,'[]',0,'2021-01-17 22:12:33','2021-01-17 22:12:33','2022-01-17 22:12:33'),
 	('9e144f69e09e29979fc1c747cda61bf052a34bb40389f080f01c88bebb183825bfd03dec7c810586',1,3,NULL,'[]',0,'2021-01-23 18:52:46','2021-01-23 18:52:46','2022-01-23 18:52:46'),
 	('9efdf0e3bdbdd5ec12676ab18762e46fe595801c9ef9ec4368484da5dac754c873b960b0aa566cf2',1,3,NULL,'[]',0,'2021-01-17 20:01:21','2021-01-17 20:01:21','2022-01-17 20:01:21'),
@@ -14854,13 +14856,16 @@ VALUES
 	('b536d7c91a87d0758a7ea2ea9a4dd05ee13461fc0fbccc66f17ff5885f67e2483341857321b0d5ef',1,3,NULL,'[\"*\"]',0,'2021-01-11 00:45:48','2021-01-11 00:45:48','2022-01-11 00:45:48'),
 	('b7335871a10fa775e881517400e7eb4ac733a7fc589dbd93d59713fd496a462a6bfb359d24bf9e1d',1,3,NULL,'[]',0,'2021-01-17 19:02:49','2021-01-17 19:02:49','2022-01-17 19:02:49'),
 	('ba67e17f2d8615b8e99f2a200dc2ca5943343ddbd4e422d1393080eed21f2716f84b0589fa491b05',2,4,NULL,'[]',0,'2021-01-11 18:33:54','2021-01-11 18:33:54','2022-01-11 18:33:54'),
+	('bb54da5e6cdf2a4db5fa19cb9444f8f5a94a30df92628f54a0025632e63abc6e206c44e636bc7fa9',1,3,NULL,'[]',0,'2021-02-06 19:18:06','2021-02-06 19:18:06','2022-02-06 19:18:06'),
 	('bc5ebdbcdbaed7654a2c424d437ed78f4d3c0e23400c687ac90d9e82ba2197c9b2ba2b144a36d259',1,3,NULL,'[]',0,'2021-01-17 16:08:48','2021-01-17 16:08:48','2022-01-17 16:08:48'),
 	('bdb807cbc27bf95f2c6534d0feaf5d638a1e8be35d15596372e120ab933177fadbb475836a2baa62',1,3,NULL,'[]',0,'2021-01-24 15:58:40','2021-01-24 15:58:40','2022-01-24 15:58:40'),
+	('be9713d8ad20c4284c014748b33c6aa86b243ff2e52d4b5c4032f40f70367a53096d2c5a409988d8',1,3,NULL,'[]',0,'2021-02-07 00:03:50','2021-02-07 00:03:50','2022-02-07 00:03:50'),
 	('c224415e773315c3a4d037e855035c03c5e5797f46e0b04c941419af13d906a75cb8e1507078e0cb',1,3,NULL,'[]',0,'2021-01-23 18:52:10','2021-01-23 18:52:10','2022-01-23 18:52:10'),
 	('c9d6d3e85875e8738cbc2d0948cfa5c1956faff155a9a195faa78ef7c0bbc7addaa90f78c5e63ed2',1,3,NULL,'[]',0,'2021-01-17 22:18:50','2021-01-17 22:18:50','2022-01-17 22:18:50'),
 	('cab914202baa007f8a01980e922202f9d531aed376b933219949347f38d5f4190059ea952c378f0a',1,3,NULL,'[]',0,'2021-01-17 19:21:35','2021-01-17 19:21:35','2022-01-17 19:21:35'),
 	('ccbb6b0d28da1373fd6ae9850c734f5d0457b340f179183fd4477bcf50d289f2213daa2296896eb1',1,3,NULL,'[]',0,'2021-01-24 16:03:06','2021-01-24 16:03:06','2022-01-24 16:03:06'),
 	('cdc7cd490f96a79237a3dc49020f9c095e897868ab1e358ccda11418d786598ed2df007128454902',1,3,NULL,'[]',0,'2021-01-17 22:12:19','2021-01-17 22:12:19','2022-01-17 22:12:19'),
+	('ce63083349f9a95d999911a768d024f8a0bd12af4b5d499d8f0f458d3cad66d56b1d536d460fd819',3,5,NULL,'[]',0,'2021-02-06 21:57:04','2021-02-06 21:57:04','2022-02-06 21:57:04'),
 	('cece0950c8fb133b8bb49735c30040760933c1112b1bbf37a380a773c1d87608df641840bcf6bcb5',1,3,NULL,'[]',0,'2021-01-24 00:40:20','2021-01-24 00:40:20','2022-01-24 00:40:20'),
 	('d2d92ba3a3385944981df123ff1937be2a07865a6e7cc68aef42fa95725b8110bee9a68f62c5baee',1,3,NULL,'[]',0,'2021-01-23 18:53:25','2021-01-23 18:53:25','2022-01-23 18:53:25'),
 	('d5bd34034e3cb93851fafd5a24396a7a326241d63ac70cda6df64bcc39f434c43476e82e846431a2',1,3,NULL,'[]',0,'2021-01-23 18:47:31','2021-01-23 18:47:31','2022-01-23 18:47:31'),
@@ -15031,6 +15036,7 @@ VALUES
 	('4f6c4d3ab3b40a7b0f47f394b30b5320cda27871809ede912a1bc1a7bc6e2266a6c3b4c5bdf3b19e','6006d16bb7f62fddd17a5045555d56ae161d1a4dd2960166e6f912c1bb7ca866d84261290e22132c',0,'2022-01-17 22:11:37'),
 	('4faa08e9322d73fba52544df086e85eb6e87f43035ca1a107d1457470e40cf7231769c429d684f37','110f374822fd02379cc43b73822919cce0ab1b1ba4460d1d74372b9709e98103d2d5ec20a3fb8bd3',0,'2022-01-17 19:27:44'),
 	('5022a73755c21cd9d8e0c545cc193cb4669a68bfcfbfce1578cc8ddc2c8a3f8d4a88e696d3fdd9e7','3b9f460c63f2c6ab84bb2f4bdd159f8f341407bb87a9c6ef4de0dbe530048bc20b23f93ec344c052',0,'2022-01-18 21:49:34'),
+	('523f7fbbf48d6cc36036a62f308a6046ff6a85043535183a96065c57412371e4205ff05bb4b6de38','9c63f6a7f86baf9dcfc8249a33b07320d7f5762b00215438555c0983834ef053043c81d36644f76a',0,'2022-02-06 17:25:26'),
 	('524b0d9d6b7aa81df9e658c1fa7cbbaa2c479a71ab1fcf28d452d45444e1fdb3f7b9888ef317fa18','0fb325abdbb2b2ebfce4a1574e1b418a8ccbe01022b86497e99f031985cd21ba359f564d699117a6',0,'2022-01-23 18:53:48'),
 	('5375ebb25bb6d8ebe44a6b75d4468c16f8f6db948433790852249a0f28750eb9159f5649207222d7','e201fc0e498e0034e5096c186692d2245085b61356f6fe4070b008f25228abd7eae5590898ea093f',0,'2022-01-23 18:49:06'),
 	('5538b6d7b2a43ec8cb23bf1c9e9b5b127b90c51d3f1de98e49ef9803befc40a4f5e777760adb2474','34cd22e7fa16715c6fc4375b2b7b45d53146c0dbc616307d1f8458118e315d7762c9a07c9345f04a',0,'2022-01-24 15:59:43'),
@@ -15056,6 +15062,7 @@ VALUES
 	('75e51950eb8c788bac384a8017e076e7fc0539ae623658ae35383a33d3ef9caf896aee870d10e52c','dd83ef97f71984c49f5569e1ab9f3bbe8951c386c9418572af7173d1d9ee93b7b0483b51b98c99ef',0,'2022-01-24 00:42:57'),
 	('77aa9dd61d0888ac2b8e4033f6cae665517a953dd9102fd19dcdd415c915d1dcf60563ef47187f7a','30560353620eb31a211975496713370f0f6479adb7b2d531d9277ee59daac3642827a1dcdcced98e',0,'2022-01-11 18:08:49'),
 	('7c6c4c58f4aa90f918082f11ed89fbf12098cece06e69ee25d3b12ade4b8226e28c83c6a8cba9126','a59cd45ed12a85159baec57f4118c592e6cb5449efcb1013f95edb38c327219013bbdae17be93a3a',0,'2022-01-24 00:34:14'),
+	('7e9b426a3f958b505a3ca754117eb6105be8480a50535ea08941724dfdf14a3f8a297650016e3959','ce63083349f9a95d999911a768d024f8a0bd12af4b5d499d8f0f458d3cad66d56b1d536d460fd819',0,'2022-02-06 21:57:04'),
 	('7f4af641c520fdfa672532460bd10f21794cf0a3501af2af15faa7c3f60fe4a93594c0198618864f','eece8decba5e2b22c7b6735990b4c63215669dc7f5a41e81aabbe8397aeab8fa84fcb47d2fdc695c',0,'2022-01-24 14:45:03'),
 	('8046c86ddda37630ff3bcdf3e54f269029e63a7c676665db356d0cfc3b6f1012baf28039a19ad512','5f1bb6fd6b54c0f3fd1f873ce5d8baeed71c7fd11eb8753d7794094c05ac1e3999ea14b5861beb5f',0,'2022-01-17 23:49:29'),
 	('836989d63286a89722ad3fc56352cff3831385cbec1f3834c127b2022038b2780ec015dc3ebc9ad4','8dd25671899b8fe1560a7a81b0a085842e32c06c9b4da3b9b9c4af1527823a132a31b5b78a59456d',0,'2022-01-24 14:17:47'),
@@ -15080,6 +15087,7 @@ VALUES
 	('94e93b520fa0f5557c009a2a614785360910796c6d6f77293badf86691f94f5f2e1f5e1d721fee3b','815fb0a220dc113afabdfe2459908b182c31083dcd96174feb1b0090550682c36629099209b7f827',0,'2022-01-17 22:10:07'),
 	('97bab81cfc9e3b84972a0bb7696323f013d85d61c3bb13510645df84521105baec3d2c1d396d9c0e','6a694ed9753c34e8adf301e32ae9688ee4f96924015b623688e22e159c036bd92159d609d624903f',0,'2022-01-17 15:40:33'),
 	('97f59fecfc40e23fc08320022141468d44649c7a0f02f78daa5b63ea2d1ba9a495e845cb38a3fe2e','acfddbe0918bf7208c89f1abb590ef3a910d501144f49a0527d29962959733599486aae5f1fef621',0,'2022-01-17 22:13:37'),
+	('98334708a04c8995bd313ecb5c482fdea4f188e4c7a846e2079c0f2b63286b6a474a6393292e8fcc','be9713d8ad20c4284c014748b33c6aa86b243ff2e52d4b5c4032f40f70367a53096d2c5a409988d8',0,'2022-02-07 00:03:50'),
 	('98de72a78148edac5a989dcb33b5fd3d1f3f45deaf5d1742ad8a20750c395c54903997b6f722fc5d','13077fda66041454c90f1fdfc5f45b9565929714731e49675351f5e9e981d1857eb0702dfb5fc192',0,'2022-01-24 16:02:19'),
 	('9b4d27e1a75c273c847c3339c2af2e8a318b862dbac43c69ac427a901d86f6896d29749ca259dd51','4d011a437a3357917a3936ff2aca827cc1121928535173bee33e176eb62c994bea47ec48bc4331f3',0,'2022-01-24 14:31:33'),
 	('9b4d864ceb69b172e08a5f355771aa5c4f0b2a77285573912a9c5dc30e175533f7d4d7382a8472c8','5021064ae6e052eaeee1bd497ab5db929a25c97181a643558707b96941dd7807c2d5e00757b42781',0,'2022-01-17 15:41:07'),
@@ -15106,6 +15114,7 @@ VALUES
 	('acc803b9d405dbd0377283b2ca6e6f02582eed5c1353ac7da87776ea0959edec2119d59ac17be7c1','67b54bedf3ff9b90d7a6dee4f49036be03de42c9144f7dc2670521e87c27d47156faad5a3d625b0d',0,'2022-01-23 23:52:18'),
 	('afe7f0ba04b15c27acb7ebbf18a1d73fa50512a0ec40f0279a090cf7529fe3d6ac1292cdd4c1d97f','06de6615b7e486b6a07236cbf63baaa98f37b186365a176b38cd15ee450e92ba7bcf89c83284504f',0,'2022-01-17 23:47:43'),
 	('b0e0d744a5eed5c79970ef342ab2edeb99d2a5e91fee51c571adc41911b27ad6d6ff698303367c7b','594f4ed99099f6f6c6f1b08d85e594b99949e8097a5ef43801e89b51aab322d93f59cd5a5f426e49',0,'2022-01-18 17:52:30'),
+	('b0ffbe0363767d577fc9e9e29dd4a1c7a9ea9577b2b4fa66ac93f4884bc8e38e245dd08a4a6bf7ac','bb54da5e6cdf2a4db5fa19cb9444f8f5a94a30df92628f54a0025632e63abc6e206c44e636bc7fa9',0,'2022-02-06 19:18:06'),
 	('b53a82ddfa864fe39ffbafc0cf7a5429a24c656ff57fd75dc2e7e36931c6ef79995be54fcba55c5b','8639211ca77317b3f1f9b1d6c5804cf4a68aa3e0cdc65d11a3914a424a3e8d314cb6ee8c85846c53',0,'2022-01-18 00:08:50'),
 	('b66ed253a09947b3fc9a94e6e147a160bd62140e9e8b348a49e62d1e6d0d4112a332d188d102134b','f6e781de01c6c6170bdf895f4aaa5cf0360455cf7b6abaac91ad7057be259259892d65534c482bdc',0,'2022-01-17 16:56:15'),
 	('b8dc1ec678be3b2715230a2f8e142439a1083ec5c98a73825996c9a48dbe59826ef22ec6bca7d07d','12cbbfab80d73e373681ec51448ff7569069432feed851cb7528f5e8d352a067ab6834e0ef048ee6',0,'2022-01-17 22:08:10'),
@@ -15252,7 +15261,7 @@ LOCK TABLES `users` WRITE;
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `api_token`, `remember_token`, `created_at`, `updated_at`, `role_id`)
 VALUES
-	(1,'gab','gab@gab.com',NULL,'$2y$10$WQ/i2P9DKA8OInxbitVeiehUaLQm5RC8k7/bmLRSFRMMjr57FP8X.',NULL,NULL,'2021-01-11 00:24:26','2021-01-11 00:24:26',2),
+	(1,'gab','gab@gab.com',NULL,'$2y$10$WQ/i2P9DKA8OInxbitVeiehUaLQm5RC8k7/bmLRSFRMMjr57FP8X.',NULL,NULL,'2021-01-11 00:24:26','2021-01-11 00:24:26',1),
 	(2,'foo','foo@foo.com',NULL,'$2y$10$Po6pDjEtiZSkLq5SpajPnemuIwGuT6rZwyC6TkJ4kMXyRccfED3P.','asd',NULL,'2021-01-11 18:28:39','2021-01-11 18:28:39',2),
 	(3,'Gabriel','foo2@foo.com',NULL,'$2y$10$4FNBgY1dV2SFTEz/qi9FM.7NiJe2RetoidhD./TUw17mYhL5D1WzO',NULL,NULL,'2021-02-04 16:44:23','2021-02-04 16:44:23',2);
 

@@ -9,7 +9,7 @@ export const BaseContextProvider = props => {
 
     const baseUrlApiDev = 'http://localhost/public/api';
     const baseUrlApiProd = 'http://puc-api.gabrielguerra.me/api';
-    const baseUrlApi = baseUrlApiProd;
+    const baseUrlApi = (process.env.NODE_ENV) === 'development' ? baseUrlApiDev : baseUrlApiProd;
     
     const [favorites, setFavorites] = useState(null);
     const [userBusiness, setUserBusiness] = useState(null);
@@ -17,7 +17,8 @@ export const BaseContextProvider = props => {
 
     const [credentials] = useState({
         userId : cookie.id,
-        accessToken : cookie.access_token
+        accessToken : cookie.access_token,
+        roleId : cookie.roleId
     });
 
     const [urls] = useState({
@@ -102,12 +103,22 @@ export const BaseContextProvider = props => {
         return (typeof cookie === 'undefined' || cookie.length === 0) ? false : true;
     };
 
+    const sortAlphabetically = (array)=> {
+        array.sort(function (a, b) {
+            if (a.name < b.name) { return -1;}
+            if (a.name > b.name) { return 1;}
+            return 0;
+        })
+        return array;
+    }
+
     let obj = {
         urls : urls,
         credentials : credentials,
         favorites : favorites,
         userBusiness : userBusiness,
         categories : categories,
+        sortAlphabetically : sortAlphabetically,
         isAuthenticated : isAuthenticated,
         isFavorite : queryIsFavorite
     }

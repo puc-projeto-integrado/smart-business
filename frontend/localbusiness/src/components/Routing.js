@@ -9,7 +9,10 @@ import Dashboard from "./User/Dashboard";
 import Category from "./Business/Category";
 import { BaseContext } from './ContextProviders/BaseContextProvider';
 import UserRegister from "./User/UserRegister";
+import UserUpdate from "./User/UserUpdate";
 import UserBusiness from "./User/UserBusiness";
+import {ModalContextProvider} from "./ContextProviders/ModalContextProvider";
+import {FormBusinessContextProvider} from "./ContextProviders/FormBusinessContextProvider";
 
 const Routing = (props) => {
 
@@ -35,7 +38,9 @@ const Routing = (props) => {
                 </Route>
 
                 <Route path='/category/:id'>
-                    <Category />
+                    <ModalContextProvider>
+                        <Category />
+                    </ModalContextProvider>
                 </Route>
 
                 <Route path='/favorites'>
@@ -43,7 +48,7 @@ const Routing = (props) => {
                 </Route>
 
                 <Route path='/register'>
-                    { isAuthenticated ? <BusinessRegister /> : <Redirect to={loginRoute} /> }
+                    { isAuthenticated ? <FormBusinessContextProvider><BusinessRegister /></FormBusinessContextProvider> : <Redirect to={loginRoute} /> }
                 </Route>
 
                 <Route path='/user/register'>
@@ -54,12 +59,18 @@ const Routing = (props) => {
                     { <UserBusiness functionRefs={props.functionRefs}/> }
                 </Route>
 
+                <Route path='/user/update'>
+                    { <UserUpdate functionRefs={props.functionRefs}/> }
+                </Route>
+
                 <Route path='/dashboard'>
                     { isAuthenticated ? <Dashboard /> : <Redirect to={loginRoute} /> }
                 </Route>
 
                 <Route path='/'>
-                    <Home />
+                    <ModalContextProvider>
+                        <Home />
+                    </ModalContextProvider>
                 </Route>
 
             </Switch>

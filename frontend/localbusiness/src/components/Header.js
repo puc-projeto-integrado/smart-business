@@ -6,8 +6,6 @@ const Header = () => {
 
     const [base] = useContext(BaseContext);
 
-    if(base.urls) {
-
         let isAuthenticated = base.isAuthenticated();
         let name = null;
 
@@ -19,17 +17,37 @@ const Header = () => {
         const max = 6;
         let count = 0;
 
+        let menu;
+        if(isAuthenticated){
+            menu = (
+                <div>
+                    <div className="user-info-bar"><strong>Olá, {name}.</strong> Caso não seja {name}, <a href="/logout">clique aqui</a>.</div>
+                    <div className="header-right">
+                        {base.userBusiness == null ? <a href="/register"><span className="fa fa-briefcase gray-4"></span> CADASTRAR EMPRESA</a> : <a href="/user/business"><span className="fa fa-briefcase gray-4"></span> DADOS DA EMPRESA</a>}
+                        <a className="" href="/user/update"><span className="fa fa-user gray-4"></span> MEUS DADOS</a>
+                        <a className="" href="/favorites"><span className="fa fa-heart gray-4"></span> FAVORITOS</a>
+                        <a className="" href="/logout"><span className="fa fa-power-off gray-4"></span> LOGOUT</a>
+                    </div>
+                </div>
+            )
+        }else{
+            menu = (
+                <div>
+                    <div className="header-right">
+                        {base.userBusiness == null ? <a href="/register"><span className="fa fa-briefcase gray-4"></span> CADASTRAR EMPRESA</a> : <a href="/user/business">DADOS DA EMPRESA</a>}
+                        <a className="active" href="/login"><span className="fa fa-key"></span> LOGIN</a>
+                    </div>
+                </div>
+            )
+        }
+
         return (
+
             <div>
                 <div className="header">
                     <div className="container">
                         <a href="/" className="logo"><img src="/assets/images/logo.png" alt="Local Business"/></a>
-                        {isAuthenticated ? <div className="user-info-bar"><strong>Olá, {name}.</strong> Caso não seja {name}, <a href="/logout">clique aqui</a>.</div> : ''}
-                        <div className="header-right">
-                            {typeof base.userBusiness === 'undefined' || base.userBusiness == null ? <a href="/register">CADASTRE SUA EMPRESA</a> : <a href="/user/business">DADOS DA EMPRESA</a>}
-                            {isAuthenticated ? (<a className="" href="/favorites"><span className="fa fa-heart red"></span> FAVORITOS</a>) : ''}
-                            {!isAuthenticated ? (<a className="active" href="/login"><span className="fa fa-key"></span> LOGIN</a>) : (<a href="/logout" className="logout">LOGOUT</a>)}
-                        </div>
+                        {menu}
                     </div>
                 </div>
 
@@ -39,16 +57,14 @@ const Header = () => {
                             {base.categories ? base.categories.map((item) => {
                                 count++;
                                 let urlCategory = `/category/${item.id}`;
-                                return (count < max) ? <li key={item.id}><a href={urlCategory}>{item.name}</a></li> : ''
+                                return (count < max) ?
+                                    <li key={item.id}><a href={urlCategory}>{item.name}</a></li> : ''
                             }) : "Carregando..."}
                         </ul>
                     </div>
                 </div>
             </div>
         )
-    }else{
-        return null;
-    }
 }
   
 export default Header;

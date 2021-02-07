@@ -13,7 +13,6 @@ const InputSelect = (props)=>{
                     <option value="">Selecione uma opção</option>
                     {
                         options.map((item) => {
-                            // let key = 'inputKey-'+item.id;
                             counter++
                             return <option  value={item.id} key={counter}>{item.name}</option>
                         })

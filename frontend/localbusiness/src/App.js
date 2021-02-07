@@ -9,6 +9,8 @@ export default function App() {
 
     const [mustRedirect, setMustRedirect] = useState(false);
 
+    console.log('ENV ', process.env.NODE_ENV)
+
     const logout = ()=>{
         delete_cookie('credentials')
         setMustRedirect('/');
