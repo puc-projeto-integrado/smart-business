@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 import BusinessDetail from './Business/BusinessDetail';
 import BusinessRegister from "./Business/BusinessRegister";
 import Dashboard from "./User/Dashboard";
+import Stats from "./admin/Stats";
 import Category from "./Business/Category";
 import { BaseContext } from './ContextProviders/BaseContextProvider';
 import UserRegister from "./User/UserRegister";
@@ -13,6 +14,7 @@ import UserUpdate from "./User/UserUpdate";
 import UserBusiness from "./User/UserBusiness";
 import {ModalContextProvider} from "./ContextProviders/ModalContextProvider";
 import {FormBusinessContextProvider} from "./ContextProviders/FormBusinessContextProvider";
+import ManageBusiness from "./admin/ManageBusiness";
 
 const Routing = (props) => {
 
@@ -65,6 +67,14 @@ const Routing = (props) => {
 
                 <Route path='/dashboard'>
                     { isAuthenticated ? <Dashboard /> : <Redirect to={loginRoute} /> }
+                </Route>
+
+                <Route path='/admin/stats'>
+                    { (isAuthenticated && base.credentials.roleId===1) ? <Stats /> : <Redirect to={loginRoute} /> }
+                </Route>
+
+                <Route path='/admin/business'>
+                    { (isAuthenticated && base.credentials.roleId===1) ? <ManageBusiness /> : <Redirect to={loginRoute} /> }
                 </Route>
 
                 <Route path='/'>

@@ -20,12 +20,14 @@ const HomeHighlights = (props) => {
     let numHighlights = 0; 
 
     if (highlights) {
+
         return (
             <div>
                 {
                     highlights.map((item) => {
                         numHighlights++;
-                        return numHighlights < 4 ? <BusinessItemHighlight queryIsFavorite={props.queryIsFavorite} data={item} key={numHighlights}/> : ''
+                        let thumb = `img-${numHighlights}.jpg`;
+                        return numHighlights < 4 ? <BusinessItemHighlight thumb={thumb} queryIsFavorite={props.queryIsFavorite} data={item} key={numHighlights}/> : ''
                     })
                 }
             </div>

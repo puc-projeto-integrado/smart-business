@@ -15,21 +15,22 @@ const BusinessGrid = (props) => {
     const maxItems = props.maxItems ? props.maxItems : 7;
     let urlRequest = props.urlRequest ? props.urlRequest : base.urls.business;
     let numHighlights = 0;
+    let setCategoryName = props.setCategoryName;
 
     useEffect(() => {
 
         const setMyStates = (data)=>{
             setBusiness(data.data)
-            if(props.setCategoryName) {
+            if(setCategoryName) {
                 let categoryName = data.data[0].category_name;
-                props.setCategoryName(categoryName)
+                setCategoryName(categoryName)
                 getCities(data.data)
             }
         }
         fetch(`${urlRequest}`)
             .then(response => response.json())            
             .then(data => setMyStates(data))
-    }, [urlRequest, props]);
+    }, [urlRequest, setCategoryName]);
 
     const handleShowModal = ()=>{
         console.log('Fired')

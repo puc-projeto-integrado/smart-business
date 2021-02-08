@@ -17,13 +17,13 @@ const BusinessItemHighlight = (props) => {
     const setIsFavorite=(status)=>{
         setIsFavoriteState(status)
     }
-
+    const thumb = `./assets/images/${props.thumb}`;
     return (
         <div>
             <div className="business-post highlight">
             <div className="row">
                 <div className="col-4 image-holder d-none d-sm-block">
-                    <img src="./assets/images/thumb-limpeza.jpg" alt=""/>
+                    <img src={thumb} alt={data.name}/>
                 </div>
                 <div className="col-md-8 col-sm-12">
                     <a href="http://localhost" className="info"><span className="fas fa-map-marker-alt"></span> {data.category_name} em {data.city_name}</a>

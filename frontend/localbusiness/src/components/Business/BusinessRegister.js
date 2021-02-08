@@ -16,16 +16,17 @@ const BusinessRegister = ()=>{
     const [selectedCategoryId, setSelectedCategoryId] = useState('');
     const [feedback, setFeedback] = useState({active: false, message : '', status : ''});
     var requestOptions = { method: 'GET', };
+    const urlUf = base.urls.uf;
 
     useEffect(() => {
-        const urlUf =  base.urls.uf;
+
         if(!uf) {
             fetch(urlUf, requestOptions)
                 .then(response => response.json())
                 .then(data => setUf(data))
                 .catch(error => console.log('error', error));
         }
-    }, [uf, requestOptions, base]);
+    }, [uf, requestOptions, urlUf]);
 
     if(selectedUfId && !cities){
         fetch(`${base.urls.uf}/${selectedUfId}`, requestOptions)

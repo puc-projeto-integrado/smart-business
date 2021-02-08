@@ -21,11 +21,9 @@ const Header = () => {
         if(isAuthenticated){
             menu = (
                 <div>
-                    <div className="user-info-bar"><strong>Olá, {name}.</strong> Caso não seja {name}, <a href="/logout">clique aqui</a>.</div>
+                    <div className="user-info-bar"><strong>Olá, {name}.</strong><br/>Caso não seja {name}, <a href="/logout" className="no-float">clique aqui</a>.</div>
                     <div className="header-right">
-                        {base.userBusiness == null ? <a href="/register"><span className="fa fa-briefcase gray-4"></span> CADASTRAR EMPRESA</a> : <a href="/user/business"><span className="fa fa-briefcase gray-4"></span> DADOS DA EMPRESA</a>}
-                        <a className="" href="/user/update"><span className="fa fa-user gray-4"></span> MEUS DADOS</a>
-                        <a className="" href="/favorites"><span className="fa fa-heart gray-4"></span> FAVORITOS</a>
+                        <a className="" href="/dashboard"><span className="fa fa-cog gray-4"></span> DASHBOARD</a>
                         <a className="" href="/logout"><span className="fa fa-power-off gray-4"></span> LOGOUT</a>
                     </div>
                 </div>

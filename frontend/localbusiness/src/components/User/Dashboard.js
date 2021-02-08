@@ -8,17 +8,17 @@ const Dashboard = ()=>{
     if(base) {
         console.log(base.credentials)
 
-        let urlBusiness = null;
-        if(base.urlBusiness){
-            urlBusiness = `/business/${base.userBusiness.id}`;
-        }
-
         let statsPanel;
         if(base.credentials.roleId===1){
             statsPanel = (
+                <>
                 <div>
-                    <a href="/favorites" className="btn btn-secondary btn-block mt-3"><em className="fa fa-eye"></em> STATÍSTICAS</a>
+                    <a href="/admin/business" className="btn btn-secondary btn-block mt-3"><em className="fa fa-cogs"></em> GERENCIAR EMPRESAS</a>
                 </div>
+                <div>
+                    <a href="/admin/stats" className="btn btn-secondary btn-block mt-3"><em className="fa fa-eye"></em> STATÍSTICAS</a>
+                </div>
+                </>
             )
         }
 
@@ -38,7 +38,7 @@ const Dashboard = ()=>{
                         </div>
                         <div>
                             {!base.userBusiness ? <a href="/register" className="btn btn-secondary btn-block mt-3"><em className="fa fa-briefcase"></em> CADASTRAR EMPRESA</a> :
-                                <a href={urlBusiness} className="btn btn-secondary btn-block mt-3"><em className="fa fa-briefcase"></em> DADOS EMPRESA</a>}
+                                <a href="/user/business" className="btn btn-secondary btn-block mt-3"><em className="fa fa-briefcase"></em> DADOS EMPRESA</a>}
                         </div>
                     </div>
                 </div>
