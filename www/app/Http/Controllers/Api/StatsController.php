@@ -53,4 +53,12 @@ class StatsController extends Controller
             ->get();
         return $this->jsonResponseinUtf8($business);
     }
+
+    public function byRegisters(){
+        $business = Business::select(DB::raw('YEAR(created_at) as year, MONTH(created_at) as month ,COUNT(*) as total'))
+            ->from('businesses')
+            ->groupBy('year', 'month')
+            ->get();
+        return $this->jsonResponseinUtf8($business);
+    }
 }

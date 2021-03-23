@@ -24,6 +24,7 @@ export const BaseContextProvider = props => {
     const [urls] = useState({
         login: `${baseUrlApi}/login`,
         userRegister: `${baseUrlApi}/user/add`,
+        userList: `${baseUrlApi}/user`,
         category: `${baseUrlApi}/category`,
         favorites: `${baseUrlApi}/favorites/${credentials.userId}`,
         favoritesDelete: `${baseUrlApi}/favorites/delete`,
@@ -40,6 +41,7 @@ export const BaseContextProvider = props => {
         statsByState: `${baseUrlApi}/stats/state`,
         statsByCity: `${baseUrlApi}/stats/city`,
         statsByFavorite: `${baseUrlApi}/stats/favorite`,
+        statsByRegister: `${baseUrlApi}/stats/register`,
     });
 
     if(userBusiness && urls){

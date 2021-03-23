@@ -1,6 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
 // import {PieChart, Legend} from 'react-easy-chart';
 import ChartsPie from "./charts/ChartsPie";
+import ChartsBar from "./charts/ChartsBar";
 import {BaseContext} from "../ContextProviders/BaseContextProvider";
 import Loading from "../Loading";
 
@@ -11,6 +12,7 @@ const Stats = ()=>{
     const [dataCities, setDataCities] = useState([]);
     const [dataStates, setDataStates] = useState([]);
     const [dataFavorites, setDataFavorites] = useState([]);
+    const [dataRegisters, setDataRegisters] = useState([]);
 
     useEffect(() => {
         fetch(base.urls.statsByCategory)
@@ -29,6 +31,10 @@ const Stats = ()=>{
             .then(response => response.json())
             .then(data => setData(data, setDataFavorites));
 
+        fetch(base.urls.statsByRegister)
+            .then(response => response.json())
+            .then(data => prepareDataRegisters(data));
+
     }, [base.urls.statsByCategory, base.urls.statsByCity]);
 
     const setData = (data, functionRef)=>{
@@ -39,6 +45,27 @@ const Stats = ()=>{
             dataList.push(tempObj);
         })
         functionRef(dataList);
+    }
+
+    const prepareDataRegisters = (data)=>{
+        console.log('Prepare data...')
+        let summary = {};
+        let box = [];
+
+        data.forEach((item)=>{
+            let year = item.year;
+
+            if(summary[year]){
+                summary[year] = summary[year] + item.total;
+            }else{
+                let boxObj = {name: year, value : item.total}
+                box.push(boxObj)
+                summary[year] = item.total;
+            }
+        });
+        setDataRegisters(box)
+        console.log('SUMM ', summary)
+        console.log('BOX ', box)
     }
 
     const data = [
@@ -68,32 +95,38 @@ const Stats = ()=>{
     const demoUrl = 'https://codesandbox.io/s/pie-chart-of-straight-angle-oz0th';
     // if(dataCategories.length>0 && dataCities.length>0 && dataStates.length>0 && dataFavorites.length>0){
     if(dataCategories.length>0){
+        console.log("FAVORITES ", dataRegisters)
         return (
 
             <div className="container">
                 <div className="row">
                     <div className="col-sm-12 col-md-12 pt-5">
                         <h2 className="mb-5">Estatísticas</h2>
-                        <h4>Empresas por:</h4>
+                        <h4>Empresas distribuídas por:</h4>
                         <div className="row">
-                            <div className="col-md-4 col-sm-12">
+                            <div className="col-md-4 col-sm-12 mt-5">
                                 <h5>Estados</h5>
                                 <ChartsPie data={dataStates}/>
                             </div>
-                            <div className="col-md-4 col-sm-12">
+                            <div className="col-md-4 col-sm-12 mt-5">
                                 <h5>Cidades</h5>
                                 <ChartsPie data={dataCities}/>
                             </div>
-                            <div className="col-md-4 col-sm-12">
-                                <h5>Categorias</h5>
+                            <div className="col-md-4 col-sm-12 mt-5">
+                                <h5>Categorias </h5>
                                 <ChartsPie data={dataCategories}/>
                             </div>
                         </div>
                         <div className="row mt-5">
-                            <div className="col-md-4 col-sm-12">
+                            <div className="col-md-12  col-sm-12 mt-5">
                                 <h5>Empresas mais favoritadas:</h5>
-                                {/*<PieChart data={dataFavorites} size={250} />*/}
-                                {/*<Legend data={dataFavorites} dataId={'key'} />*/}
+                                <ChartsBar data={dataFavorites} barDataKey="Quantidade" className="mt-3"/>
+                            </div>
+                        </div>
+                        <div className="row mt-5">
+                            <div className="col-md-12  col-sm-12 mt-5">
+                                <h5>Cadastros ao longo do tempo:</h5>
+                                <ChartsBar data={dataRegisters} barDataKey="Quantidade" className="mt-3"/>
                             </div>
                         </div>
                     </div>

@@ -15,6 +15,7 @@ import UserBusiness from "./User/UserBusiness";
 import {ModalContextProvider} from "./ContextProviders/ModalContextProvider";
 import {FormBusinessContextProvider} from "./ContextProviders/FormBusinessContextProvider";
 import ManageBusiness from "./admin/ManageBusiness";
+import ManageUser from "./admin/ManageUser";
 
 const Routing = (props) => {
 
@@ -75,6 +76,10 @@ const Routing = (props) => {
 
                 <Route path='/admin/business'>
                     { (isAuthenticated && base.credentials.roleId===1) ? <ManageBusiness /> : <Redirect to={loginRoute} /> }
+                </Route>
+
+                <Route path='/admin/user'>
+                    { (isAuthenticated && base.credentials.roleId===1) ? <ManageUser /> : <Redirect to={loginRoute} /> }
                 </Route>
 
                 <Route path='/'>

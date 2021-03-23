@@ -2,9 +2,9 @@
 
 use Illuminate\Http\Request;
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
 
 Route::group(['prefix'=>'business/', 'namespace'=>'Api', 'middleware'=>['cors']],
     function(){
@@ -25,6 +25,7 @@ Route::group(['prefix'=>'stats/', 'namespace'=>'Api', 'middleware'=>['cors']],
         Route::get('/city', 'StatsController@byCity')->name('statsByCity');
         Route::get('/state', 'StatsController@byState')->name('statsByState');
         Route::get('/favorite', 'StatsController@byFavorite')->name('statsByFavorites');
+        Route::get('/register', 'StatsController@byRegisters')->name('statsByRegisters');
     });
 
 Route::group(['prefix'=>'favorites/', 'namespace'=>'Api', 'middleware'=>['cors', 'auth']],
@@ -47,5 +48,8 @@ Route::group(['namespace'=>'Api', 'middleware'=>['cors']],
 
 Route::group(['prefix'=>'user/', 'namespace'=>'Api', 'middleware'=>['cors']],
     function() {
-        Route::post('/add/', 'AuthController@addUser')->name('addUser');
+        Route::get('/', 'UserController@index')->name('userList')->middleware('auth');
+        Route::delete('/delete', 'UserController@delete')->name('userDelete');
+        Route::put('/update', 'UserController@update')->name('userUpdate');
+        Route::post('/add/', 'AuthController@addUser')->name('userAdd');
     });
