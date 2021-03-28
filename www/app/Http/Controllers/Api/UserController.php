@@ -13,11 +13,19 @@ use App\User;
 class UserController extends Controller
 {
     public function index(){
-        $fields = ['name', 'email', 'created_at'];
+        $fields = ['id', 'name', 'email', 'created_at'];
         $user = User::select($fields)
         ->where('role_id', '!=', 1)
         ->orderBy('created_at', 'desc')
         ->get();
+        return $this->jsonResponseinUtf8($user);
+    }
+
+    public function detail($id){
+        $fields = ['name', 'email', 'created_at'];
+        $user = User::select($fields)
+            ->where('id', '=', $id)
+            ->get();
         return $this->jsonResponseinUtf8($user);
     }
 
@@ -29,14 +37,15 @@ class UserController extends Controller
         $userId = $request->id;
         $updateData['name'] = $request->name;
         $updateData['email'] = $request->email;
-
-        if(isset($request->password) && !empty($request->passwordid)){
+        $passUpdated = 'false';
+        if(isset($request->password) && !empty($request->password)){
             $updateData['password'] = Hash::make($request->password);
+            $passUpdated = 'true';
         }
 
         try {
             User::where('id', $userId)->update($updateData);
-            return Response::json(['status'=>'success'], 200);
+            return Response::json(['status'=>'success', 'passStatus'=>$passUpdated], 200);
         }catch(QueryException $e){
             return Response::json(['status'=>'failed', 'reason'=>$e->getMessage()], 422);
         }
