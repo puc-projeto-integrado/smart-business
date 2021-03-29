@@ -14,9 +14,10 @@ import UserUpdate from "./User/UserUpdate";
 import UserBusiness from "./User/UserBusiness";
 import {ModalContextProvider} from "./ContextProviders/ModalContextProvider";
 import {FormBusinessContextProvider} from "./ContextProviders/FormBusinessContextProvider";
-import ManageBusiness from "./admin/ManageBusiness";
-import ManageUser from "./admin/ManageUser";
+import ManageBusiness from "./admin/ManageBusiness/ManageBusiness";
+import ManageUser from "./admin/ManageUser/ManageUser";
 import AdminViewUser from "./admin/ManageUser/AdminViewUser";
+import AdminUpdateUser from "./admin/ManageUser/AdminUpdateUser";
 
 const Routing = (props) => {
 
@@ -77,6 +78,10 @@ const Routing = (props) => {
 
                 <Route path='/admin/business'>
                     { (isAuthenticated && base.credentials.roleId===1) ? <ManageBusiness /> : <Redirect to={loginRoute} /> }
+                </Route>
+
+                <Route path='/admin/user/update/:id'>
+                    { (isAuthenticated && base.credentials.roleId===1) ? <AdminUpdateUser /> : <Redirect to={loginRoute} /> }
                 </Route>
 
                 <Route path='/admin/user/:id'>

@@ -57,10 +57,8 @@ class UserController extends Controller
             return Response::json(['status'=>'failed', 'reason'=>'id is null'], 400);
         }
 
-        $userId = $request->user_id;
-
         try {
-            User::where('id', $userId)->forceDelete();
+            User::where('id', $request->id)->forceDelete();
             return Response::json(['status'=>'success'], 200);
         }catch(QueryException $e){
             return Response::json(['status'=>'failed', 'reason'=>$e->getMessage()], 422);

@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
-import {BaseContext} from "../ContextProviders/BaseContextProvider";
-import Loading from "../Loading";
+import {BaseContext} from "../../ContextProviders/BaseContextProvider";
+import Loading from "../../Loading";
 
 const ManageBusiness = ()=>{
 

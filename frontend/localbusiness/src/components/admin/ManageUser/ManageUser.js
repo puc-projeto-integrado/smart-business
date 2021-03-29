@@ -1,8 +1,8 @@
 import React, {useContext, useEffect, useState} from "react";
-import {BaseContext} from "../ContextProviders/BaseContextProvider";
-import Loading from "../Loading";
-import TableActions from "../Partials/TableActions";
-import MasterTable from "./MasterTable";
+import {BaseContext} from "../../ContextProviders/BaseContextProvider";
+import Loading from "../../Loading";
+import TableActions from "../../Partials/TableActions";
+import MasterTable from "../../Partials/MasterTable";
 
 const ManageUser = ()=>{
 
@@ -25,11 +25,24 @@ const ManageUser = ()=>{
             .catch(error => console.log('error', error));
     }, [base.urls.userList]);
 
-    const userDelete = ()=>{
-        // fetch(base.urls.userList, requestOptions)
-        //     .then(response => response.json())
-        //     .then(data => setUser(data))
-        //     .catch(error => console.log('error', error));
+    const userDelete = (id)=>{
+        console.log('delete user')
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${base.credentials.accessToken}`);
+
+        let urlencoded = new URLSearchParams();
+        urlencoded.append("id", id);
+
+        var requestOptions = {
+            method: 'DELETE',
+            headers: myHeaders,
+            body: urlencoded
+        };
+        fetch(base.urls.userDelete, requestOptions)
+            // .then(response => response.json())
+            .then(response => console.log('RESPONSE', response))
+            // .then(data => console.log(data))
+            .catch(error => console.log('error', error));
     }
 
     if(user) {
@@ -40,7 +53,11 @@ const ManageUser = ()=>{
                     <td width="24%">{item.name}</td>
                     <td width="24%">{item.email}</td>
                     <td width="14%">
-                        <TableActions view="view" edit="edit" delete="delete"/>
+                        <TableActions
+                            id={item.id}
+                            view="/admin/user/"
+                            edit="/admin/user/update/"
+                            delete={userDelete}/>
                     </td>
                 </tr>
             )

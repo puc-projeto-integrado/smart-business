@@ -27,6 +27,7 @@ export const BaseContextProvider = props => {
         userList: `${baseUrlApi}/user`,
         userDetail: `${baseUrlApi}/user`,
         userUpdate: `${baseUrlApi}/user/update`,
+        userDelete: `${baseUrlApi}/user/delete`,
         category: `${baseUrlApi}/category`,
         favorites: `${baseUrlApi}/favorites/${credentials.userId}`,
         favoritesDelete: `${baseUrlApi}/favorites/delete`,
@@ -48,7 +49,6 @@ export const BaseContextProvider = props => {
 
     if(userBusiness && urls){
         urls.businessUserDetail = `/business/${userBusiness.id}`;
-        //console.log('USER BUSINESS ', userBusiness)
     }else{
         urls.businessUserDetail = null;
     }
@@ -71,7 +71,6 @@ export const BaseContextProvider = props => {
         }
 
         if (!userBusiness && credentials.accessToken) {
-            //setUserBusiness(null)
             let businessHeaders = new Headers();
             businessHeaders.append("Authorization", `Bearer ${credentials.accessToken}`);
             businessHeaders.append("Content-Type", "application/x-www-form-urlencoded");
@@ -82,6 +81,7 @@ export const BaseContextProvider = props => {
             };
 
             fetch(urls.businessByUser, requestOptionsUserBusiness)
+                // .then(response => console.log('RESP ', response.status))
                 .then(response => response.status!==200 ? null : response.json())
                 .then(data => setUserBusiness(data))
                 .catch(error => console.log('error', error));
