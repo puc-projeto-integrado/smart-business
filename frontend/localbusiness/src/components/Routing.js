@@ -18,6 +18,7 @@ import ManageBusiness from "./admin/ManageBusiness/ManageBusiness";
 import ManageUser from "./admin/ManageUser/ManageUser";
 import AdminViewUser from "./admin/ManageUser/AdminViewUser";
 import AdminUpdateUser from "./admin/ManageUser/AdminUpdateUser";
+import AdminViewBusiness from "./admin/ManageBusiness/AdminViewBusiness";
 
 const Routing = (props) => {
 
@@ -74,6 +75,10 @@ const Routing = (props) => {
 
                 <Route path='/admin/stats'>
                     { (isAuthenticated && base.credentials.roleId===1) ? <Stats /> : <Redirect to={loginRoute} /> }
+                </Route>
+
+                <Route path='/admin/business/:id'>
+                    { (isAuthenticated && base.credentials.roleId===1) ? <AdminViewBusiness /> : <Redirect to={loginRoute} /> }
                 </Route>
 
                 <Route path='/admin/business'>

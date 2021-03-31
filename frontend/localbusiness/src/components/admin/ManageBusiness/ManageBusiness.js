@@ -1,6 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
 import {BaseContext} from "../../ContextProviders/BaseContextProvider";
 import Loading from "../../Loading";
+import TableActions from "../../Partials/TableActions";
 
 const ManageBusiness = ()=>{
 
@@ -13,6 +14,24 @@ const ManageBusiness = ()=>{
             .then(data => setBusiness(data))
     }, [base.urls.business]);
 
+    const businessDelete = (id)=>{
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${base.credentials.accessToken}`);
+        let urlencoded = new URLSearchParams();
+        urlencoded.append("id", id);
+
+        var requestOptions = {
+            method: 'DELETE',
+            headers: myHeaders,
+            body: urlencoded
+        };
+        fetch(base.urls.userDelete, requestOptions)
+            // .then(response => response.json())
+            .then(response => console.log('RESPONSE', response))
+            // .then(data => console.log(data))
+            .catch(error => console.log('error', error));
+    }
+
     if(business) {
         console.log(business)
         let rows = business.data.map((item) => {
@@ -21,11 +40,11 @@ const ManageBusiness = ()=>{
                     <td width="50%">{item.name}</td>
                     <td width="20%">{item.city_name}</td>
                     <td width="20%">{item.category_name}</td>
-                    <td width="10%">
-                        <em className="fa fa-eye ml-2"></em>
-                        <em className="fa fa-edit ml-2"></em>
-                        <em className="fa fa-trash ml-2"></em>
-                    </td>
+                    <TableActions
+                        id={item.id}
+                        view="/admin/business/"
+                        edit="/admin/business/update/"
+                        delete={businessDelete}/>
                 </tr>
             )
         })
