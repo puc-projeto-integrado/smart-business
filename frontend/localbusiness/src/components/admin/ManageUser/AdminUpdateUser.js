@@ -19,14 +19,13 @@ const AdminUpdateUser = ()=>{
         let requestOptions = {
             method: 'GET',
             headers: myHeaders,
-            redirect: 'follow'
         };
 
         fetch(`${base.urls.userDetail}/${id}`, requestOptions)
             .then(response => response.json())
             .then(data => setInitialFormState(data))
             .catch(error => console.log('error', error));
-    }, [base.urls.userDetail]);
+    }, [base.urls.userDetail, base.credentials.accessToken, id]);
 
     const setInitialFormState = (data)=>{
         console.log(data)
@@ -39,6 +38,7 @@ const AdminUpdateUser = ()=>{
             setFormState({name:'', email:''});
             setFeedback({active: true, message : 'Houve um erro na atualização dos dados.', status:'error'});
         }else{
+            console.log('Updated...')
             setFeedback({active: true, message : 'Dados atualizadps com sucesso!', status:'success'});
             setDataUpdated(true);
         }

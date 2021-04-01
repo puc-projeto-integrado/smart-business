@@ -23,7 +23,7 @@ const ManageUser = ()=>{
             .then(response => response.json())
             .then(data => setUser(data))
             .catch(error => console.log('error', error));
-    }, [base.urls.userList]);
+    }, [base.urls.userList, base.credentials.accessToken]);
 
     const userDelete = (id)=>{
         console.log('delete user')
@@ -52,13 +52,12 @@ const ManageUser = ()=>{
                 <tr key={item.id}>
                     <td width="24%">{item.name}</td>
                     <td width="24%">{item.email}</td>
-                    <td width="14%">
                             <TableActions
                                 id={item.id}
                                 view="/admin/user/"
                                 edit="/admin/user/update/"
                                 delete={userDelete}/>
-                    </td>
+
                 </tr>
             )
         })

@@ -17,6 +17,7 @@ Route::group(['prefix'=>'business/', 'namespace'=>'Api', 'middleware'=>['cors']]
         Route::post('/add', 'BusinessController@add')->name('businessAdd')->middleware('auth');
         Route::get('/user/{id}', 'BusinessController@byUser')->name('businessByUser')->middleware('auth');
         Route::delete('/delete', 'BusinessController@delete')->name('businessDelete')->middleware('auth');
+        Route::put('/update', 'BusinessController@update')->name('businessUpdate')->middleware('auth');
     });
 
 Route::group(['prefix'=>'stats/', 'namespace'=>'Api', 'middleware'=>['cors']],
@@ -26,6 +27,15 @@ Route::group(['prefix'=>'stats/', 'namespace'=>'Api', 'middleware'=>['cors']],
         Route::get('/state', 'StatsController@byState')->name('statsByState');
         Route::get('/favorite', 'StatsController@byFavorite')->name('statsByFavorites');
         Route::get('/register', 'StatsController@byRegisters')->name('statsByRegisters');
+    });
+
+Route::group(['prefix'=>'category/', 'namespace'=>'Api', 'middleware'=>['cors']],
+    function() {
+        Route::get('/', 'CategoryController@index')->name('category');
+//        Route::get('/city', 'StatsController@byCity')->name('statsByCity');
+//        Route::get('/state', 'StatsController@byState')->name('statsByState');
+//        Route::get('/favorite', 'StatsController@byFavorite')->name('statsByFavorites');
+//        Route::get('/register', 'StatsController@byRegisters')->name('statsByRegisters');
     });
 
 Route::group(['prefix'=>'favorites/', 'namespace'=>'Api', 'middleware'=>['cors', 'auth']],
@@ -42,7 +52,6 @@ Route::group(['namespace'=>'Api', 'middleware'=>['cors']],
         Route::get('/state', 'StateController@index')->name('state');
         Route::get('/state/{id}', 'CityController@citiesByState')->name('citiesByState');
         Route::get('/city', 'CityController@index')->name('city');
-        Route::get('/category', 'CategoryController@index')->name('category');
         Route::get('/oauth', 'FooController@index')->name('category');
     });
 

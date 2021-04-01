@@ -23,12 +23,11 @@ const AdminViewBusiness = ()=>{
             .then(response => response.json())
             .then(data => setInitialFormState(data))
             .catch(error => console.log('error', error));
-    }, [base.urls.businessDetail]);
+    }, [base.urls.businessDetail, base.credentials.accessToken, id]);
 
     const setInitialFormState = (data)=>{
         let obj = {};
         data.forEach((item)=>{
-
             Object.keys(item).forEach((key)=>{
                 console.log('key', key)
                 console.log(item[key])
@@ -61,6 +60,8 @@ const AdminViewBusiness = ()=>{
                         {viewData[key]}
                     </div>
                 )
+            }else{
+                return ''
             }
         })
 

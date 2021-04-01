@@ -15,36 +15,36 @@ const ManageBusiness = ()=>{
     }, [base.urls.business]);
 
     const businessDelete = (id)=>{
-        var myHeaders = new Headers();
+        let myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${base.credentials.accessToken}`);
         let urlencoded = new URLSearchParams();
         urlencoded.append("id", id);
 
-        var requestOptions = {
+        let requestOptions = {
             method: 'DELETE',
             headers: myHeaders,
             body: urlencoded
         };
         fetch(base.urls.userDelete, requestOptions)
-            // .then(response => response.json())
+            .then(response => response.json())
             .then(response => console.log('RESPONSE', response))
             // .then(data => console.log(data))
             .catch(error => console.log('error', error));
     }
 
     if(business) {
-        console.log(business)
+        // console.log(business)
         let rows = business.data.map((item) => {
             return (
                 <tr key={item.id}>
-                    <td width="50%">{item.name}</td>
-                    <td width="20%">{item.city_name}</td>
-                    <td width="20%">{item.category_name}</td>
+                    <td>{item.name}</td>
+                    <td>{item.city_name}</td>
+                    <td>{item.category_name}</td>
                     <TableActions
                         id={item.id}
                         view="/admin/business/"
                         edit="/admin/business/update/"
-                        delete={businessDelete}/>
+                        delete="#" />
                 </tr>
             )
         })
@@ -59,16 +59,14 @@ const ManageBusiness = ()=>{
                         <table className="table mt-5">
                             <thead>
                             <tr>
-                                <td>EMPRESA</td>
-                                <td>CIDADE</td>
-                                <td>CATEGORIA</td>
-                                <td>AÇÕES</td>
+                                <td width="50%">EMPRESA</td>
+                                <td width="20%">CIDADE</td>
+                                <td width="15%">CATEGORIA</td>
+                                <td width="15%">AÇÕES</td>
                             </tr>
                             </thead>
-
                             <tbody>
-
-                            {rows}
+                                {rows}
                             </tbody>
                         </table>
                         </div>
@@ -78,7 +76,15 @@ const ManageBusiness = ()=>{
         )
 
     }else{
-        return <Loading/>
+        return (
+            <main className="container">
+                <div className="row">
+                    <div className="col-sm-12 col-md-12  pt-5">
+                        <h2>Gerenciar Empresas</h2>
+                        <Loading/>
+                    </div>
+                </div>
+            </main>)
     }
 }
 

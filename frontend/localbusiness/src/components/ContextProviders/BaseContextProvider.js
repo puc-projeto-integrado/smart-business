@@ -40,6 +40,7 @@ export const BaseContextProvider = props => {
         businessDelete: `${baseUrlApi}/business/delete`,
         businessAdd: `${baseUrlApi}/business/add`,
         businessDetail: `${baseUrlApi}/business`,
+        businessUpdate: `${baseUrlApi}/business/update`,
         statsByCategory: `${baseUrlApi}/stats/category`,
         statsByState: `${baseUrlApi}/stats/state`,
         statsByCity: `${baseUrlApi}/stats/city`,

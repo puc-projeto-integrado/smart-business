@@ -1,16 +1,20 @@
 import React, {useContext, useEffect, useState} from "react";
 import {BaseContext} from "../../ContextProviders/BaseContextProvider";
+import {UtilsContext} from "../../ContextProviders/UtilsContextProvider";
 import {useParams} from "react-router";
 import Feedback from "../../Partials/Feedback";
 import Loading from "../../Loading";
 
 const AdminUpdateBusiness = ()=>{
-
     const [base] = useContext(BaseContext);
+    const [utils] = useContext(UtilsContext);
     const [dataUpdated, setDataUpdated] = useState(false);
     const [feedback, setFeedback] = useState({active: false, message : '', status : ''});
     const [formState, setFormState] = useState(null);
     const {id} = useParams();
+    let rows;
+    let output;
+    const exceptions = ['password', 'id', 'highlight', 'facebook_address', 'twitter_address', 'ip', 'phone'];
 
     useEffect(() => {
         let myHeaders = new Headers();
@@ -19,44 +23,32 @@ const AdminUpdateBusiness = ()=>{
         let requestOptions = {
             method: 'GET',
             headers: myHeaders,
-            redirect: 'follow'
         };
 
-        fetch(`${base.urls.userDetail}/${id}`, requestOptions)
+        fetch(`${base.urls.businessDetail}/${id}`, requestOptions)
             .then(response => response.json())
-            .then(data => setInitialFormState(data))
+            .then(data => utils.setInitialFormState(data, setFormState))
             .catch(error => console.log('error', error));
-    }, [base.urls.userDetail]);
+    }, [base.urls.businessDetail, base.credentials.accessToken, id]);
 
-    const setInitialFormState = (data)=>{
-        console.log(data)
-        const formItems = { name: data[0].name, email: data[0].email, password: '' };
-        setFormState(formItems)
+    const getNiceName = (key)=>{
+        let names = { name : 'Nome', email : 'Email', cnpj : 'CNPJ', website : 'Website', description : 'Descrição', address : 'Endereço', district : 'Bairro', phone : 'Telefone' };
+        return names[key];
     }
 
     const setMyStates = (result)=>{
         if(result.status!==200){
-            setFormState({name:'', email:''});
             setFeedback({active: true, message : 'Houve um erro na atualização dos dados.', status:'error'});
         }else{
-            setFeedback({active: true, message : 'Dados atualizadps com sucesso!', status:'success'});
+            setFeedback({active: true, message : 'Dados atualizados com sucesso!', status:'success'});
             setDataUpdated(true);
         }
     }
-    const listContains = (list, item)=>{
-        let exists = false;
-        list.forEach((listItem)=>{
-            if(item.trim()===listItem.trim()){
-                exists = true;
-            }
-        })
-        return exists;
-    }
+
     const handleSubmit = (event)=>{
         let canProceed = true;
-        let exceptions = ['password']
         Object.keys(formState).forEach((key)=>{
-            if(!formState[key] && !listContains(exceptions, key)){
+            if(!formState[key] && !utils.listContains(exceptions, key)){
                 console.log('Failed field ', key)
                 canProceed = false;
                 setFeedback({active: true, message : 'Todos os campos são obrigatórios.', status:'error'});
@@ -64,48 +56,49 @@ const AdminUpdateBusiness = ()=>{
         })
 
         if(canProceed){
-            console.log('updating...')
             let headers = new Headers();
             headers.append("Content-Type", "application/x-www-form-urlencoded");
+            headers.append("Authorization", `Bearer ${base.credentials.accessToken}`);
 
             let urlencoded = new URLSearchParams();
-            urlencoded.append("id", id);
-            urlencoded.append("name", formState.name);
-            urlencoded.append("email", formState.email);
-            urlencoded.append("password", formState.password);
+            urlencoded.append("id", id)
+            Object.keys(formState).forEach((key) => {
+                if(getNiceName(key)){
+                    urlencoded.append(key, formState[key])
+                }
+            });
 
             let requestOptions = {
                 method: 'PUT',
                 headers: headers,
                 body: urlencoded,
             };
-            console.log(urlencoded)
-            fetch(base.urls.userUpdate, requestOptions)
+
+            fetch(base.urls.businessUpdate, requestOptions)
                 .then(data => setMyStates(data))
                 .catch(error => console.log('error', error));
         }
     }
 
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        setFormState(prevState => ({ ...prevState, [name]: value }));
-    }
-
-    let output;
-
     if(formState && !dataUpdated){
+        let objToArray = Object.keys(formState);
+        rows = objToArray.map((key)=>{
+            if(getNiceName(key)){
+                return (
+                    <div className="mb-3" key={key}>
+                        <label htmlFor="name"><strong>{getNiceName(key)}:</strong></label><br/>
+                        <input type="text" name={key} className="form-control" value={formState[key]} onChange={(e)=>utils.handleFormChange(e, setFormState)}/>
+                    </div>
+                )
+            }else{
+                return '';
+            }
+        })
         output = (
             <>
                 <Feedback params={feedback}/>
-                <label htmlFor="name">Nome:</label>
-                <input type="text" name="name" className="form-control" value={formState.name} onChange={handleChange}/>
-
-                <label htmlFor="email" className="mt-3">Email:</label>
-                <input required={true} type="email" name="email" className="form-control" value={formState.email} onChange={handleChange}/>
-
-                <label htmlFor="password" className="mt-3">Senha:</label>
-                <input required={true} type="password" name="password" className="form-control" value={formState.password} onChange={handleChange}/>
-                <small>[Opcional] Deixe em branco para não alterar a senha.</small>
+                {rows}
+                <Feedback params={feedback}/>
                 <button onClick={handleSubmit} type="submit" className="btn btn-primary btn-block mt-3">SALVAR</button>
             </>
         );

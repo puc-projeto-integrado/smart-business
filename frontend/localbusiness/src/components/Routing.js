@@ -19,6 +19,9 @@ import ManageUser from "./admin/ManageUser/ManageUser";
 import AdminViewUser from "./admin/ManageUser/AdminViewUser";
 import AdminUpdateUser from "./admin/ManageUser/AdminUpdateUser";
 import AdminViewBusiness from "./admin/ManageBusiness/AdminViewBusiness";
+import AdminUpdateBusiness from "./admin/ManageBusiness/AdminUpdateBusiness";
+import {UtilsContextProvider} from "./ContextProviders/UtilsContextProvider";
+import ManageCategory from "./admin/ManageCategory/ManageCategory";
 
 const Routing = (props) => {
 
@@ -75,6 +78,18 @@ const Routing = (props) => {
 
                 <Route path='/admin/stats'>
                     { (isAuthenticated && base.credentials.roleId===1) ? <Stats /> : <Redirect to={loginRoute} /> }
+                </Route>
+
+                <Route path='/admin/category'>
+                    <UtilsContextProvider>
+                        { (isAuthenticated && base.credentials.roleId===1) ? <ManageCategory /> : <Redirect to={loginRoute} /> }
+                    </UtilsContextProvider>
+                </Route>
+
+                <Route path='/admin/business/update/:id'>
+                    <UtilsContextProvider>
+                        { (isAuthenticated && base.credentials.roleId===1) ? <AdminUpdateBusiness /> : <Redirect to={loginRoute} /> }
+                    </UtilsContextProvider>
                 </Route>
 
                 <Route path='/admin/business/:id'>

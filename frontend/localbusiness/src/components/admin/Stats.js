@@ -35,7 +35,7 @@ const Stats = ()=>{
             .then(response => response.json())
             .then(data => prepareDataRegisters(data));
 
-    }, [base.urls.statsByCategory, base.urls.statsByCity]);
+    }, [base.urls]);
 
     const setData = (data, functionRef)=>{
         let dataList = [];
@@ -68,14 +68,14 @@ const Stats = ()=>{
         console.log('BOX ', box)
     }
 
-    const data = [
-        { name: 'Group A', value: 650 },
-        { name: 'Group B', value: 300 },
-        { name: 'Group C', value: 300 },
-        { name: 'Group D', value: 200 },
-        { name: 'Group E', value: 278 },
-        { name: 'Group F', value: 189 },
-    ];
+    // const data = [
+    //     { name: 'Group A', value: 650 },
+    //     { name: 'Group B', value: 300 },
+    //     { name: 'Group C', value: 300 },
+    //     { name: 'Group D', value: 200 },
+    //     { name: 'Group E', value: 278 },
+    //     { name: 'Group F', value: 189 },
+    // ];
     // const dataByStates = [
     //     {key: 'São Paulo', value: 180},
     //     {key: 'Rio de Janeiro', value: 120},
@@ -92,7 +92,6 @@ const Stats = ()=>{
     //     {key: 'Curitiba', value: 20},
     //     {key: 'Outras', value: 10},
     // ];
-    const demoUrl = 'https://codesandbox.io/s/pie-chart-of-straight-angle-oz0th';
     // if(dataCategories.length>0 && dataCities.length>0 && dataStates.length>0 && dataFavorites.length>0){
     if(dataCategories.length>0){
         console.log("FAVORITES ", dataRegisters)

@@ -6,7 +6,9 @@ use App\Business;
 use App\Http\Controllers\Controller;
 use Doctrine\DBAL\Query\QueryException;
 use Exception;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
 use App\Http\Controllers\Api\AuthController;
 
@@ -125,6 +127,26 @@ class BusinessController extends Controller
         }
     }
 
+    public function update(Request $request)
+    {
+        if (!isset($request->id) || empty($request->id)){
+            return Response::json(['status'=>'failed', 'reason'=>'id is null'], 400);
+        }
 
+        $updateData = [];
+        $updateData["id"] = $request->id;
+
+        foreach ($request->request as $key => $value) {
+            $updateData[$key] = $value;
+        }
+
+
+        try {
+            Business::where('id', $request->id)->update($updateData);
+            return Response::json(['status'=>'success'], 200);
+        }catch(\Illuminate\Database\QueryException $e){
+            return Response::json(['status'=>'failed', 'reason'=>$e->getMessage()], 422);
+        }
+    }
 
 }

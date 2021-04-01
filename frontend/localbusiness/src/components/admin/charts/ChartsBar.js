@@ -1,21 +1,21 @@
 import React, { PureComponent } from 'react';
-import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-const staticData = [
-    {
-        name: 'Santa Catarina',
-        Quantidade: 1200,
-    },
-    {
-        name: 'Rio de Janeiro',
-        Quantidade: 2400,
-    },
-    {
-        name: 'São Paulo',
-        Quantidade: 600,
-    },
-
-];
+// const staticData = [
+//     {
+//         name: 'Santa Catarina',
+//         Quantidade: 1200,
+//     },
+//     {
+//         name: 'Rio de Janeiro',
+//         Quantidade: 2400,
+//     },
+//     {
+//         name: 'São Paulo',
+//         Quantidade: 600,
+//     },
+//
+// ];
 
 export default class ChartsBar extends PureComponent {
 
@@ -33,6 +33,7 @@ export default class ChartsBar extends PureComponent {
             let value = item.value;
             let row = {"name":business, [barDataKey]:value}
             data.push(row);
+            return '';
         });
 
         console.log(data);

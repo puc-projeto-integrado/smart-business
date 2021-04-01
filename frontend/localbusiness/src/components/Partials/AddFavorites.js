@@ -5,7 +5,7 @@ import {ModalContext} from "../ContextProviders/ModalContextProvider";
 const AddFavorites = (props)=>{
     
     const [base] = useContext(BaseContext);
-    const [modal, setModal] = useContext(ModalContext);
+    const [setModal] = useContext(ModalContext);
 
     const addToFavoritesDo = ()=>{
         console.log("addToFavorites")

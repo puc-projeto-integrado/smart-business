@@ -26,7 +26,7 @@ const UserUpdate = ()=>{
             .then(response => response.json())
             .then(data => setInitialFormState(data))
             .catch(error => console.log('error', error));
-    }, [base.urls.userDetail]);
+    }, [base.urls.userDetail, base.credentials.accessToken, id]);
 
     const setInitialFormState = (data)=>{
         console.log(data)
