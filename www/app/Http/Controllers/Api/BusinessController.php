@@ -140,7 +140,6 @@ class BusinessController extends Controller
             $updateData[$key] = $value;
         }
 
-
         try {
             Business::where('id', $request->id)->update($updateData);
             return Response::json(['status'=>'success'], 200);

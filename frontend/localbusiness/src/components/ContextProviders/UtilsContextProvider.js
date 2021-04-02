@@ -19,9 +19,10 @@ export const UtilsContextProvider = props => {
         console.log('Item delete...')
         let headers = new Headers();
         let urlencoded = new URLSearchParams();
+        headers.append("Content-Type", "application/x-www-form-urlencoded");
         headers.append("Authorization", `Bearer ${bearerToken}`);
         urlencoded.append("id", id);
-
+        console.log(urlencoded.toString())
         let requestOptions = {
             method: 'DELETE',
             headers: headers,
@@ -29,8 +30,19 @@ export const UtilsContextProvider = props => {
         };
 
         fetch(url, requestOptions)
-            .then(response => callback(response))
+            .then(response => callback(response,id))
             .catch(error => console.log('error', error));
+    }
+
+    const getElementById = (list, id)=>{
+        for(const item of list){
+            if(item.id === id){ return item;}
+        }
+        return '';
+    }
+
+    const removeItemFromList = (list, id)=>{
+        return list.filter((item)=> item.id !== id);
     }
 
     const listContains = (list, item)=>{
@@ -47,7 +59,8 @@ export const UtilsContextProvider = props => {
         listContains : listContains,
         handleFormChange : handleFormChange,
         setInitialFormState : setInitialFormState,
-        itemDelete : itemDelete
+        itemDelete : itemDelete,
+        removeItemFromList : removeItemFromList
     }
 
     const [functions, setFunctions] = useState(obj);

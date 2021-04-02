@@ -3,12 +3,15 @@ import {BaseContext} from "../../ContextProviders/BaseContextProvider";
 import {UtilsContext} from "../../ContextProviders/UtilsContextProvider";
 import Loading from "../../Loading";
 import TableActions from "../../Partials/TableActions";
+import Feedback from "../../Partials/Feedback";
 
 const ManageCategory = ()=>{
 
     const [base] = useContext(BaseContext);
     const [utils] = useContext(UtilsContext);
     const [category, setCategory] = useState(null);
+    const [itemWasDeleted, setItemWasDeleted] = useState(false);
+    const [feedback, setFeedback] = useState({active: false, message : '', status : ''});
     const bearerToken = base.credentials.accessToken;
 
     useEffect(() => {
@@ -17,12 +20,15 @@ const ManageCategory = ()=>{
             .then(data => setCategory(data))
     }, [base.urls.category]);
 
-    const processItemDelete = (response)=>{
-        console.log("processItemDelete ", response)
+    const processItemDelete = (response, id)=>{
+        let updatedCategoryList = utils.removeItemFromList(category, id);
+        setCategory(updatedCategoryList);
+        setFeedback({active: true, message : 'Item removido com sucesso!', status:'success'});
+        setItemWasDeleted(true);
     }
 
     if(category) {
-        console.log(category)
+
         let rows = category.map((item) => {
             return (
                 <tr key={item.id}>
@@ -33,7 +39,7 @@ const ManageCategory = ()=>{
                         edit="/admin/business/update/"
                         itemDeleteCallback={utils.itemDelete}
                         processItemDeleteCallback={processItemDelete}
-                        urlItemDelete={base.urls.category}
+                        urlItemDelete={base.urls.categoryDelete}
                         bearerToken={bearerToken}
                     />
                 </tr>
@@ -44,7 +50,8 @@ const ManageCategory = ()=>{
             <main className="container">
                 <div className="row">
                     <div className="col-sm-12 col-md-12 pt-5">
-                        <h2>Gerenciar Empresas</h2>
+                        <h2>Gerenciar Categorias</h2>
+                        {itemWasDeleted ? <Feedback params={feedback}/> : ''}
                         <div className="table-responsive">
                             <table className="table mt-5">
                                 <thead>
