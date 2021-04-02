@@ -32,6 +32,7 @@ Route::group(['prefix'=>'stats/', 'namespace'=>'Api', 'middleware'=>['cors']],
 Route::group(['prefix'=>'category/', 'namespace'=>'Api', 'middleware'=>['cors']],
     function() {
         Route::get('/', 'CategoryController@index')->name('category');
+        Route::get('/{id}', 'CategoryController@show')->name('categoryShow');
         Route::delete('/delete', 'CategoryController@delete')->name('categoryDelete');
 //        Route::get('/state', 'StatsController@byState')->name('statsByState');
 //        Route::get('/favorite', 'StatsController@byFavorite')->name('statsByFavorites');

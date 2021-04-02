@@ -30,6 +30,7 @@ export const BaseContextProvider = props => {
         userDelete: `${baseUrlApi}/user/delete`,
         category: `${baseUrlApi}/category`,
         categoryDelete: `${baseUrlApi}/category/delete`,
+        categoryDetail: `${baseUrlApi}/category`,
         favorites: `${baseUrlApi}/favorites/${credentials.userId}`,
         favoritesDelete: `${baseUrlApi}/favorites/delete`,
         favoritesAdd: `${baseUrlApi}/favorites/add`,

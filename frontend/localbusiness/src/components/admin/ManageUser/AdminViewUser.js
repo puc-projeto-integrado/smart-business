@@ -1,54 +1,39 @@
 import React, {useState, useContext, useEffect} from "react";
 import { BaseContext } from '../../ContextProviders/BaseContextProvider';
+import {UtilsContext} from "../../ContextProviders/UtilsContextProvider";
 import Loading from "../../Loading";
+import RowView from "../../Partials/RowView";
 import {useParams} from "react-router";
+import useGetEntity from "../../hooks/useGetEntity";
 
 const AdminViewUser = ()=>{
 
     const [base] = useContext(BaseContext);
+    const [utils] = useContext(UtilsContext);
     const [viewData, setViewData] = useState(null);
     const {id} = useParams();
-
-    useEffect(() => {
-        let myHeaders = new Headers();
-        myHeaders.append("Authorization", `Bearer ${base.credentials.accessToken}`);
-
-        let requestOptions = {
-            method: 'GET',
-            headers: myHeaders,
-            redirect: 'follow'
-        };
-
-        fetch(`${base.urls.userDetail}/${id}`, requestOptions)
-            .then(response => response.json())
-            .then(data => setInitialFormState(data))
-            .catch(error => console.log('error', error));
-    }, [base.urls.userDetail, base.credentials.accessToken, id]);
-
-    const setInitialFormState = (data)=>{
-        console.log(data)
-        const formItems = { name: data[0].name, email: data[0].email, password: '' };
-        setViewData(formItems)
+    const labels = { name : 'Nome', email : 'Email' };
+    const urlEdit = `/admin/user/update/${id}`;
+    const deps = {
+        bearerToken : base.credentials.accessToken,
+        url : `${base.urls.userDetail}/${id}`,
+        setInitialFormState : utils.setInitialFormState,
+        setInitData : setViewData,
     }
-
     let output;
-    let urlEdit = `/admin/user/update/${id}`;
+
+    useGetEntity(deps);
+
     if(viewData) {
+        let rows = Object.keys(viewData).map((key)=>{
+            return labels[key] ? <RowView key={key} value={viewData[key]} name={labels[key]} /> : '';
+        })
+
         output = (
             <>
-            <div className="mb-3">
-                <label htmlFor="name"><strong>Nome:</strong></label><br/>
-                {viewData.name}
-            </div>
-            <div className="mb-3">
-                <label htmlFor="email" className="mt-3"><strong>Email:</strong></label><br/>
-                {viewData.email}
-            </div>
-            <div className="mb-3">
-                <label htmlFor="password" className="mt-3"><strong>Senha:</strong></label><br/>
-                ******
-            </div>
-            <a href={urlEdit} className="btn btn-primary btn-block mt-3">EDITAR</a>
+                {rows}
+                <RowView value="********" name="Password" />
+                <a href={urlEdit} className="btn btn-primary btn-block mt-3">EDITAR</a>
             </>
         );
     }else{

@@ -27,7 +27,7 @@ class BusinessController extends Controller
         return $this->jsonResponseinUtf8($business);
     }
 
-    public function show(Request $request, $id){
+    public function show($id){
         $business = Business::where('businesses.id', $id)
         ->select($this->defaultFields)
         ->join('cities', 'businesses.city_id', '=', 'cities.id')

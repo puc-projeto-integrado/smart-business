@@ -22,6 +22,7 @@ import AdminViewBusiness from "./admin/ManageBusiness/AdminViewBusiness";
 import AdminUpdateBusiness from "./admin/ManageBusiness/AdminUpdateBusiness";
 import {UtilsContextProvider} from "./ContextProviders/UtilsContextProvider";
 import ManageCategory from "./admin/ManageCategory/ManageCategory";
+import AdminViewCategory from "./admin/ManageCategory/AdminViewCategory";
 
 const Routing = (props) => {
 
@@ -80,6 +81,12 @@ const Routing = (props) => {
                     { (isAuthenticated && base.credentials.roleId===1) ? <Stats /> : <Redirect to={loginRoute} /> }
                 </Route>
 
+                <Route path='/admin/category/:id'>
+                    <UtilsContextProvider>
+                        { (isAuthenticated && base.credentials.roleId===1) ? <AdminViewCategory /> : <Redirect to={loginRoute} /> }
+                    </UtilsContextProvider>
+                </Route>
+
                 <Route path='/admin/category'>
                     <UtilsContextProvider>
                         { (isAuthenticated && base.credentials.roleId===1) ? <ManageCategory /> : <Redirect to={loginRoute} /> }
@@ -93,11 +100,15 @@ const Routing = (props) => {
                 </Route>
 
                 <Route path='/admin/business/:id'>
+                    <UtilsContextProvider>
                     { (isAuthenticated && base.credentials.roleId===1) ? <AdminViewBusiness /> : <Redirect to={loginRoute} /> }
+                    </UtilsContextProvider>
                 </Route>
 
                 <Route path='/admin/business'>
+                    <UtilsContextProvider>
                     { (isAuthenticated && base.credentials.roleId===1) ? <ManageBusiness /> : <Redirect to={loginRoute} /> }
+                    </UtilsContextProvider>
                 </Route>
 
                 <Route path='/admin/user/update/:id'>
@@ -105,7 +116,9 @@ const Routing = (props) => {
                 </Route>
 
                 <Route path='/admin/user/:id'>
+                    <UtilsContextProvider>
                     { (isAuthenticated && base.credentials.roleId===1) ? <AdminViewUser /> : <Redirect to={loginRoute} /> }
+                    </UtilsContextProvider>
                 </Route>
 
                 <Route path='/admin/user'>

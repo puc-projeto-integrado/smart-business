@@ -1,68 +1,36 @@
-import React, {useState, useContext, useEffect} from "react";
-import { BaseContext } from '../../ContextProviders/BaseContextProvider';
+import React, {useState, useContext} from "react";
+import {BaseContext} from '../../ContextProviders/BaseContextProvider';
+import {UtilsContext} from "../../ContextProviders/UtilsContextProvider";
 import Loading from "../../Loading";
 import {useParams} from "react-router";
+import RowView from "../../Partials/RowView";
+import useGetEntity from "../../hooks/useGetEntity";
 
 const AdminViewBusiness = ()=>{
 
     const [base] = useContext(BaseContext);
+    const [utils] = useContext(UtilsContext);
     const [viewData, setViewData] = useState(null);
     const {id} = useParams();
-
-    useEffect(() => {
-        let myHeaders = new Headers();
-        myHeaders.append("Authorization", `Bearer ${base.credentials.accessToken}`);
-
-        let requestOptions = {
-            method: 'GET',
-            headers: myHeaders,
-            redirect: 'follow'
-        };
-
-        fetch(`${base.urls.businessDetail}/${id}`, requestOptions)
-            .then(response => response.json())
-            .then(data => setInitialFormState(data))
-            .catch(error => console.log('error', error));
-    }, [base.urls.businessDetail, base.credentials.accessToken, id]);
-
-    const setInitialFormState = (data)=>{
-        let obj = {};
-        data.forEach((item)=>{
-            Object.keys(item).forEach((key)=>{
-                console.log('key', key)
-                console.log(item[key])
-                obj[key]=item[key]
-            })
-        });
-        setViewData(obj)
+    const urlEdit = `/admin/business/update/${id}`;
+    const labels = {
+        id: 'ID', name: 'Nome', email: 'Email', cnpj: 'CNPJ', website: 'Website',
+        description: 'Descrição', address: 'Endereço', district: 'Bairro', category_name: 'Categoria',
+        city_name: 'Cidade', phone: 'Telefone'
+    };
+    const deps = {
+        bearerToken : base.credentials.accessToken,
+        url : `${base.urls.businessDetail}/${id}`,
+        setInitialFormState : utils.setInitialFormState,
+        setInitData : setViewData,
     }
-
     let output;
-    let urlEdit = `/admin/business/update/${id}`;
 
-    const getNiceName = (key)=>{
-        let names = {
-            id : 'ID', name : 'Nome', email : 'Email', cnpj : 'CNPJ', website : 'Website',
-            description : 'Descrição', address : 'Endereço', district : 'Bairro', category_name : 'Categoria',
-            city_name : 'Cidade', phone : 'Telefone'
-        };
-        return names[key];
-    }
+    useGetEntity(deps)
 
     if(viewData) {
-        let objToArray = Object.keys(viewData);
-
-        let rows = objToArray.map((key)=>{
-            if(getNiceName(key)){
-                return (
-                    <div className="mb-3">
-                        <label htmlFor="name"><strong>{getNiceName(key)}:</strong></label><br/>
-                        {viewData[key]}
-                    </div>
-                )
-            }else{
-                return ''
-            }
+        let rows = Object.keys(viewData).map((key)=>{
+            return labels[key] ? <RowView key={key} value={viewData[key]} name={labels[key]} /> : '';
         })
 
         output = (

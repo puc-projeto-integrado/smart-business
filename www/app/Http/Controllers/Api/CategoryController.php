@@ -13,6 +13,11 @@ class CategoryController extends Controller
     public function index(){
         return Category::all();
     }
+    public function show($id){
+        $category = Category::where('id', $id)
+            ->get();
+        return $this->jsonResponseinUtf8($category);
+    }
 
     public function update(){
         return Category::all();

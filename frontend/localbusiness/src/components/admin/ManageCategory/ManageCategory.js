@@ -4,6 +4,7 @@ import {UtilsContext} from "../../ContextProviders/UtilsContextProvider";
 import Loading from "../../Loading";
 import TableActions from "../../Partials/TableActions";
 import Feedback from "../../Partials/Feedback";
+import MasterTable from "../../Partials/MasterTable";
 
 const ManageCategory = ()=>{
 
@@ -28,14 +29,14 @@ const ManageCategory = ()=>{
     }
 
     if(category) {
-
+        let tableLabels = ['NOME', 'AÇÕES'];
         let rows = category.map((item) => {
             return (
                 <tr key={item.id}>
                     <td width="80%">{item.name}</td>
                     <TableActions
                         id={item.id}
-                        view="/admin/business/"
+                        view="/admin/category/"
                         edit="/admin/business/update/"
                         itemDeleteCallback={utils.itemDelete}
                         processItemDeleteCallback={processItemDelete}
@@ -53,17 +54,7 @@ const ManageCategory = ()=>{
                         <h2>Gerenciar Categorias</h2>
                         {itemWasDeleted ? <Feedback params={feedback}/> : ''}
                         <div className="table-responsive">
-                            <table className="table mt-5">
-                                <thead>
-                                <tr>
-                                    <td width="80%">NOME</td>
-                                    <td width="20%">AÇÕES</td>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {rows}
-                                </tbody>
-                            </table>
+                            <MasterTable labels={tableLabels} rows={rows}/>
                         </div>
                     </div>
                 </div>
@@ -79,7 +70,8 @@ const ManageCategory = ()=>{
                         <Loading/>
                     </div>
                 </div>
-            </main>)
+            </main>
+        )
     }
 }
 

@@ -60,7 +60,8 @@ export const UtilsContextProvider = props => {
         handleFormChange : handleFormChange,
         setInitialFormState : setInitialFormState,
         itemDelete : itemDelete,
-        removeItemFromList : removeItemFromList
+        removeItemFromList : removeItemFromList,
+        getElementById : getElementById
     }
 
     const [functions, setFunctions] = useState(obj);
