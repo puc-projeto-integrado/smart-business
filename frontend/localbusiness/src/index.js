@@ -1,11 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import {BaseContextProvider} from './components/ContextProviders/BaseContextProvider';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+      <BaseContextProvider>
+        <App />
+      </BaseContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

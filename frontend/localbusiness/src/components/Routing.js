@@ -23,16 +23,21 @@ import AdminUpdateBusiness from "./admin/ManageBusiness/AdminUpdateBusiness";
 import {UtilsContextProvider} from "./ContextProviders/UtilsContextProvider";
 import ManageCategory from "./admin/ManageCategory/ManageCategory";
 import AdminViewCategory from "./admin/ManageCategory/AdminViewCategory";
+import AdminUpdateCategory from "./admin/ManageCategory/AdminUpdateCategory";
 
 const Routing = (props) => {
 
     const [base] = useContext(BaseContext);
-    let isAuthenticated = base.isAuthenticated();
     const loginRoute = '/login';
-    
+    let isAuthenticated = base.isAuthenticated();
+
+    if(props.mustRedirect){
+        window.location=props.mustRedirect;
+    }
+
     return (
         <Router>
-            { props.mustRedirect ? <Redirect to={props.mustRedirect} /> : ''}
+            {/*{ props.mustRedirect ? <Redirect to={props.mustRedirect} /> : ''}*/}
             <Switch>
 
                 <Route path='/login'>
@@ -80,7 +85,11 @@ const Routing = (props) => {
                 <Route path='/admin/stats'>
                     { (isAuthenticated && base.credentials.roleId===1) ? <Stats /> : <Redirect to={loginRoute} /> }
                 </Route>
-
+                <Route path='/admin/category/update/:id'>
+                    <UtilsContextProvider>
+                        { (isAuthenticated && base.credentials.roleId===1) ? <AdminUpdateCategory /> : <Redirect to={loginRoute} /> }
+                    </UtilsContextProvider>
+                </Route>
                 <Route path='/admin/category/:id'>
                     <UtilsContextProvider>
                         { (isAuthenticated && base.credentials.roleId===1) ? <AdminViewCategory /> : <Redirect to={loginRoute} /> }
@@ -122,7 +131,9 @@ const Routing = (props) => {
                 </Route>
 
                 <Route path='/admin/user'>
+                    <UtilsContextProvider>
                     { (isAuthenticated && base.credentials.roleId===1) ? <ManageUser /> : <Redirect to={loginRoute} /> }
+                    </UtilsContextProvider>
                 </Route>
 
                 <Route path='/'>

@@ -55,6 +55,12 @@ $font-unit:1rem;
 .submenu li { display: inline-block;}
 .column-submenu .fa{ color: $gray-4 !important; margin-right:10px;}
 
+.menu-admin{ min-height: 30px; padding: $def-spacing 0px 0px 0px; background-color: $blue-1; text-align: center;}
+.menu-admin a{ color: $bright; font-size:1.1rem;}
+.menu-admin a:hover { text-decoration: none; color: #333;}
+.menu-admin ul,li { list-style-type: none; margin:0px; padding: 0px;;}
+.menu-admin li { color: #fff; display: inline-block; margin:0px 20px 10px 0px;}
+
 .business-post{ border: 1px solid $gray-3; border-radius:$def-spacing; padding:$def-spacing*2; margin: $def-spacing*2 0px; min-height: 210px;}
 .business-post.highlight{ background-color: $gray-1; border:0px;}
 .info{ text-decoration: none; font-family: sans-serif;}

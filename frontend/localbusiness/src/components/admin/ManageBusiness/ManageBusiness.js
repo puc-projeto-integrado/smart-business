@@ -2,6 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import {BaseContext} from "../../ContextProviders/BaseContextProvider";
 import Loading from "../../Loading";
 import TableActions from "../../Partials/TableActions";
+import MasterTable from "../../Partials/MasterTable";
 
 const ManageBusiness = ()=>{
 
@@ -34,6 +35,14 @@ const ManageBusiness = ()=>{
 
     if(business) {
         // console.log(business)
+        let tableLabels = [
+            ['NOME',30],
+            ['CIDADE',25],
+            ['CATEGORIA',25],
+            ['AÇÕES',20]
+        ];
+
+
         let rows = business.data.map((item) => {
             return (
                 <tr key={item.id}>
@@ -56,19 +65,7 @@ const ManageBusiness = ()=>{
                     <div className="col-sm-12 col-md-12  pt-5">
                         <h2>Gerenciar Empresas</h2>
                         <div className="table-responsive">
-                        <table className="table mt-5">
-                            <thead>
-                            <tr>
-                                <td width="50%">EMPRESA</td>
-                                <td width="20%">CIDADE</td>
-                                <td width="15%">CATEGORIA</td>
-                                <td width="15%">AÇÕES</td>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                {rows}
-                            </tbody>
-                        </table>
+                            <MasterTable labels={tableLabels} rows={rows}/>
                         </div>
                     </div>
                 </div>

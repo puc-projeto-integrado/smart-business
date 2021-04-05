@@ -29,7 +29,10 @@ const ManageCategory = ()=>{
     }
 
     if(category) {
-        let tableLabels = ['NOME', 'AÇÕES'];
+        let tableLabels = [
+            ['NOME',80],
+            ['AÇÕES',20]
+        ];
         let rows = category.map((item) => {
             return (
                 <tr key={item.id}>
@@ -37,7 +40,7 @@ const ManageCategory = ()=>{
                     <TableActions
                         id={item.id}
                         view="/admin/category/"
-                        edit="/admin/business/update/"
+                        edit="/admin/category/update/"
                         itemDeleteCallback={utils.itemDelete}
                         processItemDeleteCallback={processItemDelete}
                         urlItemDelete={base.urls.categoryDelete}

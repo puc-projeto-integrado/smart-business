@@ -3,7 +3,8 @@ import React from "react";
 const MasterTable = (props)=>{
 
     const header = props.labels.map((label)=>{
-       return (<td>{label}</td>)
+        let width = `${label[1]}%`;
+        return (<td width={width} key={'td'+label[0]}><strong>{label[0]}</strong></td>)
     });
 
     return (

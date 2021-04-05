@@ -19,7 +19,23 @@ class CategoryController extends Controller
         return $this->jsonResponseinUtf8($category);
     }
 
-    public function update(){
+    public function update(Request $request){
+        if (!isset($request->id) || empty($request->id)){
+            return Response::json(['status'=>'failed', 'reason'=>'id is null'], 400);
+        }
+        return [];
+        $userId = $request->id;
+        $updateData['name'] = $request->name;
+
+        try {
+            Category::where('id', $userId)->update($updateData);
+            return Response::json(['status'=>'success'], 200);
+        }catch(QueryException $e){
+            return Response::json(['status'=>'failed', 'reason'=>$e->getMessage()], 422);
+        }
+    }
+
+    public function add(){
         return Category::all();
     }
 

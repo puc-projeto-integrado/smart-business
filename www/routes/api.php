@@ -34,9 +34,7 @@ Route::group(['prefix'=>'category/', 'namespace'=>'Api', 'middleware'=>['cors']]
         Route::get('/', 'CategoryController@index')->name('category');
         Route::get('/{id}', 'CategoryController@show')->name('categoryShow');
         Route::delete('/delete', 'CategoryController@delete')->name('categoryDelete');
-//        Route::get('/state', 'StatsController@byState')->name('statsByState');
-//        Route::get('/favorite', 'StatsController@byFavorite')->name('statsByFavorites');
-//        Route::get('/register', 'StatsController@byRegisters')->name('statsByRegisters');
+        Route::put('/update', 'CategoryController@update')->name('categoryUpdate');
     });
 
 Route::group(['prefix'=>'favorites/', 'namespace'=>'Api', 'middleware'=>['cors', 'auth']],
@@ -45,7 +43,6 @@ Route::group(['prefix'=>'favorites/', 'namespace'=>'Api', 'middleware'=>['cors',
         Route::post('/add', 'FavoriteController@add')->name('favoritesAdd');
         Route::delete('/delete', 'FavoriteController@delete')->name('favoritesDelete');
     });
-//https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=784p4owi2ycdf8&redirect_uri=http://2cd1d326f68e.ngrok.io/public/api/oauth&state=DCEeFWf45A53sdfKef424&scope=r_liteprofile
 
 Route::group(['namespace'=>'Api', 'middleware'=>['cors']],
     function() {

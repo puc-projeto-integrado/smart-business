@@ -1,17 +1,21 @@
 import React, {useContext, useEffect, useState} from "react";
 import {BaseContext} from "../../ContextProviders/BaseContextProvider";
+import {UtilsContext} from "../../ContextProviders/UtilsContextProvider";
 import Loading from "../../Loading";
 import TableActions from "../../Partials/TableActions";
 import MasterTable from "../../Partials/MasterTable";
+import Feedback from "../../Partials/Feedback";
 
 const ManageUser = ()=>{
-
     const [base] = useContext(BaseContext);
+    const [utils] = useContext(UtilsContext);
     const [user, setUser] = useState(null);
+    const [feedback, setFeedback] = useState({active: false, message : '', status : ''});
+    const bearerToken = base.credentials.accessToken;
 
     useEffect(() => {
         var myHeaders = new Headers();
-        myHeaders.append("Authorization", `Bearer ${base.credentials.accessToken}`);
+        myHeaders.append("Authorization", `Bearer ${bearerToken}`);
 
         var requestOptions = {
             method: 'GET',
@@ -23,30 +27,21 @@ const ManageUser = ()=>{
             .then(response => response.json())
             .then(data => setUser(data))
             .catch(error => console.log('error', error));
-    }, [base.urls.userList, base.credentials.accessToken]);
+    }, [base.urls.userList, bearerToken]);
 
-    const userDelete = (id)=>{
-        console.log('delete user')
-        var myHeaders = new Headers();
-        myHeaders.append("Authorization", `Bearer ${base.credentials.accessToken}`);
-
-        let urlencoded = new URLSearchParams();
-        urlencoded.append("id", id);
-
-        var requestOptions = {
-            method: 'DELETE',
-            headers: myHeaders,
-            body: urlencoded
-        };
-        fetch(base.urls.userDelete, requestOptions)
-            // .then(response => response.json())
-            .then(response => console.log('RESPONSE', response))
-            // .then(data => console.log(data))
-            .catch(error => console.log('error', error));
+    const processItemDelete = (response, id)=>{
+        let updatedList = utils.removeItemFromList(user, id);
+        setUser(updatedList);
+        setFeedback({active: true, message : 'Item removido com sucesso!', status:'success'});
     }
 
     if(user) {
-        let tableLabels = ['NOME', 'EMAIL', 'AÇÕES'];
+        let tableLabels = [
+            ['NOME',40],
+            ['EMAIL',40],
+            ['AÇÕES',20]
+        ];
+
         let rows = user.map((item) => {
             return (
                 <tr key={item.id}>
@@ -56,8 +51,11 @@ const ManageUser = ()=>{
                                 id={item.id}
                                 view="/admin/user/"
                                 edit="/admin/user/update/"
-                                delete={userDelete}/>
-
+                                itemDeleteCallback={utils.itemDelete}
+                                processItemDeleteCallback={processItemDelete}
+                                urlItemDelete={base.urls.userDelete}
+                                bearerToken={bearerToken}
+                            />
                 </tr>
             )
         })
@@ -67,6 +65,7 @@ const ManageUser = ()=>{
                 <div className="row">
                     <div className="col-sm-12 col-md-12  pt-5">
                         <h2>Gerenciar Usuários</h2>
+                        <Feedback params={feedback}/>
                         <div className="table-responsive">
                             <MasterTable labels={tableLabels} rows={rows}/>
                         </div>

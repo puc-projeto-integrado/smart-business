@@ -49,7 +49,6 @@ class UserController extends Controller
         }catch(QueryException $e){
             return Response::json(['status'=>'failed', 'reason'=>$e->getMessage()], 422);
         }
-
     }
 
     public function delete(Request $request){

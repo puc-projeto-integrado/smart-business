@@ -8,7 +8,6 @@ const useGetEntity = (deps)=>{
         let requestOptions = {
             method: 'GET',
             headers: myHeaders,
-            redirect: 'follow'
         };
 
         fetch(deps.url, requestOptions)

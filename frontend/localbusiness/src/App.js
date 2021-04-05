@@ -1,22 +1,28 @@
-import React, {useState} from 'react'
-import {BaseContextProvider} from './components/ContextProviders/BaseContextProvider';
+import React, {useContext, useState} from 'react'
+import {BaseContext} from './components/ContextProviders/BaseContextProvider';
 import {delete_cookie} from "sfcookies";
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Routing from './components/Routing';
 
 export default function App() {
-
-    const [mustRedirect, setMustRedirect] = useState(false);
-
     console.log('ENV ', process.env.NODE_ENV)
+
+    const [base] = useContext(BaseContext);
+    const [mustRedirect, setMustRedirect] = useState(false);
+    let isAuthenticated = base.isAuthenticated();
+    let userBusiness = base.userBusiness;
+    let categories = base.categories;
+    let role = base.credentials.roleId;
 
     const logout = ()=>{
         delete_cookie('credentials')
         setMustRedirect('/');
     }
 
-    const redirect = (url)=> setMustRedirect(url);
+    const redirect = (url)=> {
+        setMustRedirect(url);
+    }
 
     const functionRefs = {
         "logout" : logout,
@@ -24,10 +30,16 @@ export default function App() {
     }
 
     return (
-        <BaseContextProvider>
-            <Header functionRefs={functionRefs}/>
+        <>
+            <Header
+                functionRefs={functionRefs}
+                isAuthenticated={isAuthenticated}
+                userBusiness={userBusiness}
+                categories={categories}
+                role={role}
+            />
             <Routing functionRefs={functionRefs} mustRedirect={mustRedirect} />
             <Footer />
-        </BaseContextProvider>
+        </>
     )
 }
