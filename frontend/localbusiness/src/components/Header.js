@@ -20,10 +20,12 @@ const Header = (props) => {
             <div className="menu-admin">
                 <div className="container">
                     <ul>
-                        <li>Gerencie: </li>
+                        <li><em className="fa fa-cogs"></em> <b>Gerencie:</b> </li>
                         <li><a href="/admin/user">Usuários</a></li>
                         <li><a href="/admin/category">Categorias</a></li>
                         <li><a href="/admin/business">Empresas</a></li>
+                        <li><a href="/admin/business">Cidades</a></li>
+                        <li><a href="/admin/business">Reviews</a></li>
                     </ul>
                 </div>
             </div>

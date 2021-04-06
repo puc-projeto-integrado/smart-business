@@ -5,6 +5,7 @@ import Loading from "../../Loading";
 import TableActions from "../../Partials/TableActions";
 import MasterTable from "../../Partials/MasterTable";
 import Feedback from "../../Partials/Feedback";
+import useGetEntity from "../../Hooks/useGetEntity";
 
 const ManageUser = ()=>{
     const [base] = useContext(BaseContext);
@@ -12,22 +13,16 @@ const ManageUser = ()=>{
     const [user, setUser] = useState(null);
     const [feedback, setFeedback] = useState({active: false, message : '', status : ''});
     const bearerToken = base.credentials.accessToken;
+    let output;
 
-    useEffect(() => {
-        var myHeaders = new Headers();
-        myHeaders.append("Authorization", `Bearer ${bearerToken}`);
+    const deps = {
+        bearerToken : base.credentials.accessToken,
+        url : base.urls.userList,
+        setInitialFormState : setUser,
+        setInitData : null,
+    }
 
-        var requestOptions = {
-            method: 'GET',
-            headers: myHeaders,
-            redirect: 'follow'
-        };
-
-        fetch(base.urls.userList, requestOptions)
-            .then(response => response.json())
-            .then(data => setUser(data))
-            .catch(error => console.log('error', error));
-    }, [base.urls.userList, bearerToken]);
+    useGetEntity(deps);
 
     const processItemDelete = (response, id)=>{
         let updatedList = utils.removeItemFromList(user, id);
@@ -60,23 +55,26 @@ const ManageUser = ()=>{
             )
         })
 
-        return (
-            <main className="container">
-                <div className="row">
-                    <div className="col-sm-12 col-md-12  pt-5">
-                        <h2>Gerenciar Usuários</h2>
-                        <Feedback params={feedback}/>
-                        <div className="table-responsive">
-                            <MasterTable labels={tableLabels} rows={rows}/>
-                        </div>
-                    </div>
-                </div>
-            </main>
-        )
+        output = (
+                    <div className="table-responsive">
+                        <MasterTable labels={tableLabels} rows={rows}/>
+                    </div> )
 
     }else{
-        return <Loading/>
+        output = <Loading/>
     }
+
+    return (
+        <main className="container">
+            <div className="row">
+                <div className="col-sm-12 col-md-12  pt-5">
+                    <h2>Gerenciar Usuários</h2>
+                    <Feedback params={feedback}/>
+                    {output}
+                </div>
+            </div>
+        </main>
+    )
 }
 
 export default ManageUser;

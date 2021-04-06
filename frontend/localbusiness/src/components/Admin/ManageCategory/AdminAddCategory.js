@@ -4,23 +4,23 @@ import {UtilsContext} from "../../ContextProviders/UtilsContextProvider";
 import {useParams} from "react-router";
 import Feedback from "../../Partials/Feedback";
 import Loading from "../../Loading";
-import useGetEntity from "../../hooks/useGetEntity";
+import useGetEntity from "../../Hooks/useGetEntity";
 
-const AdminUpdateCategory = ()=>{
+const AdminAddCategory = ()=>{
     const [base] = useContext(BaseContext);
     const [utils] = useContext(UtilsContext);
     const [dataUpdated, setDataUpdated] = useState(false);
     const [feedback, setFeedback] = useState({active: false, message : '', status : ''});
     const [formState, setFormState] = useState(null);
     const {id} = useParams();
-    const beareToken = base.credentials.accessToken;
+    const bearerToken = base.credentials.accessToken;
     const exceptions = ['password', 'id', 'highlight', 'facebook_address', 'twitter_address', 'ip', 'phone'];
     const labels = { name : 'Nome'};
     let rows;
-    let output;
+    let output = <Loading/>;
 
     const deps = {
-        bearerToken : beareToken,
+        bearerToken : bearerToken,
         url : `${base.urls.categoryDetail}/${id}`,
         setInitialFormState : utils.setInitialFormState,
         setInitData : setFormState,
@@ -44,7 +44,7 @@ const AdminUpdateCategory = ()=>{
             exceptions : exceptions,
             formState : formState,
             setFeedback :setFeedback,
-            bearerToken : beareToken,
+            bearerToken : bearerToken,
             id : id,
             setMyStates : setMyStates
         }
@@ -72,8 +72,6 @@ const AdminUpdateCategory = ()=>{
         );
     }else if(formState && dataUpdated){
         output = <Feedback params={feedback}/>
-    }else{
-        output = <Loading/>
     }
 
     return (
@@ -88,4 +86,4 @@ const AdminUpdateCategory = ()=>{
     )
 }
 
-export default AdminUpdateCategory;
+export default AdminAddCategory;

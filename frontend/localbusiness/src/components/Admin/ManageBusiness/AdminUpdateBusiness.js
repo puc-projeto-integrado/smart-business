@@ -4,7 +4,7 @@ import {UtilsContext} from "../../ContextProviders/UtilsContextProvider";
 import {useParams} from "react-router";
 import Feedback from "../../Partials/Feedback";
 import Loading from "../../Loading";
-import useGetEntity from "../../hooks/useGetEntity";
+import useGetEntity from "../../Hooks/useGetEntity";
 
 const AdminUpdateBusiness = ()=>{
     const [base] = useContext(BaseContext);

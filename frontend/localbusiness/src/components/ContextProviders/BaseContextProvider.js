@@ -1,55 +1,18 @@
 import React, {useState, createContext, useEffect} from "react";
 import {read_cookie} from "sfcookies";
-
+import {CommonUrls, CommonCredentials} from "../Common";
 export const BaseContext = createContext();
 
 export const BaseContextProvider = props => {
 
     const cookie = read_cookie('credentials');
-
-    const baseUrlApiDev = 'http://localhost/public/api';
-    const baseUrlApiProd = 'http://puc-api.gabrielguerra.me/api';
-    const baseUrlApi = (process.env.NODE_ENV) === 'development' ? baseUrlApiDev : baseUrlApiProd;
-    
     const [favorites, setFavorites] = useState(null);
     const [userBusiness, setUserBusiness] = useState(null);
     const [categories, setCategories] = useState(null);
 
-    const [credentials] = useState({
-        userId : cookie.id,
-        accessToken : cookie.access_token,
-        roleId : cookie.roleId
-    });
+    const [credentials] = useState(CommonCredentials);
 
-    const [urls] = useState({
-        login: `${baseUrlApi}/login`,
-        userRegister: `${baseUrlApi}/user/add`,
-        userList: `${baseUrlApi}/user`,
-        userDetail: `${baseUrlApi}/user`,
-        userUpdate: `${baseUrlApi}/user/update`,
-        userDelete: `${baseUrlApi}/user/delete`,
-        category: `${baseUrlApi}/category`,
-        categoryDelete: `${baseUrlApi}/category/delete`,
-        categoryDetail: `${baseUrlApi}/category`,
-        categoryUpdate: `${baseUrlApi}/category/update`,
-        favorites: `${baseUrlApi}/favorites/${credentials.userId}`,
-        favoritesDelete: `${baseUrlApi}/favorites/delete`,
-        favoritesAdd: `${baseUrlApi}/favorites/add`,
-        uf: `${baseUrlApi}/state`,
-        business: `${baseUrlApi}/business`,
-        businessHighlight: `${baseUrlApi}/business/highlight`,
-        businessByUser: `${baseUrlApi}/business/user/${credentials.userId}`,
-        businessCategory: `${baseUrlApi}/business/category`,
-        businessDelete: `${baseUrlApi}/business/delete`,
-        businessAdd: `${baseUrlApi}/business/add`,
-        businessDetail: `${baseUrlApi}/business`,
-        businessUpdate: `${baseUrlApi}/business/update`,
-        statsByCategory: `${baseUrlApi}/stats/category`,
-        statsByState: `${baseUrlApi}/stats/state`,
-        statsByCity: `${baseUrlApi}/stats/city`,
-        statsByFavorite: `${baseUrlApi}/stats/favorite`,
-        statsByRegister: `${baseUrlApi}/stats/register`,
-    });
+    const [urls] = useState(CommonUrls);
 
     if(userBusiness && urls){
         urls.businessUserDetail = `/business/${userBusiness.id}`;

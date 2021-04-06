@@ -115,13 +115,16 @@ class BusinessController extends Controller
     }
 
     public function delete(Request $request){
-        $userId = $request->user_id;
-        $businessItemId = $request->business_id;
+
+        if (!isset($request->id) || empty($request->id)){
+            return Response::json(['status'=>'failed', 'reason'=>'id is null'], 400);
+        }
+        $businessItemId = $request->id;
         try {
-            Business::where('user_id', $userId)
-                ->where('id', $businessItemId)
+            Business::where('id', $businessItemId)
+                //->where('user_id', $userId)
                 ->forceDelete();
-            return Response::json(['userID'=>$userId, 'status'=>200, 'message'=>'deleted'], 200);
+            return Response::json(['status'=>200, 'message'=>'deleted'], 200);
         }catch(QueryException $e){
             return Response::json(['message'=>'failed', 'reason'=>$e->getMessage()], 422);
         }

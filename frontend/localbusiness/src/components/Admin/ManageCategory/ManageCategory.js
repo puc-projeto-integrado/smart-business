@@ -5,21 +5,24 @@ import Loading from "../../Loading";
 import TableActions from "../../Partials/TableActions";
 import Feedback from "../../Partials/Feedback";
 import MasterTable from "../../Partials/MasterTable";
+import useGetEntity from "../../Hooks/useGetEntity";
 
 const ManageCategory = ()=>{
-
     const [base] = useContext(BaseContext);
     const [utils] = useContext(UtilsContext);
     const [category, setCategory] = useState(null);
     const [itemWasDeleted, setItemWasDeleted] = useState(false);
     const [feedback, setFeedback] = useState({active: false, message : '', status : ''});
     const bearerToken = base.credentials.accessToken;
+    const deps = {
+        bearerToken : bearerToken,
+        url : base.urls.category,
+        setInitialFormState : setCategory,
+        setInitData : null,
+    }
+    let output = <Loading/>;
 
-    useEffect(() => {
-        fetch(base.urls.category)
-            .then(response => response.json())
-            .then(data => setCategory(data))
-    }, [base.urls.category]);
+    useGetEntity(deps);
 
     const processItemDelete = (response, id)=>{
         let updatedCategoryList = utils.removeItemFromList(category, id);
@@ -50,32 +53,20 @@ const ManageCategory = ()=>{
             )
         })
 
-        return (
-            <main className="container">
-                <div className="row">
-                    <div className="col-sm-12 col-md-12 pt-5">
-                        <h2>Gerenciar Categorias</h2>
-                        {itemWasDeleted ? <Feedback params={feedback}/> : ''}
-                        <div className="table-responsive">
-                            <MasterTable labels={tableLabels} rows={rows}/>
-                        </div>
-                    </div>
-                </div>
-            </main>
-        )
-
-    }else{
-        return (
-            <main className="container">
-                <div className="row">
-                    <div className="col-sm-12 col-md-12  pt-5">
-                        <h2>Gerenciar Categorias</h2>
-                        <Loading/>
-                    </div>
-                </div>
-            </main>
-        )
+        output = <div className="table-responsive"><MasterTable labels={tableLabels} rows={rows}/></div>;
     }
+
+    return (
+        <main className="container">
+            <div className="row">
+                <div className="col-sm-12 col-md-12  pt-5">
+                    <h2>Gerenciar Categorias</h2>
+                    {itemWasDeleted ? <Feedback params={feedback}/> : ''}
+                    {output}
+                </div>
+            </div>
+        </main>
+    )
 }
 
 export default ManageCategory;

@@ -1,32 +1,29 @@
-import React, {useState, useContext} from "react";
-import {BaseContext} from '../../ContextProviders/BaseContextProvider';
+import React, {useState, useContext, useEffect} from "react";
+import { BaseContext } from '../../ContextProviders/BaseContextProvider';
 import {UtilsContext} from "../../ContextProviders/UtilsContextProvider";
+import {CommonUrls, CommonCredentials} from "../../Common";
 import Loading from "../../Loading";
-import {useParams} from "react-router";
 import RowView from "../../Partials/RowView";
-import useGetEntity from "../../hooks/useGetEntity";
+import {useParams} from "react-router";
+import useGetEntity from "../../Hooks/useGetEntity";
 
-const AdminViewBusiness = ()=>{
+const AdminViewUser = ()=>{
 
     const [base] = useContext(BaseContext);
     const [utils] = useContext(UtilsContext);
     const [viewData, setViewData] = useState(null);
     const {id} = useParams();
-    const urlEdit = `/admin/business/update/${id}`;
-    const labels = {
-        id: 'ID', name: 'Nome', email: 'Email', cnpj: 'CNPJ', website: 'Website',
-        description: 'Descrição', address: 'Endereço', district: 'Bairro', category_name: 'Categoria',
-        city_name: 'Cidade', phone: 'Telefone'
-    };
+    const labels = { name : 'Nome', email : 'Email' };
+    const urlEdit = `/admin/user/update/${id}`;
     const deps = {
-        bearerToken : base.credentials.accessToken,
-        url : `${base.urls.businessDetail}/${id}`,
+        bearerToken : CommonCredentials.accessToken,
+        url : `${CommonUrls.userDetail}/${id}`,
         setInitialFormState : utils.setInitialFormState,
         setInitData : setViewData,
     }
-    let output;
+    let output = <Loading/>;
 
-    useGetEntity(deps)
+    useGetEntity(deps);
 
     if(viewData) {
         let rows = Object.keys(viewData).map((key)=>{
@@ -36,11 +33,10 @@ const AdminViewBusiness = ()=>{
         output = (
             <>
                 {rows}
+                <RowView value="********" name="Password" />
                 <a href={urlEdit} className="btn btn-primary btn-block mt-3">EDITAR</a>
             </>
         );
-    }else{
-        output = <Loading/>
     }
 
     return (
@@ -55,4 +51,4 @@ const AdminViewBusiness = ()=>{
     )
 }
 
-export default AdminViewBusiness;
+export default AdminViewUser;

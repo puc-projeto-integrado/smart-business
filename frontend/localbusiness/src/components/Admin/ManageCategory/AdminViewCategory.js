@@ -1,43 +1,38 @@
-import React, {useState, useContext, useEffect} from "react";
-import { BaseContext } from '../../ContextProviders/BaseContextProvider';
+import React, {useState, useContext} from "react";
 import {UtilsContext} from "../../ContextProviders/UtilsContextProvider";
+import {useParams} from "react-router";
 import Loading from "../../Loading";
 import RowView from "../../Partials/RowView";
-import {useParams} from "react-router";
-import useGetEntity from "../../hooks/useGetEntity";
+import useGetEntity from "../../Hooks/useGetEntity";
+import {CommonUrls, CommonCredentials} from "../../Common";
 
-const AdminViewUser = ()=>{
-
-    const [base] = useContext(BaseContext);
+const AdminViewCategory = ()=>{
     const [utils] = useContext(UtilsContext);
     const [viewData, setViewData] = useState(null);
     const {id} = useParams();
-    const labels = { name : 'Nome', email : 'Email' };
-    const urlEdit = `/admin/user/update/${id}`;
+    const urlEdit = `/admin/category/update/${id}`;
+    const labels = {name: 'Nome'};
     const deps = {
-        bearerToken : base.credentials.accessToken,
-        url : `${base.urls.userDetail}/${id}`,
+        bearerToken : CommonCredentials.accessToken,
+        url : `${CommonUrls.categoryDetail}/${id}`,
         setInitialFormState : utils.setInitialFormState,
         setInitData : setViewData,
     }
-    let output;
+    let output = <Loading/>;
 
-    useGetEntity(deps);
+    useGetEntity(deps)
 
     if(viewData) {
         let rows = Object.keys(viewData).map((key)=>{
-            return labels[key] ? <RowView key={key} value={viewData[key]} name={labels[key]} /> : '';
+            return (labels[key]) ? <RowView key={key} value={viewData[key]} name={labels[key]} /> : '';
         })
 
         output = (
             <>
                 {rows}
-                <RowView value="********" name="Password" />
                 <a href={urlEdit} className="btn btn-primary btn-block mt-3">EDITAR</a>
             </>
         );
-    }else{
-        output = <Loading/>
     }
 
     return (
@@ -52,4 +47,4 @@ const AdminViewUser = ()=>{
     )
 }
 
-export default AdminViewUser;
+export default AdminViewCategory;

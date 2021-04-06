@@ -28,7 +28,7 @@ export const UtilsContextProvider = props => {
             headers: headers,
             body: urlencoded
         };
-
+console.log('urlencoded ', urlencoded)
         fetch(url, requestOptions)
             .then(response=>console.log(response))
             .then(response => callback(response,id))
@@ -78,6 +78,7 @@ export const UtilsContextProvider = props => {
     }
 
     const removeItemFromList = (list, id)=>{
+        console.log('LIST ', list)
         return list.filter((item)=> item.id !== id);
     }
 

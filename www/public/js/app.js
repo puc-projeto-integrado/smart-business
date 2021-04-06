@@ -10967,7 +10967,7 @@ jQuery.fn.extend( {
 			this.each( function() {
 				var queue = jQuery.queue( this, type, data );
 
-				// Ensure a hooks for this queue
+				// Ensure a Hooks for this queue
 				jQuery._queueHooks( this, type );
 
 				if ( type === "fx" && queue[ 0 ] !== "inprogress" ) {
@@ -13173,7 +13173,7 @@ function getWidthOrHeight( elem, dimension, extra ) {
 
 jQuery.extend( {
 
-	// Add in style property hooks for overriding the default
+	// Add in style property Hooks for overriding the default
 	// behavior of getting and setting a style property
 	cssHooks: {
 		opacity: {
@@ -13417,7 +13417,7 @@ jQuery.cssHooks.marginLeft = addGetHookIf( support.reliableMarginLeft,
 	}
 );
 
-// These hooks are used by animate to expand properties
+// These Hooks are used by animate to expand properties
 jQuery.each( {
 	margin: "",
 	padding: "",
@@ -13658,7 +13658,7 @@ function defaultPrefilter( elem, props, opts ) {
 		hidden = elem.nodeType && isHiddenWithinTree( elem ),
 		dataShow = dataPriv.get( elem, "fxshow" );
 
-	// Queue-skipping animations hijack the fx hooks
+	// Queue-skipping animations hijack the fx Hooks
 	if ( !opts.queue ) {
 		hooks = jQuery._queueHooks( elem, "fx" );
 		if ( hooks.unqueued == null ) {
@@ -14333,7 +14333,7 @@ jQuery.extend( {
 			return jQuery.prop( elem, name, value );
 		}
 
-		// Attribute hooks are determined by the lowercase version
+		// Attribute Hooks are determined by the lowercase version
 		// Grab necessary hook if one is defined
 		if ( nType !== 1 || !jQuery.isXMLDoc( elem ) ) {
 			hooks = jQuery.attrHooks[ name.toLowerCase() ] ||
@@ -14462,7 +14462,7 @@ jQuery.extend( {
 
 		if ( nType !== 1 || !jQuery.isXMLDoc( elem ) ) {
 
-			// Fix name and attach hooks
+			// Fix name and attach Hooks
 			name = jQuery.propFix[ name ] || name;
 			hooks = jQuery.propHooks[ name ];
 		}
@@ -52083,8 +52083,8 @@ var workInProgressHook = null; // Whether an update was scheduled at any point d
 var didScheduleRenderPhaseUpdate = false;
 var RE_RENDER_LIMIT = 25; // In DEV, this is the name of the currently executing primitive hook
 
-var currentHookNameInDev = null; // In DEV, this list ensures that hooks are called in the same order between renders.
-// The list stores the order of hooks used during the initial render (mount).
+var currentHookNameInDev = null; // In DEV, this list ensures that Hooks are called in the same order between renders.
+// The list stores the order of Hooks used during the initial render (mount).
 // Subsequent renders (updates) reference this list.
 
 var hookTypesDev = null;
@@ -52221,11 +52221,11 @@ function renderWithHooks(current, workInProgress, Component, props, secondArg, n
   // currentHook = null;
   // workInProgressHook = null;
   // didScheduleRenderPhaseUpdate = false;
-  // TODO Warn if no hooks are used at all during mount, then some are used during update.
+  // TODO Warn if no Hooks are used at all during mount, then some are used during update.
   // Currently we will identify the update render as a mount because memoizedState === null.
   // This is tricky because it's valid for certain types of components (e.g. React.lazy)
   // Using memoizedState to differentiate between mount/update only works if at least one stateful hook is used.
-  // Non-stateful hooks (e.g. context) don't get added to memoizedState,
+  // Non-stateful Hooks (e.g. context) don't get added to memoizedState,
   // so memoizedState would be null during updates and mounts.
 
   {
@@ -52233,9 +52233,9 @@ function renderWithHooks(current, workInProgress, Component, props, secondArg, n
       ReactCurrentDispatcher.current = HooksDispatcherOnUpdateInDEV;
     } else if (hookTypesDev !== null) {
       // This dispatcher handles an edge case where a component is updating,
-      // but no stateful hooks have been used.
+      // but no stateful Hooks have been used.
       // We want to match the production code behavior (which will use HooksDispatcherOnMount),
-      // but with the extra DEV validation to ensure hooks ordering hasn't changed.
+      // but with the extra DEV validation to ensure Hooks ordering hasn't changed.
       // This dispatcher does that.
       ReactCurrentDispatcher.current = HooksDispatcherOnMountWithHookTypesInDEV;
     } else {
@@ -52308,7 +52308,7 @@ function renderWithHooks(current, workInProgress, Component, props, secondArg, n
 
   if (!!didRenderTooFewHooks) {
     {
-      throw Error( "Rendered fewer hooks than expected. This may be caused by an accidental early return statement." );
+      throw Error( "Rendered fewer Hooks than expected. This may be caused by an accidental early return statement." );
     }
   }
 
@@ -52330,7 +52330,7 @@ function resetHooksAfterThrow() {
   if (didScheduleRenderPhaseUpdate) {
     // There were render phase updates. These are only valid for this render
     // phase, which we are now aborting. Remove the updates from the queues so
-    // they do not persist to the next render. Do not remove updates from hooks
+    // they do not persist to the next render. Do not remove updates from Hooks
     // that weren't processed.
     //
     // Only reset the updates from the queue if it has a clone. If it does
@@ -52420,7 +52420,7 @@ function updateWorkInProgressHook() {
     // Clone from the current hook.
     if (!(nextCurrentHook !== null)) {
       {
-        throw Error( "Rendered more hooks than during the previous render." );
+        throw Error( "Rendered more Hooks than during the previous render." );
       }
     }
 
@@ -52847,7 +52847,7 @@ function updateImperativeHandle(ref, create, deps) {
 }
 
 function mountDebugValue(value, formatterFn) {// This hook is normally a no-op.
-  // The react-debug-hooks package injects its own implementation
+  // The react-debug-Hooks package injects its own implementation
   // so that e.g. DevTools can display custom hook values.
 }
 
@@ -54401,9 +54401,9 @@ function updateSimpleMemoComponent(current, workInProgress, Component, nextProps
         // we're bailing out early *without* evaluating the component, we need
         // to account for it here, too. Reset to the value of the current fiber.
         // NOTE: This only applies to SimpleMemoComponent, not MemoComponent,
-        // because a MemoComponent fiber does not have hooks or an update queue;
+        // because a MemoComponent fiber does not have Hooks or an update queue;
         // rather, it wraps around an inner component, which may or may not
-        // contains hooks.
+        // contains Hooks.
         // TODO: Move the reset at in beginWork out of the common path so that
         // this is no longer necessary.
         workInProgress.expirationTime = current.expirationTime;
@@ -54941,7 +54941,7 @@ function mountIndeterminateComponent(_current, workInProgress, Component, render
     } // Proceed under the assumption that this is a class instance
 
 
-    workInProgress.tag = ClassComponent; // Throw out any hooks that were used.
+    workInProgress.tag = ClassComponent; // Throw out any Hooks that were used.
 
     workInProgress.memoizedState = null;
     workInProgress.updateQueue = null; // Push context providers early to prevent context stack mismatches.
@@ -60814,7 +60814,7 @@ function startWorkOnPendingInteractions(root, expirationTime) {
   }); // Store the current set of interactions on the FiberRoot for a few reasons:
   // We can re-use it in hot functions like performConcurrentWorkOnRoot()
   // without having to recalculate it. We will also use it in commitWork() to
-  // pass to any Profiler onRender() hooks. This also provides DevTools with a
+  // pass to any Profiler onRender() Hooks. This also provides DevTools with a
   // way to access it when the onCommitRoot() hook is called.
 
   root.memoizedInteractions = interactions;
@@ -60914,7 +60914,7 @@ function injectInternals(internals) {
   }
 
   try {
-    var rendererID = hook.inject(internals); // We have successfully injected, so now it is safe to set up hooks.
+    var rendererID = hook.inject(internals); // We have successfully injected, so now it is safe to set up Hooks.
 
     if (true) {
       // Only used by Fast Refresh
@@ -61934,8 +61934,8 @@ var setSuspenseHandler = null;
 
 
   overrideHookState = function (fiber, id, path, value) {
-    // For now, the "id" of stateful hooks is just the stateful hook index.
-    // This may change in the future with e.g. nested hooks.
+    // For now, the "id" of stateful Hooks is just the stateful hook index.
+    // This may change in the future with e.g. nested Hooks.
     var currentHook = fiber.memoizedState;
 
     while (currentHook !== null && id > 0) {
@@ -61947,7 +61947,7 @@ var setSuspenseHandler = null;
       var newState = copyWithSet(currentHook.memoizedState, path, value);
       currentHook.memoizedState = newState;
       currentHook.baseState = newState; // We aren't actually adding an update to the queue,
-      // because there is no update we can add for useReducer hooks that won't trigger an error.
+      // because there is no update we can add for useReducer Hooks that won't trigger an error.
       // (There's no appropriate action type for DevTools overrides.)
       // As a result though, React will see the scheduled update as a noop and bailout.
       // Shallow cloning props works as a workaround for now to bypass the bailout check.
@@ -62011,7 +62011,7 @@ function injectIntoDevTools(devToolsConfig) {
     // Enables DevTools to append owner stacks to error messages in DEV mode.
     getCurrentFiber:  function () {
       return current;
-    } 
+    }
   }));
 }
 var IsSomeRendererActing$1 = ReactSharedInternals.IsSomeRendererActing;

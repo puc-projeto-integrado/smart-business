@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 import BusinessDetail from './Business/BusinessDetail';
 import BusinessRegister from "./Business/BusinessRegister";
 import Dashboard from "./User/Dashboard";
-import Stats from "./admin/Stats";
+import Stats from "./Admin/Stats";
 import Category from "./Business/Category";
 import { BaseContext } from './ContextProviders/BaseContextProvider';
 import UserRegister from "./User/UserRegister";
@@ -14,16 +14,17 @@ import UserUpdate from "./User/UserUpdate";
 import UserBusiness from "./User/UserBusiness";
 import {ModalContextProvider} from "./ContextProviders/ModalContextProvider";
 import {FormBusinessContextProvider} from "./ContextProviders/FormBusinessContextProvider";
-import ManageBusiness from "./admin/ManageBusiness/ManageBusiness";
-import ManageUser from "./admin/ManageUser/ManageUser";
-import AdminViewUser from "./admin/ManageUser/AdminViewUser";
-import AdminUpdateUser from "./admin/ManageUser/AdminUpdateUser";
-import AdminViewBusiness from "./admin/ManageBusiness/AdminViewBusiness";
-import AdminUpdateBusiness from "./admin/ManageBusiness/AdminUpdateBusiness";
+import ManageBusiness from "./Admin/ManageBusiness/ManageBusiness";
+import ManageUser from "./Admin/ManageUser/ManageUser";
+import AdminViewUser from "./Admin/ManageUser/AdminViewUser";
+import AdminUpdateUser from "./Admin/ManageUser/AdminUpdateUser";
+import AdminViewBusiness from "./Admin/ManageBusiness/AdminViewBusiness";
+import AdminUpdateBusiness from "./Admin/ManageBusiness/AdminUpdateBusiness";
 import {UtilsContextProvider} from "./ContextProviders/UtilsContextProvider";
-import ManageCategory from "./admin/ManageCategory/ManageCategory";
-import AdminViewCategory from "./admin/ManageCategory/AdminViewCategory";
-import AdminUpdateCategory from "./admin/ManageCategory/AdminUpdateCategory";
+import ManageCategory from "./Admin/ManageCategory/ManageCategory";
+import AdminViewCategory from "./Admin/ManageCategory/AdminViewCategory";
+import AdminUpdateCategory from "./Admin/ManageCategory/AdminUpdateCategory";
+import AdminAddCategory from "./Admin/ManageCategory/AdminAddCategory";
 
 const Routing = (props) => {
 
@@ -96,6 +97,12 @@ const Routing = (props) => {
                     </UtilsContextProvider>
                 </Route>
 
+                <Route path='/admin/category/add'>
+                    <UtilsContextProvider>
+                        { (isAuthenticated && base.credentials.roleId===1) ? <AdminAddCategory /> : <Redirect to={loginRoute} /> }
+                    </UtilsContextProvider>
+                </Route>
+
                 <Route path='/admin/category'>
                     <UtilsContextProvider>
                         { (isAuthenticated && base.credentials.roleId===1) ? <ManageCategory /> : <Redirect to={loginRoute} /> }
@@ -121,7 +128,9 @@ const Routing = (props) => {
                 </Route>
 
                 <Route path='/admin/user/update/:id'>
+                    <UtilsContextProvider>
                     { (isAuthenticated && base.credentials.roleId===1) ? <AdminUpdateUser /> : <Redirect to={loginRoute} /> }
+                    </UtilsContextProvider>
                 </Route>
 
                 <Route path='/admin/user/:id'>
