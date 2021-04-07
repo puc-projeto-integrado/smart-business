@@ -14,7 +14,7 @@ const useGetEntity = (deps)=>{
             .then(response => response.json())
             .then(data => deps.setInitialFormState(data, deps.setInitData))
             .catch(error => console.log('error', error));
-    }, [deps.url, deps.bearerToken]);
+    }, [deps.url, deps.bearerToken, deps.setInitialFormState, deps.setInitData]);
 }
 
 export default useGetEntity;

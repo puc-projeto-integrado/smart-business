@@ -1,12 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
+import {CommonUrls} from "./../Common";
 import BusinessItemHighlight from './../Business/BusinessItemHighlight';
 import Loading from './../Loading';
-import { BaseContext } from '../ContextProviders/BaseContextProvider';
 
 const HomeHighlights = (props) => {
-
-    const [base] = useContext(BaseContext);
-    const url = base.urls.businessHighlight;
+    const url = CommonUrls.businessHighlight;
     const [highlights, setHighlights] = useState(null);
 
     useEffect(() => {
@@ -20,7 +18,6 @@ const HomeHighlights = (props) => {
     let numHighlights = 0; 
 
     if (highlights) {
-
         return (
             <div>
                 {

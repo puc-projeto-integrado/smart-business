@@ -3,6 +3,7 @@ import {useParams} from "react-router";
 import Column from "../Column";
 import BusinessGrid from './BusinessGrid';
 import { BaseContext } from '../ContextProviders/BaseContextProvider';
+import Loading from "../Loading";
 
 const Category = ()=>{
 
@@ -13,6 +14,12 @@ const Category = ()=>{
 
     const setCategoryNameFromCallback = (name)=>{
         setCategoryName(name)
+    }
+
+    let columnOutput = <Loading/>;
+    if(base.categories) {
+        let categories = base.sortAlphabetically(base.categories);
+        columnOutput = <Column categories={categories}/>
     }
 
     return (
@@ -32,7 +39,7 @@ const Category = ()=>{
                         itemSize='full'/>
                 </div>
                 <div className="col-4 d-none d-sm-block pt-5">
-                    <Column />
+                    {columnOutput}
                 </div>
             </div>
         </div>

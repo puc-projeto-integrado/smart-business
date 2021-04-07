@@ -1,29 +1,22 @@
-import React, {useContext} from 'react';
-import { BaseContext } from './ContextProviders/BaseContextProvider';
-import Loading from './Loading';
+import React from 'react';
 
-const Column = ()=>{
-
-    const [base] = useContext(BaseContext);
+const Column = (props)=>{
     const max = 25;
     let count = 0;
-
-    if(base.categories) {
-        let categories = base.sortAlphabetically(base.categories);
-
+    if(props.categories) {
+        console.log(props.categories)
+        let categories = props.categories;
+        let title, urlCategory;
         return (
             <aside>
-                {/*<span className="gray-3">ANÚNCIO</span>*/}
-                {/*<img src="/assets/images/anuncio.jpg" alt="Local Business"/>*/}
-
                 <ul className="column-submenu">
-                    {categories ? categories.map((item) => {
+                    {categories.map((item) => {
                         count++;
-                        let urlCategory = `/category/${item.id}`;
-                        let title = `Fornecedores de ${item.name}`;
+                        urlCategory = `/category/${item.id}`;
+                        title = `Fornecedores de ${item.name}`;
                         return (count < max) ? <li key={item.id}><a href={urlCategory} title={title}><span
                             className="fa fa-check"></span> {item.name}</a></li> : ''
-                    }) : <Loading/>}
+                    })}
                 </ul>
             </aside>
         )

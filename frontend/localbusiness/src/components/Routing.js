@@ -1,14 +1,14 @@
 import React, {useContext} from 'react';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import { BaseContext } from './ContextProviders/BaseContextProvider';
 import Home from './Home/Home';
 import Favorites from './User/Favorites';
 import Login from './Login';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import BusinessDetail from './Business/BusinessDetail';
 import BusinessRegister from "./Business/BusinessRegister";
 import Dashboard from "./User/Dashboard";
 import Stats from "./Admin/Stats";
 import Category from "./Business/Category";
-import { BaseContext } from './ContextProviders/BaseContextProvider';
 import UserRegister from "./User/UserRegister";
 import UserUpdate from "./User/UserUpdate";
 import UserBusiness from "./User/UserBusiness";
@@ -79,7 +79,7 @@ const Routing = (props) => {
                 </Route>
 
                 <Route path='/dashboard'>
-                    { isAuthenticated ? <Dashboard /> : <Redirect to={loginRoute} /> }
+                    { isAuthenticated ? <Dashboard userBusiness={base.userBusiness} base={base}/> : <Redirect to={loginRoute} /> }
                 </Route>
 
                 <Route path='/admin/stats'>
@@ -100,9 +100,6 @@ const Routing = (props) => {
                         { (isAuthenticated && base.credentials.roleId===1) ? <AdminViewCategory /> : <Redirect to={loginRoute} /> }
                     </UtilsContextProvider>
                 </Route>
-
-
-
                 <Route path='/admin/category'>
                     <UtilsContextProvider>
                         { (isAuthenticated && base.credentials.roleId===1) ? <ManageCategory /> : <Redirect to={loginRoute} /> }

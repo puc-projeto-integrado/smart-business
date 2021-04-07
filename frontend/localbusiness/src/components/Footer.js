@@ -1,13 +1,10 @@
 import React, {useContext} from 'react';
-import { BaseContext } from './ContextProviders/BaseContextProvider';
 
-const Footer = ()=>{
+const Footer = (props)=>{
 
-    const [base] = useContext(BaseContext);
+    if(props.categories){
 
-    if(base.categories){
-
-        let categories = base.sortAlphabetically(base.categories);
+        let categories = props.categories;
         const total = categories.length;
         let count = 0;
 

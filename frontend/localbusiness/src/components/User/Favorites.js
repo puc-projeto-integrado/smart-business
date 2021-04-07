@@ -2,6 +2,7 @@ import React, {useContext} from "react";
 import BusinessItem from "../Business/BusinessItem";
 import Column from "../Column";
 import { BaseContext } from '../ContextProviders/BaseContextProvider';
+import Loading from "../Loading";
 
 const Favorites = ()=>{
 
@@ -23,7 +24,11 @@ const Favorites = ()=>{
             return <div>Você ainda não tem favoritos cadastrados...</div>
         }
     }
-
+    let columnOutput = <Loading/>;
+    if(base.categories) {
+        let categories = base.sortAlphabetically(base.categories);
+        columnOutput = <Column categories={categories}/>
+    }
     if(base.favorites){
         return (
             <div className="container">
@@ -33,7 +38,7 @@ const Favorites = ()=>{
                     <ShowFavorites />
                 </div>
                 <div className="col-4 d-none d-sm-block pt-5">
-                    <Column />
+                    {columnOutput}
                 </div>
             </div>
             </div>

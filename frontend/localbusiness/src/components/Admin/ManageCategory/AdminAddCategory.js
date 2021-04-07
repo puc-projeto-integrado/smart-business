@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useState} from "react";
 import {UtilsContext} from "../../ContextProviders/UtilsContextProvider";
 import {CommonUrls, CommonCredentials} from "../../Common";
 import {useParams} from "react-router";

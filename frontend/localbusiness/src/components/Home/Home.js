@@ -3,11 +3,16 @@ import Column from './../Column';
 import HomeHighlights from './HomeHighlights';
 import BusinessGrid from './../Business/BusinessGrid';
 import {BaseContext} from '../ContextProviders/BaseContextProvider';
+import Loading from "../Loading";
 
 const Home = () => {
 
     const [base] = useContext(BaseContext);
-
+    let output = <Loading/>;
+    if(base.categories) {
+        let categories = base.sortAlphabetically(base.categories);
+        output = <Column categories={categories}/>
+    }
     return (
 
             <main className="container">
@@ -16,7 +21,7 @@ const Home = () => {
                         <HomeHighlights queryIsFavorite={base.isFavorite} favoritesData={base.favorites}/>
                     </div>
                     <div className="col-4 d-none d-sm-block pt-5">
-                        <Column />
+                        {output}
                     </div>
                 </div>
 

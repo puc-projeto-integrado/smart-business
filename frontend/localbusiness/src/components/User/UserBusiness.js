@@ -10,11 +10,10 @@ const UserBusiness = (props)=>{
     const [base] = useContext(BaseContext);
     const [business, setBusiness] = useState('loading');
     const [feedback, setFeedback] = useState({active: false, message : '', status : ''});
+    let output;
 
     useEffect(() => {
         if(base.urls) {
-            //console.log(base)
-
             let businessHeaders = new Headers();
             businessHeaders.append("Content-Type", "application/x-www-form-urlencoded");
             businessHeaders.append("Authorization", `Bearer ${base.credentials.accessToken}`);
@@ -37,8 +36,8 @@ const UserBusiness = (props)=>{
             myHeaders.append("Authorization", `Bearer ${base.credentials.accessToken}`);
 
             var urlencoded = new URLSearchParams();
-            urlencoded.append("user_id", base.credentials.userId);
-            urlencoded.append("business_id", business.id);
+            // urlencoded.append("user_id", base.credentials.userId);
+            urlencoded.append("id", business.id);
 
             var requestOptions = {
                 method: 'DELETE',
@@ -53,7 +52,6 @@ const UserBusiness = (props)=>{
     }
 
     const removeBusinnessPost = (response)=>{
-
         if(response.status!==200){
             setFeedback({active: true, message : 'Houve um erro ao excluir sua empresa.', status:'error'});
         }else{
@@ -61,24 +59,16 @@ const UserBusiness = (props)=>{
             setFeedback({active: true, message : 'Empresa excluída com sucesso!', status:'success'});
             setBusiness(null);
         }
-    }    
+    }
 
-    if (business==='loading') {
-        return (
-            <main className="container">
-                <div className="row">
-                    <div className="col-sm-12 col-md-8  pt-5">
-                        <Loading />
-                    </div>
-                    <div className="col-4 d-none d-sm-block pt-5">
-                        <Column />
-                    </div>
-                </div>
-            </main>
-        )
+    let columnOutput = <Loading/>;
+    if(base.categories) {
+        columnOutput = <Column categories={base.categories}/>
+    }
 
-    } else if (business) {
-
+    if (business === 'loading') {
+        output = <Loading/>
+    }else if (business && business !== 'loading') {
         let propsObj = {
             categoryName : business.category_name,
             cityName : business.city_name,
@@ -88,39 +78,32 @@ const UserBusiness = (props)=>{
             website : business.website,
         }
 
-        return (
-            <main className="container">
-                <div className="row">
-                    <div className="col-sm-12 col-md-8 pt-5">
-                        <h2 className="mb-5">Sua Empresa</h2>
-                        <Feedback params={feedback}/>
-                        <BusinessItemDetail business={propsObj}/>
-                        <div className="mt-5">
-                            <button type="button" onClick={removeBusiness} className="btn btn-danger ml-3"><em className="fa fa-times"></em> Remover Empresa</button>
-                        </div>
-                    </div>
-                    <div className="col-4 d-none d-sm-block pt-5">
-                        <Column />
-                    </div>
+        output = (
+            <>
+                <BusinessItemDetail business={propsObj}/>
+                <div className="mt-5">
+                    <button type="button" onClick={removeBusiness} className="btn btn-danger ml-3"><em className="fa fa-times"></em> Remover Empresa</button>
                 </div>
-            </main>
+            </>
         )
     }else{
-        return (
-            <main className="container">
-                <div className="row">
-                    <div className="col-sm-12 col-md-8 pt-5">
-                        <h2 className="mb-5">Sua Empresa</h2>
-                        <Feedback params={feedback}/>
-                        <p>Nenhuma empresa cadastrada no momento.</p>
-                    </div>
-                    <div className="col-4 d-none d-sm-block pt-5">
-                        <Column />
-                    </div>
-                </div>
-            </main>
-        )
+        output = <p>Nenhuma empresa cadastrada no momento.</p>;
     }
+
+    return (
+        <main className="container">
+            <div className="row">
+                <div className="col-sm-12 col-md-8 pt-5">
+                    <h2 className="mb-5">Sua Empresa</h2>
+                    <Feedback params={feedback}/>
+                    {output}
+                </div>
+                <div className="col-4 d-none d-sm-block pt-5">
+                    {columnOutput}
+                </div>
+            </div>
+        </main>
+    )
 }
 
 export default UserBusiness;

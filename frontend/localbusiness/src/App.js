@@ -6,7 +6,7 @@ import Footer from './components/Footer'
 import Routing from './components/Routing';
 
 export default function App() {
-    console.log('ENV ', process.env.NODE_ENV)
+    //console.log('ENV ', process.env.NODE_ENV)
 
     const [base] = useContext(BaseContext);
     const [mustRedirect, setMustRedirect] = useState(false);
@@ -39,7 +39,7 @@ export default function App() {
                 role={role}
             />
             <Routing functionRefs={functionRefs} mustRedirect={mustRedirect} />
-            <Footer />
+            <Footer categories={categories} />
         </>
     )
 }

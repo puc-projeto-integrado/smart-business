@@ -1,7 +1,7 @@
 import React from "react";
 
 const Feedback = (props)=>{
-
+    //console.log('FEEDBACK ', props)
     let params = props.params;
 
     if(params.active && params.status){

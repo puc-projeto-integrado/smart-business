@@ -57,7 +57,7 @@ export const BaseContextProvider = props => {
         if(!categories) {
             fetch(urls.category)
                 .then(response => response.json())
-                .then(data => setCategories(data))
+                .then(data => setCategories(sortAlphabetically(data)))
                 .catch(error => console.log('error', error));
         }
 

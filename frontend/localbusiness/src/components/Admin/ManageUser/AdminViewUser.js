@@ -1,5 +1,4 @@
-import React, {useState, useContext, useEffect} from "react";
-import { BaseContext } from '../../ContextProviders/BaseContextProvider';
+import React, {useState, useContext} from "react";
 import {UtilsContext} from "../../ContextProviders/UtilsContextProvider";
 import {CommonUrls, CommonCredentials} from "../../Common";
 import Loading from "../../Loading";
@@ -9,7 +8,6 @@ import useGetEntity from "../../Hooks/useGetEntity";
 
 const AdminViewUser = ()=>{
 
-    const [base] = useContext(BaseContext);
     const [utils] = useContext(UtilsContext);
     const [viewData, setViewData] = useState(null);
     const {id} = useParams();

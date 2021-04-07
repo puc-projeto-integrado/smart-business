@@ -1,23 +1,22 @@
-import React, {useContext, useEffect, useState} from "react";
-import { BaseContext } from '../ContextProviders/BaseContextProvider';
+import React, {useEffect, useState} from "react";
 import Loading from "../Loading";
+import {CommonCredentials} from "./../Common";
 
-const Dashboard = ()=>{
-
-    const [base] = useContext(BaseContext);
+const Dashboard = (props)=>{
+    console.log('DASHBOARD ', props)
+    let userBusiness = props.userBusiness;
     const [isAdmin, setIsAdmin] = useState(false);
     const [businessCanRegister, setBusinessCanRegister] = useState(false);
 
     useEffect(() => {
-        if(base.credentials.roleId===1){
+        if(CommonCredentials.roleId===1){
             setIsAdmin('true');
         }
 
-        setBusinessCanRegister(base.userBusiness);
-    }, [base.credentials.roleId, base.userBusiness]);
+        setBusinessCanRegister(userBusiness);
+    }, [CommonCredentials.roleId, userBusiness]);
 
-    if(base) {
-        let statsPanel;
+        let statsPanel = <Loading/>;
         let adminButtons;
         let businessAction;
 
@@ -62,9 +61,7 @@ const Dashboard = ()=>{
                 </div>
             </div>
         )
-    }else{
-        return <Loading/>
-    }
+
 }
 
 export default Dashboard;

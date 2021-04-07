@@ -119,9 +119,9 @@ class BusinessController extends Controller
         if (!isset($request->id) || empty($request->id)){
             return Response::json(['status'=>'failed', 'reason'=>'id is null'], 400);
         }
-        $businessItemId = $request->id;
+
         try {
-            Business::where('id', $businessItemId)
+            Business::where('id', $request->id)
                 //->where('user_id', $userId)
                 ->forceDelete();
             return Response::json(['status'=>200, 'message'=>'deleted'], 200);

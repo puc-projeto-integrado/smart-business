@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React from 'react';
 import {read_cookie} from "sfcookies";
 
 const Header = (props) => {

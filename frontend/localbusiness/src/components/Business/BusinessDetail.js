@@ -10,7 +10,8 @@ const BusinessDetail = () => {
     const {id} = useParams();
     const [base] = useContext(BaseContext);
     const url = `${base.urls.businessDetail}/${id}`;
-    const [business, setBusiness] = useState(null);    
+    const [business, setBusiness] = useState(null);
+    let output = <Loading/>;
 
     useEffect(() => {
         fetch(url)
@@ -22,8 +23,14 @@ const BusinessDetail = () => {
         setBusiness(data[0])
     }
 
+    let columnOutput = <Loading/>;
+    if(base.categories) {
+        let categories = base.sortAlphabetically(base.categories);
+        columnOutput = <Column categories={categories}/>
+    }
+
     if (business) {
-        
+
         let propsObj = {
             categoryName : business.category_name,
             cityName : business.city_name,
@@ -33,32 +40,21 @@ const BusinessDetail = () => {
             website : business.website,
         }
 
-        return (
-            <main className="container">
-                <div className="row">
-                    <div className="col-sm-12 col-md-8 pt-5">
-                        <BusinessItemDetail business={propsObj}/>
-                    </div>
-                    <div className="col-4 d-none d-sm-block pt-5">
-                        <Column />
-                    </div>
-                </div>
-            </main>
-        )
-    } else {
-        return (
-            <main className="container">
-                <div className="row">
-                    <div className="col-sm-12 col-md-8  pt-5">
-                        <Loading />
-                    </div>
-                    <div className="col-4 d-none d-sm-block pt-5">
-                        <Column />
-                    </div>
-                </div>
-            </main>
-        )
+        output = <BusinessItemDetail business={propsObj}/>
     }
+
+    return (
+        <main className="container">
+            <div className="row">
+                <div className="col-sm-12 col-md-8 pt-5">
+                    {output}
+                </div>
+                <div className="col-4 d-none d-sm-block pt-5">
+                    {columnOutput}
+                </div>
+            </div>
+        </main>
+    )
 }
 
 export default BusinessDetail;
