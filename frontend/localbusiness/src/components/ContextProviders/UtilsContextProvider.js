@@ -65,6 +65,7 @@ console.log('urlencoded ', urlencoded)
             };
 
             fetch(params.url, requestOptions)
+                // .then(log => console.log('RES ', log.json()))
                 .then(data => params.setMyStates(data))
                 .catch(error => console.log('error', error));
         }

@@ -14,7 +14,7 @@ const AdminUpdateCategory = ()=>{
     const [formState, setFormState] = useState(null);
     const {id} = useParams();
     const bearerToken = base.credentials.accessToken;
-    const exceptions = ['password', 'id', 'highlight', 'facebook_address', 'twitter_address', 'ip', 'phone'];
+    const exceptions = ['created_at', 'updated_at'];
     const labels = { name : 'Nome'};
     let rows;
     let output = <Loading/>;

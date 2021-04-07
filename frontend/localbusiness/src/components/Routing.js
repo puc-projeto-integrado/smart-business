@@ -40,7 +40,6 @@ const Routing = (props) => {
         <Router>
             {/*{ props.mustRedirect ? <Redirect to={props.mustRedirect} /> : ''}*/}
             <Switch>
-
                 <Route path='/login'>
                     <Login functionRefs={props.functionRefs}/>
                 </Route>
@@ -86,6 +85,11 @@ const Routing = (props) => {
                 <Route path='/admin/stats'>
                     { (isAuthenticated && base.credentials.roleId===1) ? <Stats /> : <Redirect to={loginRoute} /> }
                 </Route>
+                <Route path='/admin/category/add'>
+                    <UtilsContextProvider>
+                        { (isAuthenticated && base.credentials.roleId===1) ? <AdminAddCategory /> : <Redirect to={loginRoute} /> }
+                    </UtilsContextProvider>
+                </Route>
                 <Route path='/admin/category/update/:id'>
                     <UtilsContextProvider>
                         { (isAuthenticated && base.credentials.roleId===1) ? <AdminUpdateCategory /> : <Redirect to={loginRoute} /> }
@@ -97,11 +101,7 @@ const Routing = (props) => {
                     </UtilsContextProvider>
                 </Route>
 
-                <Route path='/admin/category/add'>
-                    <UtilsContextProvider>
-                        { (isAuthenticated && base.credentials.roleId===1) ? <AdminAddCategory /> : <Redirect to={loginRoute} /> }
-                    </UtilsContextProvider>
-                </Route>
+
 
                 <Route path='/admin/category'>
                     <UtilsContextProvider>

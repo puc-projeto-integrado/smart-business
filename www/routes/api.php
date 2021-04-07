@@ -35,6 +35,7 @@ Route::group(['prefix'=>'category/', 'namespace'=>'Api', 'middleware'=>['cors']]
         Route::get('/{id}', 'CategoryController@show')->name('categoryShow');
         Route::delete('/delete', 'CategoryController@delete')->name('categoryDelete');
         Route::put('/update', 'CategoryController@update')->name('categoryUpdate');
+        Route::put('/add', 'CategoryController@add')->name('categoryAdd');
     });
 
 Route::group(['prefix'=>'favorites/', 'namespace'=>'Api', 'middleware'=>['cors', 'auth']],

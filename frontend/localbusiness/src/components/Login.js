@@ -3,7 +3,7 @@ import { bake_cookie, delete_cookie } from 'sfcookies';
 import { BaseContext } from './ContextProviders/BaseContextProvider';
 
 const Login = (props) => {
-
+console.log('LOGIN PROPS ', props)
     const [base] = useContext(BaseContext);
     const [email, setEmail] = useState('gab@gab.com');
     const [password, setPassword] = useState('admin123');
