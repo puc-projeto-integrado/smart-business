@@ -6,6 +6,7 @@ import Loading from "../Loading";
 const UserUpdate = ()=>{
 
     const [base] = useContext(BaseContext);
+    console.log('USER_UPDATE ', base)
     const [accountCreated, setAccountCreated] = useState(false);
     const [editing, setEditing] = useState(false);
     const [feedback, setFeedback] = useState({active: false, message : '', status : ''});
@@ -96,7 +97,7 @@ const UserUpdate = ()=>{
     if(!accountCreated && !editing && formState) {
         output = (
             <>
-                <h2 className="mb-5">Seus Dados</h2>
+                <h2 className="mb-5">SEUS DADOS</h2>
                 <Feedback params={feedback}/>
                 <div className="mb-3">
                     <label htmlFor="name"><strong>Nome:</strong></label><br/>
@@ -116,7 +117,7 @@ const UserUpdate = ()=>{
     }else if(!accountCreated && editing && formState){
         output = (
             <>
-                <h2 className="mb-5">Editar seus Dados</h2>
+                <h2 className="mb-5">EDITAR SEUS DADOS</h2>
                 <Feedback params={feedback}/>
                 <label htmlFor="name">Nome:</label>
                 <input type="text" name="name" className="form-control" value={formState.name} onChange={handleChange}/>

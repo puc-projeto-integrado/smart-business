@@ -4,7 +4,6 @@ const Column = (props)=>{
     const max = 25;
     let count = 0;
     if(props.categories) {
-        console.log(props.categories)
         let categories = props.categories;
         let title, urlCategory;
         return (
