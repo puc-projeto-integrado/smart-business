@@ -1,19 +1,17 @@
 import React, {useContext, useEffect, useState} from 'react';
+import {CommonUrls} from "../Common";
 import BusinessItem from './../Business/BusinessItem';
 import Loading from './../Loading';
-import {BaseContext} from '../ContextProviders/BaseContextProvider';
 import InputSelect from "../Partials/InputSelect";
 import CustomModal from "../Partials/CustomModal";
 
 const BusinessGrid = (props) => {
-
-    const [base] = useContext(BaseContext);
     const [business, setBusiness] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [filteredBusiness, setFilteredBusiness] = useState(null);
     const [citiesInBusiness, setCitiesInBusiness] = useState([]);
     const maxItems = props.maxItems ? props.maxItems : 7;
-    let urlRequest = props.urlRequest ? props.urlRequest : base.urls.business;
+    let urlRequest = props.urlRequest ? props.urlRequest : CommonUrls.business;
     let numHighlights = 0;
     let setCategoryName = props.setCategoryName;
 

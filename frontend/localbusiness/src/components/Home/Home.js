@@ -10,8 +10,7 @@ const Home = () => {
     const [base] = useContext(BaseContext);
     let output = <Loading/>;
     if(base.categories) {
-        let categories = base.sortAlphabetically(base.categories);
-        output = <Column categories={categories}/>
+        output = <Column categories={base.categories}/>
     }
     return (
 

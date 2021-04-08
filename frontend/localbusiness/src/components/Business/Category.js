@@ -18,8 +18,7 @@ const Category = ()=>{
 
     let columnOutput = <Loading/>;
     if(base.categories) {
-        let categories = base.sortAlphabetically(base.categories);
-        columnOutput = <Column categories={categories}/>
+        columnOutput = <Column categories={base.categories}/>
     }
 
     return (

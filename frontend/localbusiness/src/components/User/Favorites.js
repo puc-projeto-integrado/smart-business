@@ -47,12 +47,10 @@ const Favorites = ()=>{
     }else{
         return (
             <div className="container mt-5">
-                <h2>Favorites</h2>
+                <h2>Favoritos</h2>
                 <p>Loading...</p>
             </div>
         )
     }
-
-
 }
 export default Favorites;

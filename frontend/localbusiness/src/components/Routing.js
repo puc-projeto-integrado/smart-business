@@ -1,6 +1,7 @@
 import React, {useContext} from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { BaseContext } from './ContextProviders/BaseContextProvider';
+import {CommonCredentials, CommonFunctions} from "./Common";
 import Home from './Home/Home';
 import Favorites from './User/Favorites';
 import Login from './Login';
@@ -30,7 +31,7 @@ const Routing = (props) => {
 
     const [base] = useContext(BaseContext);
     const loginRoute = '/login';
-    let isAuthenticated = base.isAuthenticated();
+    let isAuthenticated = CommonFunctions.isAuthenticated();
 
     if(props.mustRedirect){
         window.location=props.mustRedirect;
@@ -79,66 +80,66 @@ const Routing = (props) => {
                 </Route>
 
                 <Route path='/dashboard'>
-                    { isAuthenticated ? <Dashboard userBusiness={base.userBusiness} base={base}/> : <Redirect to={loginRoute} /> }
+                    { isAuthenticated ? <Dashboard userBusiness={props.userBusiness} base={base}/> : <Redirect to={loginRoute} /> }
                 </Route>
 
                 <Route path='/admin/stats'>
-                    { (isAuthenticated && base.credentials.roleId===1) ? <Stats /> : <Redirect to={loginRoute} /> }
+                    { (isAuthenticated && CommonCredentials.roleId===1) ? <Stats /> : <Redirect to={loginRoute} /> }
                 </Route>
                 <Route path='/admin/category/add'>
                     <UtilsContextProvider>
-                        { (isAuthenticated && base.credentials.roleId===1) ? <AdminAddCategory /> : <Redirect to={loginRoute} /> }
+                        { (isAuthenticated && CommonCredentials.roleId===1) ? <AdminAddCategory /> : <Redirect to={loginRoute} /> }
                     </UtilsContextProvider>
                 </Route>
                 <Route path='/admin/category/update/:id'>
                     <UtilsContextProvider>
-                        { (isAuthenticated && base.credentials.roleId===1) ? <AdminUpdateCategory /> : <Redirect to={loginRoute} /> }
+                        { (isAuthenticated && CommonCredentials.roleId===1) ? <AdminUpdateCategory /> : <Redirect to={loginRoute} /> }
                     </UtilsContextProvider>
                 </Route>
                 <Route path='/admin/category/:id'>
                     <UtilsContextProvider>
-                        { (isAuthenticated && base.credentials.roleId===1) ? <AdminViewCategory /> : <Redirect to={loginRoute} /> }
+                        { (isAuthenticated && CommonCredentials.roleId===1) ? <AdminViewCategory /> : <Redirect to={loginRoute} /> }
                     </UtilsContextProvider>
                 </Route>
                 <Route path='/admin/category'>
                     <UtilsContextProvider>
-                        { (isAuthenticated && base.credentials.roleId===1) ? <ManageCategory /> : <Redirect to={loginRoute} /> }
+                        { (isAuthenticated && CommonCredentials.roleId===1) ? <ManageCategory /> : <Redirect to={loginRoute} /> }
                     </UtilsContextProvider>
                 </Route>
 
                 <Route path='/admin/business/update/:id'>
                     <UtilsContextProvider>
-                        { (isAuthenticated && base.credentials.roleId===1) ? <AdminUpdateBusiness /> : <Redirect to={loginRoute} /> }
+                        { (isAuthenticated && CommonCredentials.roleId===1) ? <AdminUpdateBusiness /> : <Redirect to={loginRoute} /> }
                     </UtilsContextProvider>
                 </Route>
 
                 <Route path='/admin/business/:id'>
                     <UtilsContextProvider>
-                    { (isAuthenticated && base.credentials.roleId===1) ? <AdminViewBusiness /> : <Redirect to={loginRoute} /> }
+                    { (isAuthenticated && CommonCredentials.roleId===1) ? <AdminViewBusiness /> : <Redirect to={loginRoute} /> }
                     </UtilsContextProvider>
                 </Route>
 
                 <Route path='/admin/business'>
                     <UtilsContextProvider>
-                    { (isAuthenticated && base.credentials.roleId===1) ? <ManageBusiness /> : <Redirect to={loginRoute} /> }
+                    { (isAuthenticated && CommonCredentials.roleId===1) ? <ManageBusiness /> : <Redirect to={loginRoute} /> }
                     </UtilsContextProvider>
                 </Route>
 
                 <Route path='/admin/user/update/:id'>
                     <UtilsContextProvider>
-                    { (isAuthenticated && base.credentials.roleId===1) ? <AdminUpdateUser /> : <Redirect to={loginRoute} /> }
+                    { (isAuthenticated && CommonCredentials.roleId===1) ? <AdminUpdateUser /> : <Redirect to={loginRoute} /> }
                     </UtilsContextProvider>
                 </Route>
 
                 <Route path='/admin/user/:id'>
                     <UtilsContextProvider>
-                    { (isAuthenticated && base.credentials.roleId===1) ? <AdminViewUser /> : <Redirect to={loginRoute} /> }
+                    { (isAuthenticated && CommonCredentials.roleId===1) ? <AdminViewUser /> : <Redirect to={loginRoute} /> }
                     </UtilsContextProvider>
                 </Route>
 
                 <Route path='/admin/user'>
                     <UtilsContextProvider>
-                    { (isAuthenticated && base.credentials.roleId===1) ? <ManageUser /> : <Redirect to={loginRoute} /> }
+                    { (isAuthenticated && CommonCredentials.roleId===1) ? <ManageUser /> : <Redirect to={loginRoute} /> }
                     </UtilsContextProvider>
                 </Route>
 

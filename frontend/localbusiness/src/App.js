@@ -1,5 +1,6 @@
 import React, {useContext, useState} from 'react'
 import {BaseContext} from './components/ContextProviders/BaseContextProvider';
+import {CommonFunctions} from "./components/Common";
 import {delete_cookie} from "sfcookies";
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -10,7 +11,7 @@ export default function App() {
 
     const [base] = useContext(BaseContext);
     const [mustRedirect, setMustRedirect] = useState(false);
-    let isAuthenticated = base.isAuthenticated();
+    let isAuthenticated = CommonFunctions.isAuthenticated();
     let userBusiness = base.userBusiness;
     let categories = base.categories;
     let role = base.credentials.roleId;
@@ -38,7 +39,7 @@ export default function App() {
                 categories={categories}
                 role={role}
             />
-            <Routing functionRefs={functionRefs} mustRedirect={mustRedirect} />
+            <Routing userBusiness={userBusiness} functionRefs={functionRefs} mustRedirect={mustRedirect} />
             <Footer categories={categories} />
         </>
     )

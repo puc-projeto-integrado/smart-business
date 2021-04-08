@@ -1,11 +1,9 @@
 import React, {useState, createContext, useEffect} from "react";
-import {read_cookie} from "sfcookies";
-import {CommonUrls, CommonCredentials} from "../Common";
-export const BaseContext = createContext();
+import {CommonUrls, CommonCredentials, CommonFunctions} from "../Common";
+export const BaseContext = createContext([]);
 
 export const BaseContextProvider = props => {
 
-    const cookie = read_cookie('credentials');
     const [favorites, setFavorites] = useState(null);
     const [userBusiness, setUserBusiness] = useState(null);
     const [categories, setCategories] = useState(null);
@@ -57,7 +55,7 @@ export const BaseContextProvider = props => {
         if(!categories) {
             fetch(urls.category)
                 .then(response => response.json())
-                .then(data => setCategories(sortAlphabetically(data)))
+                .then(data => setCategories(CommonFunctions.sortAlphabetically(data)))
                 .catch(error => console.log('error', error));
         }
 
@@ -74,18 +72,9 @@ export const BaseContextProvider = props => {
         }
     }
 
-    const isAuthenticated = () => {
-        return (typeof cookie === 'undefined' || cookie.length === 0) ? false : true;
-    };
-
-    const sortAlphabetically = (array)=> {
-        array.sort(function (a, b) {
-            if (a.name < b.name) { return -1;}
-            if (a.name > b.name) { return 1;}
-            return 0;
-        })
-        return array;
-    }
+    // const isAuthenticated = () => {
+    //     return (typeof cookie === 'undefined' || cookie.length === 0) ? false : true;
+    // };
 
     let obj = {
         urls : urls,
@@ -93,8 +82,7 @@ export const BaseContextProvider = props => {
         favorites : favorites,
         userBusiness : userBusiness,
         categories : categories,
-        sortAlphabetically : sortAlphabetically,
-        isAuthenticated : isAuthenticated,
+        // isAuthenticated : isAuthenticated,
         isFavorite : queryIsFavorite
     }
 

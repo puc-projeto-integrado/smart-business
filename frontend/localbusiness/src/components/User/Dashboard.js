@@ -3,7 +3,7 @@ import Loading from "../Loading";
 import {CommonCredentials} from "./../Common";
 
 const Dashboard = (props)=>{
-    console.log('DASHBOARD ', props)
+    //console.log('DASHBOARD ', props)
     let userBusiness = props.userBusiness;
     const [isAdmin, setIsAdmin] = useState(false);
     const [businessCanRegister, setBusinessCanRegister] = useState(false);
