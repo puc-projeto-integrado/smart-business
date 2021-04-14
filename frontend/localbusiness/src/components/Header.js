@@ -23,9 +23,10 @@ const Header = (props) => {
                         <li><em className="fa fa-cogs"></em> <b>Gerencie:</b> </li>
                         <li><a href="/admin/user">Usuários</a></li>
                         <li><a href="/admin/category">Categorias</a></li>
+                        <li><a href="/admin/state">Estados</a></li>
+                        <li><a href="/admin/city">Cidades</a></li>
                         <li><a href="/admin/business">Empresas</a></li>
-                        <li><a href="/admin/business">Cidades</a></li>
-                        <li><a href="/admin/business">Reviews</a></li>
+                        <li><a href="/admin/review">Reviews</a></li>
                     </ul>
                 </div>
             </div>

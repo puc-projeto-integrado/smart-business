@@ -29,7 +29,7 @@ const BusinessRegister = ()=>{
     }, [uf, requestOptions, urlUf]);
 
     if(selectedUfId && !cities){
-        fetch(`${base.urls.uf}/${selectedUfId}`, requestOptions)
+        fetch(`${base.urls.citiesByState}/${selectedUfId}`, requestOptions)
             .then(response => response.json())
             .then(data => setCities(data))
             .catch(error => console.log('error', error));

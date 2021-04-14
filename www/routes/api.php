@@ -45,12 +45,21 @@ Route::group(['prefix'=>'favorites/', 'namespace'=>'Api', 'middleware'=>['cors',
         Route::delete('/delete', 'FavoriteController@delete')->name('favoritesDelete');
     });
 
+Route::group(['prefix'=>'state/', 'namespace'=>'Api', 'middleware'=>['cors']],
+    function() {
+        Route::get('/', 'StateController@index')->name('state');
+        Route::get('/{id}', 'StateController@show')->name('stateShow');
+    });
+
+Route::group(['prefix'=>'city/', 'namespace'=>'Api', 'middleware'=>['cors']],
+    function() {
+        Route::get('/', 'CityController@index')->name('city');
+        Route::get('/state/{id}', 'CityController@citiesByState')->name('citiesByState');
+    });
+
 Route::group(['namespace'=>'Api', 'middleware'=>['cors']],
     function() {
         Route::post('/login/', 'AuthController@login')->name('login');
-        Route::get('/state', 'StateController@index')->name('state');
-        Route::get('/state/{id}', 'CityController@citiesByState')->name('citiesByState');
-        Route::get('/city', 'CityController@index')->name('city');
         Route::get('/oauth', 'FooController@index')->name('category');
     });
 

@@ -48,6 +48,7 @@ const ManageBusiness = ()=>{
                     <td>{item.category_name}</td>
                     <TableActions
                         id={item.id}
+                        add='/admin/business/add'
                         view="/admin/business/"
                         edit="/admin/business/update/"
                         itemDeleteCallback={utils.itemDelete}
