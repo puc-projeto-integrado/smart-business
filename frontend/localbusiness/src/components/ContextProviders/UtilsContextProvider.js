@@ -37,6 +37,8 @@ console.log('urlencoded ', urlencoded)
 
     const handleSubmit = (event, params)=>{
         let canProceed = true;
+        let method = (params.method) ? 'POST' : 'POST';
+
         Object.keys(params.formState).forEach((key)=>{
             if(!params.formState[key] && !listContains(params.exceptions, key)){
                 console.log('Failed field ', key)
@@ -59,7 +61,7 @@ console.log('urlencoded ', urlencoded)
             });
 
             let requestOptions = {
-                method: 'PUT',
+                method: method,
                 headers: headers,
                 body: urlencoded,
             };

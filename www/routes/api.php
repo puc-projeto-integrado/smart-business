@@ -33,9 +33,9 @@ Route::group(['prefix'=>'category/', 'namespace'=>'Api', 'middleware'=>['cors']]
     function() {
         Route::get('/', 'CategoryController@index')->name('category');
         Route::get('/{id}', 'CategoryController@show')->name('categoryShow');
-        Route::delete('/delete', 'CategoryController@delete')->name('categoryDelete');
-        Route::put('/update', 'CategoryController@update')->name('categoryUpdate');
-        Route::put('/add', 'CategoryController@add')->name('categoryAdd');
+        Route::delete('/delete', 'CategoryController@delete')->name('categoryDelete')->middleware('auth');
+        Route::put('/update', 'CategoryController@update')->name('categoryUpdate')->middleware('auth');
+        Route::put('/add', 'CategoryController@add')->name('categoryAdd')->middleware('auth');
     });
 
 Route::group(['prefix'=>'favorites/', 'namespace'=>'Api', 'middleware'=>['cors', 'auth']],
@@ -49,6 +49,8 @@ Route::group(['prefix'=>'state/', 'namespace'=>'Api', 'middleware'=>['cors']],
     function() {
         Route::get('/', 'StateController@index')->name('state');
         Route::get('/{id}', 'StateController@show')->name('stateShow');
+        Route::post('/add', 'StateController@add')->name('stateAdd')->middleware('auth');
+        Route::put('/update', 'StateController@show')->name('stateUpdate')->middleware('auth');
     });
 
 Route::group(['prefix'=>'city/', 'namespace'=>'Api', 'middleware'=>['cors']],

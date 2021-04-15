@@ -9,8 +9,7 @@ const AdminAddState = ()=>{
     const [utils] = useContext(UtilsContext);
     const [dataCreated, setDataCreated] = useState(false);
     const [feedback, setFeedback] = useState({active: false, message : '', status : ''});
-    const [formState, setFormState] = useState({name:''});
-    const {id} = useParams();
+    const [formState, setFormState] = useState({uf:'', name:''});
     const bearerToken = CommonCredentials.accessToken;
     const exceptions = ['created_at', 'updated_at'];
     const labels = { uf : 'Uf', name : 'Nome'};
@@ -42,13 +41,13 @@ const AdminAddState = ()=>{
 
         if(!dataCreated){
             const params = {
-                url : CommonUrls.categoryAdd,
+                url : CommonUrls.stateAdd,
                 labels : labels,
                 exceptions : exceptions,
                 formState : formState,
                 setFeedback :setFeedback,
                 bearerToken : bearerToken,
-                id : id,
+                id : null,
                 setMyStates : setMyStates
             }
 

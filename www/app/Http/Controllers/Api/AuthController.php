@@ -92,7 +92,6 @@ class AuthController
                 'roleId' => $result[0]->role_id,
             ];
         }
-
         return null;
     }
 

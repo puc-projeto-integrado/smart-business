@@ -45,6 +45,7 @@ export const CommonUrls = {
             favoritesDelete: `${baseUrlApi}/favorites/delete`,
             favoritesAdd: `${baseUrlApi}/favorites/add`,
             uf: `${baseUrlApi}/state`,
+            stateAdd: `${baseUrlApi}/state/add`,
             citiesByState: `${baseUrlApi}/city/state`,
             business: `${baseUrlApi}/business`,
             businessHighlight: `${baseUrlApi}/business/highlight`,

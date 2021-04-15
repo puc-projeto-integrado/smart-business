@@ -62,6 +62,11 @@ const ManageCategory = ()=>{
                 <div className="col-sm-12 col-md-12  pt-5">
                     <h2>Gerenciar Categorias</h2>
                     {itemWasDeleted ? <Feedback params={feedback}/> : ''}
+                    <div className="row">
+                        <div className="col-md-12" style={{textAlign:"right"}}>
+                            <a href="/admin/category/add" className="btn btn-primary mt-3"><em className="fa fa-plus"></em> Criar registro</a>
+                        </div>
+                    </div>
                     {output}
                 </div>
             </div>

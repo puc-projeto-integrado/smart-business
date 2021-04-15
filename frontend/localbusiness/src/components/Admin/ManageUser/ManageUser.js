@@ -71,6 +71,11 @@ const ManageUser = ()=>{
                 <div className="col-sm-12 col-md-12  pt-5">
                     <h2>Gerenciar Usuários</h2>
                     <Feedback params={feedback}/>
+                    <div className="row">
+                        <div className="col-md-12" style={{textAlign:"right"}}>
+                            <a href="/admin/user/add" className="btn btn-primary mt-3"><em className="fa fa-plus"></em> Criar registro</a>
+                        </div>
+                    </div>
                     {output}
                 </div>
             </div>

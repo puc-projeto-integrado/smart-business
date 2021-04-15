@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
-use Doctrine\DBAL\Query\QueryException;
+use Exception;
+use Illuminate\Database\QueryException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -37,6 +38,27 @@ class StateController extends Controller
             return Response::json(['status'=>200, 'message'=>'saved'], 200);
         }catch (QueryException | Exception $e){
             return Response::json(['message'=>'failed', 'reason'=>$e->getMessage()], 422);
+        }
+    }
+
+    public function update(Request $request)
+    {
+        if (!isset($request->id) || empty($request->id)){
+            return Response::json(['status'=>'failed', 'reason'=>'id is null'], 400);
+        }
+
+        $updateData = [];
+        $updateData["id"] = $request->id;
+
+        foreach ($request->request as $key => $value) {
+            $updateData[$key] = $value;
+        }
+
+        try {
+            State::where('id', $request->id)->update($updateData);
+            return Response::json(['status'=>'success'], 200);
+        }catch(QueryException | Exception $e){
+            return Response::json(['status'=>'failed', 'reason'=>$e->getMessage()], 422);
         }
     }
 }
