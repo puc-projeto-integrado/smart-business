@@ -1,3 +1,10 @@
+Build process completed successfully
+Installing '/usr/local/lib/php/extensions/no-debug-non-zts-20190902/xdebug.so'
+install ok: channel://pecl.php.net/xdebug-3.0.4
+configuration option "php_ini" is not set to php.ini location
+You should add "zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-20190902/xdebug.so" to php.ini
+
+
 <p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
 
 <p align="center">

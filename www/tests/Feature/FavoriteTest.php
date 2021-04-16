@@ -3,28 +3,59 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Fixture;
+use Tests\TestConstants;
 
 class FavoriteTest extends TestCase
 {
+    private Fixture $fixture;
 
-    private static $base = '/api/favorites';
-
-    public function testFavorites()
+    public function setUp(): void
     {
-        $response = $this->get($this::$base.'/6');
+        parent::setUp();
+        $this->fixture = new Fixture();
+    }
+
+    public function testUser()
+    {
+        $response = $this->get('/api/user/');
+        $response->assertStatus(401);
+
+        $response = $this->json(
+            'GET',
+            '/api/user/',
+            [],
+            ['Authorization' => 'Bearer '.$this->fixture->getToken()]
+        );
+        $response->assertStatus(200);
+    }
+
+    public function testUserDetail()
+    {
+        $response = $this->get('/api/user/1');
+        $response->assertStatus(401);
+
+        $response = $this->json(
+            'GET',
+            '/api/user/1',
+            [],
+            ['Authorization' => 'Bearer '.$this->fixture->getToken()]
+        );
+        $response->assertStatus(200);
+
+        $content = json_decode($response->content(), false);
+        $this->assertEquals(3, count((array)$content[0]));
+    }
+
+    public function testUserUpdate()
+    {
+        $response = $this->get('/api/user/update');
         $response->assertStatus(401);
     }
 
-    public function testFavoritesAdd()
+    public function testUserDelete()
     {
-        $response = $this->post($this::$base.'/add');
-        $response->assertStatus(401);
-    }
-
-    public function testFavoritesDelete()
-    {
-        $response = $this->delete($this::$base.'/delete');
+        $response = $this->get('/api/user/delete');
         $response->assertStatus(401);
     }
 }

@@ -80,10 +80,6 @@ class BusinessController extends Controller
         return $this->jsonResponseinUtf8($result);
     }
 
-    public function foo($id){
-        return $id;
-    }
-
     public function highlights(Request $request){
         $business = Business::where('highlight','S')
         ->select($this->defaultFields)
@@ -94,11 +90,10 @@ class BusinessController extends Controller
     }
 
     public function add(Request $request){
-
         $business = new Business;
         $exceptionalFields = ['id'];
 
-        foreach ($_POST as $key => $value) {
+        foreach ($request->request as $key => $value) {
             if (!in_array($key, $exceptionalFields, true)) {
                 $business->$key = $value;
             }
@@ -106,10 +101,9 @@ class BusinessController extends Controller
 
         try{
             $business->save();
-            return Response::json(['status'=>200, 'message'=>'saved'], 200);
-
+            $lastInsertedId = $business->id;
+            return Response::json(['status'=>200, 'message'=>'saved', 'id'=>$lastInsertedId], 200);
         }catch (QueryException | Exception $e){
-            //return Response::json(['status'=>'saved'], 200);
             return Response::json(['message'=>'failed', 'reason'=>$e->getMessage()], 422);
         }
     }
