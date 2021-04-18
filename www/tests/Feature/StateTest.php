@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use Tests\Fixture;
 use Tests\TestConstants;
+use App\State;
 
 class StateTest extends TestCase
 {
@@ -16,46 +17,47 @@ class StateTest extends TestCase
         $this->fixture = new Fixture();
     }
 
-    public function testUser()
+    public function testState()
     {
-        $response = $this->get('/api/user/');
-        $response->assertStatus(401);
-
-        $response = $this->json(
-            'GET',
-            '/api/user/',
-            [],
-            ['Authorization' => 'Bearer '.$this->fixture->getToken()]
-        );
+        $response = $this->get('/api/state/');
         $response->assertStatus(200);
     }
 
-    public function testUserDetail()
+    public function testStateDetail()
     {
-        $response = $this->get('/api/user/1');
-        $response->assertStatus(401);
-
-        $response = $this->json(
-            'GET',
-            '/api/user/1',
-            [],
-            ['Authorization' => 'Bearer '.$this->fixture->getToken()]
-        );
+        $response = $this->get('/api/state/5');
         $response->assertStatus(200);
-
-        $content = json_decode($response->content(), false);
-        $this->assertEquals(3, count((array)$content[0]));
     }
 
-    public function testUserUpdate()
+    public function testStateAdd()
     {
-        $response = $this->get('/api/user/update');
+        $url = '/api/state/add';
+        $response = $this->post($url);
         $response->assertStatus(401);
+
+        $postContent = ['name'=>'State Test'];
+        $this->withHeaders($this->fixture->getHeaders())->post($url, $postContent)->assertStatus(200);
+        $this->withHeaders($this->fixture->getHeaders())->post($url, ['foo'=>'foo'])->assertStatus(422);
     }
 
-    public function testUserDelete()
+    public function testStateUpdate()
     {
-        $response = $this->get('/api/user/delete');
+        $url = '/api/state/update';
+        $response = $this->put($url);
+        $response->assertStatus(401);
+        $lastId = $this->fixture->getLastId(new State());
+        $postContent = [
+            'id' => $lastId,
+            'name'=>'State Test Updated',
+        ];
+        $this->withHeaders($this->fixture->getHeaders())->put($url, $postContent)->assertStatus(200);
+        $this->withHeaders($this->fixture->getHeaders())->put($url, [])->assertStatus(400);
+        $this->withHeaders($this->fixture->getHeaders())->put($url, ['id'=>$lastId, 'foo'=>'foo'])->assertStatus(422);
+    }
+
+    public function testStateDelete()
+    {
+        $response = $this->delete('/api/state/delete');
         $response->assertStatus(401);
     }
 }

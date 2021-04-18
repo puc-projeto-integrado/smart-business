@@ -7,7 +7,6 @@ use Illuminate\Database\QueryException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests;
 use App\State;
 use Illuminate\Support\Facades\Response;
 
@@ -28,15 +27,15 @@ class StateController extends Controller
         $state = new State;
         $exceptionalFields = ['id'];
 
-        foreach ($_POST as $key => $value) {
+        foreach ($request->request as $key => $value) {
             if (!in_array($key, $exceptionalFields, true))
                 $state->$key = $value;
         }
 
-        try{
+        try {
             $state->save();
             return Response::json(['status'=>200, 'message'=>'saved'], 200);
-        }catch (QueryException | Exception $e){
+        }catch (QueryException | \Exception $e){
             return Response::json(['message'=>'failed', 'reason'=>$e->getMessage()], 422);
         }
     }

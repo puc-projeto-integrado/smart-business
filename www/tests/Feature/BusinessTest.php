@@ -21,7 +21,6 @@ class BusinessTest extends TestCase
     {
         parent::setUp();
         $this->testHelper = new Fixture();
-
     }
 
     public function testBusiness()
@@ -111,10 +110,10 @@ class BusinessTest extends TestCase
             'Content-Type' => 'application/x-www-form-urlencoded'
         ];
 
-        $lastInsertedId = Business::orderBy('id', 'DESC')->first();
+        $lastId = Business::orderBy('id', 'DESC')->first();
 
         $postContent = [
-            'id' => $lastInsertedId->id,
+            'id' => $lastId->id,
             'name'=>'Foo Test Updated',
             'description'=>'Test description Updated',
             'city_id'=>456,

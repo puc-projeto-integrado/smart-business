@@ -35,7 +35,7 @@ Route::group(['prefix'=>'category/', 'namespace'=>'Api', 'middleware'=>['cors']]
         Route::get('/{id}', 'CategoryController@show')->name('categoryShow');
         Route::delete('/delete', 'CategoryController@delete')->name('categoryDelete')->middleware('auth');
         Route::put('/update', 'CategoryController@update')->name('categoryUpdate')->middleware('auth');
-        Route::put('/add', 'CategoryController@add')->name('categoryAdd')->middleware('auth');
+        Route::post('/add', 'CategoryController@add')->name('categoryAdd')->middleware('auth');
     });
 
 Route::group(['prefix'=>'favorites/', 'namespace'=>'Api', 'middleware'=>['cors', 'auth']],
@@ -50,7 +50,8 @@ Route::group(['prefix'=>'state/', 'namespace'=>'Api', 'middleware'=>['cors']],
         Route::get('/', 'StateController@index')->name('state');
         Route::get('/{id}', 'StateController@show')->name('stateShow');
         Route::post('/add', 'StateController@add')->name('stateAdd')->middleware('auth');
-        Route::put('/update', 'StateController@show')->name('stateUpdate')->middleware('auth');
+        Route::put('/update', 'StateController@update')->name('stateUpdate')->middleware('auth');
+        Route::delete('/delete', 'StateController@delete')->name('stateDelete')->middleware('auth');
     });
 
 Route::group(['prefix'=>'city/', 'namespace'=>'Api', 'middleware'=>['cors']],
@@ -65,10 +66,10 @@ Route::group(['namespace'=>'Api', 'middleware'=>['cors']],
         Route::get('/oauth', 'FooController@index')->name('category');
     });
 
-Route::group(['prefix'=>'user/', 'namespace'=>'Api', 'middleware'=>['cors']],
+Route::group(['prefix'=>'user/', 'namespace'=>'Api', 'middleware'=>['cors', 'auth']],
     function() {
-        Route::get('/', 'UserController@index')->name('userList')->middleware('auth');
-        Route::get('/{id}', 'UserController@detail')->name('userDetail')->middleware('auth');
+        Route::get('/', 'UserController@index')->name('userList');
+        Route::get('/{id}', 'UserController@detail')->name('userDetail');
         Route::delete('/delete', 'UserController@delete')->name('userDelete');
         Route::put('/update', 'UserController@update')->name('userUpdate');
         Route::post('/add/', 'AuthController@addUser')->name('userAdd');

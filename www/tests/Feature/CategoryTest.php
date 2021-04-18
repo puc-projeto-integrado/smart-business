@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Category;
+use Illuminate\Database\Eloquent\Model;
 use Tests\TestCase;
 use Tests\Fixture;
 use Tests\TestConstants;
@@ -16,46 +18,51 @@ class CategoryTest extends TestCase
         $this->fixture = new Fixture();
     }
 
-    public function testUser()
+    public function testCategory()
     {
-        $response = $this->get('/api/user/');
-        $response->assertStatus(401);
-
-        $response = $this->json(
-            'GET',
-            '/api/user/',
-            [],
-            ['Authorization' => 'Bearer '.$this->fixture->getToken()]
-        );
+        $response = $this->get('/api/category/');
         $response->assertStatus(200);
     }
 
-    public function testUserDetail()
+    public function testCategoryDetail()
     {
-        $response = $this->get('/api/user/1');
-        $response->assertStatus(401);
-
-        $response = $this->json(
-            'GET',
-            '/api/user/1',
-            [],
-            ['Authorization' => 'Bearer '.$this->fixture->getToken()]
-        );
+        $response = $this->get('/api/category/1');
         $response->assertStatus(200);
-
-        $content = json_decode($response->content(), false);
-        $this->assertEquals(3, count((array)$content[0]));
     }
 
-    public function testUserUpdate()
-    {
-        $response = $this->get('/api/user/update');
+    public function testCategoryAdd(){
+        $url = '/api/category/add';
+        $response = $this->json('POST', $url);
         $response->assertStatus(401);
+
+        $postContent = ['name'=>'Category Test'];
+        $this->json('POST', $url, [], $this->fixture->getHeaders())->assertStatus(400);
+        $this->withHeaders($this->fixture->getHeaders())->post($url, $postContent)->assertStatus(200);
+    }
+
+    public function testCategoryUpdate()
+    {
+        $url = '/api/category/update';
+        $response = $this->put($url);
+        $response->assertStatus(401);
+
+        $postContent = [
+            'id' => $this->fixture->getLastId(new Category()),
+            'name'=>'Cat Test Updated',
+        ];
+        $this->withHeaders($this->fixture->getHeaders())->put($url, $postContent)->assertStatus(200);
+        $this->withHeaders($this->fixture->getHeaders())->put($url, [])->assertStatus(400);
     }
 
     public function testUserDelete()
     {
-        $response = $this->get('/api/user/delete');
+        $url = '/api/category/delete';
+        $response = $this->delete($url);
         $response->assertStatus(401);
+
+        $postContent = ['id' => $this->fixture->getLastId(new Category())];
+
+        $this->withHeaders($this->fixture->getHeaders())->delete($url, $postContent)->assertStatus(200);
+        $this->withHeaders($this->fixture->getHeaders())->delete($url, [])->assertStatus(400);
     }
 }

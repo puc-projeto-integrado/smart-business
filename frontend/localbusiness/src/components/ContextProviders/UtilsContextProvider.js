@@ -37,7 +37,7 @@ console.log('urlencoded ', urlencoded)
 
     const handleSubmit = (event, params)=>{
         let canProceed = true;
-        let method = (params.method) ? 'POST' : 'POST';
+        let method = (params.method) ? params.method : 'POST';
 
         Object.keys(params.formState).forEach((key)=>{
             if(!params.formState[key] && !listContains(params.exceptions, key)){

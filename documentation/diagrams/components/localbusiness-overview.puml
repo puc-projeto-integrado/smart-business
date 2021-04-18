@@ -1,0 +1,59 @@
+@startuml
+title OVERVIEW
+skinparam component{
+  BackgroundColor lightgray
+}
+
+database MySql as MySql
+interface "App Rest API" as appApi
+interface HTTP as Http
+
+cloud CloudFlare as CloudFlare
+
+node FRONTEND as Frontend{
+
+component "ReactJs App" as App{
+
+        component Router as Router
+        component Header as Header
+        component Content as Content{
+'                component "Data Grid" as DataGrid
+'                component "Dashboard" as Dashboard
+'                component "Master Table" as MasterTable{
+'                    component "Table Actions" as TableActions
+'                }
+
+        }
+        component Sidebar as Sidebar
+        component Footer as Footer
+        component Loader as Loader
+
+    }
+}
+note right of CloudFlare
+CloudFlare é um serviço
+que combina Proxy, Cache e CDN.
+end note
+
+node BACKEND as backend{
+    component "Laravel App" as "Laravel"{
+        component Login as Login
+        component Authentication as Authentication
+        component Business as Business
+        component State as State
+        component City as City
+        component Category as Category
+        component Review as Review
+        component Stats as Stats
+        component User as User
+        component OAuth as OAuth
+    }
+}
+interface "Data Access" as DataAccess
+CloudFlare -- App
+App -r..> Http : uses
+Http -r..> appApi : uses
+appApi ..> Laravel : uses
+Laravel ..> DataAccess
+DataAccess -- MySql
+@enduml

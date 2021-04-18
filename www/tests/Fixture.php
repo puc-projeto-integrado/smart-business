@@ -15,6 +15,17 @@ class Fixture{
         $this->constants  = new TestConstants();
     }
 
+    public function getLastId($entity){
+        return $entity::orderBy('id', 'DESC')->first()->id;
+    }
+
+    public function getHeaders(){
+        return [
+            'Authorization' => 'Bearer '.$this->getToken(),
+            'Content-Type' => 'application/x-www-form-urlencoded'
+        ];
+    }
+
     public function getToken(){
         $client = new Client();
         $this->tokenUrl = URL::to('/').'/public/api/login';

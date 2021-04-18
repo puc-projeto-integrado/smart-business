@@ -16,46 +16,35 @@ class CityTest extends TestCase
         $this->fixture = new Fixture();
     }
 
-    public function testUser()
+    public function testCity()
     {
-        $response = $this->get('/api/user/');
-        $response->assertStatus(401);
-
-        $response = $this->json(
-            'GET',
-            '/api/user/',
-            [],
-            ['Authorization' => 'Bearer '.$this->fixture->getToken()]
-        );
-        $response->assertStatus(200);
+        $this->get('/api/city/')->assertStatus(200);
+    }
+    public function testCityByState()
+    {
+        $this->get('/api/city/state/19')->assertStatus(200);
     }
 
-    public function testUserDetail()
-    {
-        $response = $this->get('/api/user/1');
-        $response->assertStatus(401);
-
-        $response = $this->json(
-            'GET',
-            '/api/user/1',
-            [],
-            ['Authorization' => 'Bearer '.$this->fixture->getToken()]
-        );
-        $response->assertStatus(200);
-
-        $content = json_decode($response->content(), false);
-        $this->assertEquals(3, count((array)$content[0]));
-    }
-
-    public function testUserUpdate()
-    {
-        $response = $this->get('/api/user/update');
-        $response->assertStatus(401);
-    }
-
-    public function testUserDelete()
-    {
-        $response = $this->get('/api/user/delete');
-        $response->assertStatus(401);
-    }
+//    public function testCityDetail()
+//    {
+//        $this->get('/api/city/207')->assertStatus(200);
+//    }
+//
+//    public function testCityAdd()
+//    {
+//        $response = $this->get('/api/city/add');
+//        $response->assertStatus(401);
+//    }
+//
+//    public function testCityUpdate()
+//    {
+//        $response = $this->get('/api/city/update');
+//        $response->assertStatus(401);
+//    }
+//
+//    public function testCityrDelete()
+//    {
+//        $response = $this->get('/api/city/delete');
+//        $response->assertStatus(401);
+//    }
 }

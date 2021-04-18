@@ -20,6 +20,20 @@ class CategoryController extends Controller
         return $this->jsonResponseinUtf8($category);
     }
 
+    public function add(Request $request){
+        if (!isset($request->name) || empty($request->name)){
+            return Response::json(['status'=>'failed', 'reason'=>'name is null'], 400);
+        }
+        try {
+            $category = new Category;
+            $category->name = $request->name;
+            $category->save();
+            return Response::json(['status'=>'success', 'id'=>$request->id], 200);
+        }catch(QueryException | \Exception $e){
+            return Response::json(['status'=>'failed', 'reason'=>$e->getMessage()], 422);
+        }
+    }
+
     public function update(Request $request){
         if (!isset($request->id) || empty($request->id)){
             return Response::json(['status'=>'failed', 'reason'=>'id is null'], 400);
@@ -30,20 +44,6 @@ class CategoryController extends Controller
         try {
             Category::where('id', $request->id)->update($updateData);
             return Response::json(['status'=>'success'], 200);
-        }catch(QueryException $e){
-            return Response::json(['status'=>'failed', 'reason'=>$e->getMessage()], 422);
-        }
-    }
-
-    public function add(Request $request){
-        if (!isset($request->name) || empty($request->name)){
-            return Response::json(['status'=>'failed', 'reason'=>'name is null'], 400);
-        }
-        try {
-            $category = new Category;
-            $category->name = $request->name;
-            $category->save();
-            return Response::json(['status'=>'success', 'id'=>$request->id], 200);
         }catch(QueryException $e){
             return Response::json(['status'=>'failed', 'reason'=>$e->getMessage()], 422);
         }

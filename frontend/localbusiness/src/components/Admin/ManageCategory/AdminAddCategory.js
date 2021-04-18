@@ -49,7 +49,8 @@ const AdminAddCategory = ()=>{
                 setFeedback :setFeedback,
                 bearerToken : bearerToken,
                 id : id,
-                setMyStates : setMyStates
+                setMyStates : setMyStates,
+                method : 'POST'
             }
 
             output = (

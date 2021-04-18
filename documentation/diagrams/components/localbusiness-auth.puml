@@ -1,0 +1,32 @@
+@startuml
+
+title AUTHENTICATION
+skinparam component{
+  BackgroundColor lightgray
+}
+
+'component Dashboard as DB
+control "Authentication\nHandler" as AuthHandler
+database MySQL as mysql
+interface HTTP as HTTP
+interface "App API" as LBA
+interface "Linkedin API" as LAPI
+
+[Login] -d..> HTTP :uses
+HTTP -r..> LBA :uses
+LBA -r..> AuthHandler :uses
+component "ViewHandler" as ViewHandler
+
+component AUTHENTICATION as AUTH_COMP{
+    interface Authentication as Auth
+    component Oauth as OA
+    component User as U
+    AuthHandler -d..> Auth :uses
+    Auth -d..> OA :uses
+    Auth -d..> U :uses
+    Auth -d..> LAPI :uses
+    Auth -r..> mysql : uses
+
+}
+[Login] -> ViewHandler
+@enduml
