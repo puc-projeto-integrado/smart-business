@@ -20,8 +20,6 @@ class AuthController
 {
 
     private $baseUrl;
-    //private $tokenUrl = 'http://localhost/public/oauth/token';
-    //http://puc-api.gabrielguerra.me
     private $tokenUrl;
 
     public function __construct(){
@@ -41,12 +39,13 @@ class AuthController
             if(!$credentials){
                 return $this->sendHttpStatusCode(401, 'Unauthorized - step 2.');
             }
-
             $content = $this->getBearerToken($credentials['oauthClientId'], $credentials['secret'], $request->email, $request->password);
             $content = json_decode($content, false);
             $content->name = $credentials['name'];
+//            return $this->sendHttpStatusCode(500, Null, $content->name);
             $content->id = $credentials['id'];
             $content->roleId = $credentials['roleId'];
+
             return $this->sendHttpStatusCode(200, Null, $content);
         }
         return $this->sendHttpStatusCode(401, 'Unauthorized - step 1.');
@@ -73,7 +72,7 @@ class AuthController
         return Response::json($params, $status);
     }
 
-    private function getCredentials(string $email)
+    public function getCredentials(string $email)
     {
         try {
             $result = User::where('email', $email)
@@ -95,13 +94,18 @@ class AuthController
         return null;
     }
 
-    private function getBearerToken($oauthClientId, $secret, $email, $password): String
+    public function getBearerToken($oauthClientId, $secret, $email, $password, $customUrl=Null): String
     {
 
         $client = new Client();
+        $url = $this->tokenUrl;
+
+        if($customUrl){
+            $url = $customUrl;
+        }
 
         try {
-            $response = $client->post($this->tokenUrl, [
+            $response = $client->post($url, [
                 'form_params' => [
                     'grant_type' => 'password',
                     'client_id' => $oauthClientId,
@@ -125,7 +129,7 @@ class AuthController
     private function clientExceptionHandler(ClientException $exception): JsonResponse
     {
         if ($exception->hasResponse() && $exception->getResponse()) {
-            return $this->sendHttpStatusCode('ERROR', $exception->getResponse()->getStatusCode(), $exception->getResponse()->getReasonPhrase());
+            return $this->sendHttpStatusCode(500, $exception->getResponse()->getStatusCode(), $exception->getResponse()->getReasonPhrase());
         }
         return $this->sendHttpStatusCode(422, 'Unprocessable Entity.', $exception->getMessage());
     }

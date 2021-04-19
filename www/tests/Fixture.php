@@ -35,8 +35,11 @@ class Fixture{
                 'password' => $this->constants::adminPassword
             ]
         ]);
+
         $content = $response->getBody();
         $content = json_decode($content->getContents(), false);
+//        var_dump($content->message->access_token);
         return $content->body->access_token;
+//        return $content->message->access_token;
     }
 }

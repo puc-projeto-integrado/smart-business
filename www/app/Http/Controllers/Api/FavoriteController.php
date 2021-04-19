@@ -38,16 +38,16 @@ class FavoriteController extends Controller{
 
     public function delete(Request $request){
 
-        $userId = $request->user_id;
-        $businessItemId = $request->business_id;
-        try {
-            Favorite::where('user_id', $userId)
-                ->where('business_id', $businessItemId)
-                ->forceDelete();
-            return Response::json(['status'=>$businessItemId], 200);
-        }catch(QueryException $e){
-            return Response::json(['status'=>'failed', 'reason'=>$e->getMessage()], 422);
+        if (empty($request->user_id) || !isset($request->user_id)) {
+            return Response::json(['status'=>'failed', 'reason'=>'id is null'], 400);
         }
 
+        $userId = $request->user_id;
+        $businessItemId = $request->business_id;
+
+        Favorite::where('user_id', $userId)
+            ->where('business_id', $businessItemId)
+            ->forceDelete();
+        return Response::json(['status'=>$businessItemId], 200);
     }
 }

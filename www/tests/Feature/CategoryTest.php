@@ -38,6 +38,7 @@ class CategoryTest extends TestCase
         $postContent = ['name'=>'Category Test'];
         $this->json('POST', $url, [], $this->fixture->getHeaders())->assertStatus(400);
         $this->withHeaders($this->fixture->getHeaders())->post($url, $postContent)->assertStatus(200);
+        $this->withHeaders($this->fixture->getHeaders())->post($url, $postContent)->assertStatus(422);
     }
 
     public function testCategoryUpdate()

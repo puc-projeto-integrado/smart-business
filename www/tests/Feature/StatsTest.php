@@ -16,46 +16,34 @@ class StatsTest extends TestCase
         $this->fixture = new Fixture();
     }
 
-    public function testUser()
+    public function testStatsCategory()
     {
-        $response = $this->get('/api/user/');
-        $response->assertStatus(401);
-
-        $response = $this->json(
-            'GET',
-            '/api/user/',
-            [],
-            ['Authorization' => 'Bearer '.$this->fixture->getToken()]
-        );
+        $response = $this->get('/api/stats/category');
         $response->assertStatus(200);
     }
 
-    public function testUserDetail()
+    public function testStatsCity()
     {
-        $response = $this->get('/api/user/1');
-        $response->assertStatus(401);
-
-        $response = $this->json(
-            'GET',
-            '/api/user/1',
-            [],
-            ['Authorization' => 'Bearer '.$this->fixture->getToken()]
-        );
+        $response = $this->get('/api/stats/city');
         $response->assertStatus(200);
-
-        $content = json_decode($response->content(), false);
-        $this->assertEquals(3, count((array)$content[0]));
     }
 
-    public function testUserUpdate()
+    public function testStatsState()
     {
-        $response = $this->get('/api/user/update');
-        $response->assertStatus(401);
+        $response = $this->get('/api/stats/state');
+        $response->assertStatus(200);
     }
 
-    public function testUserDelete()
+    public function testStatsFavorite()
     {
-        $response = $this->get('/api/user/delete');
-        $response->assertStatus(401);
+        $response = $this->get('/api/stats/favorite');
+        $response->assertStatus(200);
     }
+
+    public function testStatsRegister()
+    {
+        $response = $this->get('/api/stats/register');
+        $response->assertStatus(200);
+    }
+
 }

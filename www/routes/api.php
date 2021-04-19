@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 //    return $request->user();
 //});
 
+// BUSINESS
 Route::group(['prefix'=>'business/', 'namespace'=>'Api', 'middleware'=>['cors']],
     function(){
         Route::get('/', 'BusinessController@index')->name('business');
@@ -20,6 +21,7 @@ Route::group(['prefix'=>'business/', 'namespace'=>'Api', 'middleware'=>['cors']]
         Route::put('/update', 'BusinessController@update')->name('businessUpdate')->middleware('auth');
     });
 
+// STATS
 Route::group(['prefix'=>'stats/', 'namespace'=>'Api', 'middleware'=>['cors']],
     function() {
         Route::get('/category', 'StatsController@byCategory')->name('statsByCategory');
@@ -29,6 +31,7 @@ Route::group(['prefix'=>'stats/', 'namespace'=>'Api', 'middleware'=>['cors']],
         Route::get('/register', 'StatsController@byRegisters')->name('statsByRegisters');
     });
 
+// CATEGORY
 Route::group(['prefix'=>'category/', 'namespace'=>'Api', 'middleware'=>['cors']],
     function() {
         Route::get('/', 'CategoryController@index')->name('category');
@@ -38,6 +41,7 @@ Route::group(['prefix'=>'category/', 'namespace'=>'Api', 'middleware'=>['cors']]
         Route::post('/add', 'CategoryController@add')->name('categoryAdd')->middleware('auth');
     });
 
+// FAVORITE
 Route::group(['prefix'=>'favorites/', 'namespace'=>'Api', 'middleware'=>['cors', 'auth']],
     function(){
         Route::get('/{id}', 'FavoriteController@show')->name('favoritesShow');
@@ -45,6 +49,7 @@ Route::group(['prefix'=>'favorites/', 'namespace'=>'Api', 'middleware'=>['cors',
         Route::delete('/delete', 'FavoriteController@delete')->name('favoritesDelete');
     });
 
+// STATE
 Route::group(['prefix'=>'state/', 'namespace'=>'Api', 'middleware'=>['cors']],
     function() {
         Route::get('/', 'StateController@index')->name('state');
@@ -54,6 +59,7 @@ Route::group(['prefix'=>'state/', 'namespace'=>'Api', 'middleware'=>['cors']],
         Route::delete('/delete', 'StateController@delete')->name('stateDelete')->middleware('auth');
     });
 
+// CITY
 Route::group(['prefix'=>'city/', 'namespace'=>'Api', 'middleware'=>['cors']],
     function() {
         Route::get('/', 'CityController@index')->name('city');

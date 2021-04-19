@@ -60,4 +60,17 @@ class StateController extends Controller
             return Response::json(['status'=>'failed', 'reason'=>$e->getMessage()], 422);
         }
     }
+
+    public function delete(Request $request){
+        if (!isset($request->id) || empty($request->id)){
+            return Response::json(['status'=>'failed', 'reason'=>'id is null'], 400);
+        }
+
+        try {
+            State::where('id', $request->id)->forceDelete();
+            return Response::json(['status'=>'success'], 200);
+        }catch(QueryException | Exception $e){
+            return Response::json(['status'=>'failed', 'reason'=>$e->getMessage()], 422);
+        }
+    }
 }

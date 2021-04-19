@@ -24,6 +24,11 @@ class CategoryController extends Controller
         if (!isset($request->name) || empty($request->name)){
             return Response::json(['status'=>'failed', 'reason'=>'name is null'], 400);
         }
+
+        if(count(Category::where('name', '=', $request->name)->get()->toArray())>0){
+            return Response::json(['status'=>'Unprocessable Entity.', 'reason'=>'Category already exists.'], 422);
+        }
+
         try {
             $category = new Category;
             $category->name = $request->name;
@@ -54,12 +59,8 @@ class CategoryController extends Controller
             return Response::json(['status'=>'failed', 'reason'=>'id is null'], 400);
         }
 
-        try {
-            Category::where('id', $request->id)->forceDelete();
-            return Response::json(['status'=>'success', 'id'=>$request->id], 200);
-        }catch(QueryException $e){
-            return Response::json(['status'=>'failed', 'reason'=>$e->getMessage()], 422);
-        }
+        Category::where('id', $request->id)->forceDelete();
+        return Response::json(['status'=>'success', 'id'=>$request->id], 200);
     }
 
 }

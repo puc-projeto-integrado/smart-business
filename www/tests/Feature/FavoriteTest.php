@@ -16,46 +16,50 @@ class FavoriteTest extends TestCase
         $this->fixture = new Fixture();
     }
 
-    public function testUser()
+    public function testFavoriteDetail()
     {
-        $response = $this->get('/api/user/');
+        $url = '/api/favorites/12';
+        $response = $this->get($url);
         $response->assertStatus(401);
 
-        $response = $this->json(
-            'GET',
-            '/api/user/',
-            [],
-            ['Authorization' => 'Bearer '.$this->fixture->getToken()]
-        );
+        $headers = $this->fixture->getHeaders();
+        $postContent = [];
+
+        $response = $this->withHeaders($headers)->get($url, $postContent);
         $response->assertStatus(200);
     }
 
-    public function testUserDetail()
+    public function testFavoriteAdd()
     {
-        $response = $this->get('/api/user/1');
+        $url = '/api/favorites/add';
+        $response = $this->get($url);
         $response->assertStatus(401);
 
-        $response = $this->json(
-            'GET',
-            '/api/user/1',
-            [],
-            ['Authorization' => 'Bearer '.$this->fixture->getToken()]
-        );
+        $headers = $this->fixture->getHeaders();
+        $postContent = ['user_id'=>1, 'business_id'=>6261];
+
+        $response = $this->withHeaders($headers)->post($url, $postContent);
         $response->assertStatus(200);
 
-        $content = json_decode($response->content(), false);
-        $this->assertEquals(3, count((array)$content[0]));
+        $response = $this->withHeaders($headers)->post($url, $postContent);
+        $response->assertStatus(422);
     }
 
-    public function testUserUpdate()
+    public function testFavoriteDelete()
     {
-        $response = $this->get('/api/user/update');
+        $url = '/api/favorites/delete';
+        $response = $this->delete($url);
         $response->assertStatus(401);
+
+        $headers = $this->fixture->getHeaders();
+
+        $postContent = [];
+        $response = $this->withHeaders($headers)->delete($url, $postContent);
+        $response->assertStatus(400);
+
+        $postContent = ['user_id'=>1, 'business_id'=>6261];
+        $response = $this->withHeaders($headers)->delete($url, $postContent);
+        $response->assertStatus(200);
     }
 
-    public function testUserDelete()
-    {
-        $response = $this->get('/api/user/delete');
-        $response->assertStatus(401);
-    }
 }

@@ -54,8 +54,7 @@ class UserTest extends TestCase
             'role_id' => 2
         ];
 
-        $this->withHeaders($this->fixture->getHeaders())->put($url, $postContent)->assertStatus(200);
-
+        $this->withHeaders($this->fixture->getHeaders())->post($url, $postContent)->assertStatus(200);
     }
 
     public function testUserUpdate()
@@ -63,11 +62,21 @@ class UserTest extends TestCase
         $url = '/api/user/update';
         $response = $this->put($url);
         $response->assertStatus(401);
+        $lastId = $this->fixture->getLastId(new User());
 
         $postContent = [
-            'id' => 3,
+            'id' =>$lastId,
             'name'=>'User Test Updated',
-            'email'=>'test_email@email.com'
+            'email'=>'test_email_update@email.com'
+        ];
+
+        $this->withHeaders($this->fixture->getHeaders())->put($url, $postContent)->assertStatus(200);
+
+        $postContent = [
+            'id' =>$lastId,
+            'name'=>'User Test Updated',
+            'email'=>'test_email_update@email.com',
+            'password'=>'123'
         ];
         $this->withHeaders($this->fixture->getHeaders())->put($url, $postContent)->assertStatus(200);
         $this->withHeaders($this->fixture->getHeaders())->put($url, [])->assertStatus(400);
@@ -76,7 +85,16 @@ class UserTest extends TestCase
 
     public function testUserDelete()
     {
-        $response = $this->get('/api/user/delete');
+        $url = '/api/user/delete';
+        $response = $this->get($url);
         $response->assertStatus(401);
+
+        $headers = $this->fixture->getHeaders();
+
+        $lastInsertedId = $this->fixture->getLastId(new User());
+        $postContent = ['id' => $lastInsertedId];
+
+        $this->withHeaders($headers)->delete($url, $postContent)->assertStatus(200);
+        $this->withHeaders($headers)->delete($url, [])->assertStatus(400);
     }
 }

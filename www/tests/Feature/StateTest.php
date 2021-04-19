@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Database\Eloquent\Model;
 use Tests\TestCase;
 use Tests\Fixture;
 use Tests\TestConstants;
@@ -57,7 +58,15 @@ class StateTest extends TestCase
 
     public function testStateDelete()
     {
-        $response = $this->delete('/api/state/delete');
+        $url = '/api/state/delete';
+        $response = $this->delete($url);
         $response->assertStatus(401);
+
+        $headers = $this->fixture->getHeaders();
+        $lastInsertedId = $this->fixture->getLastId(new State());
+        $postContent = ['id' => $lastInsertedId];
+
+        $this->withHeaders($headers)->delete($url, $postContent)->assertStatus(200);
+        $this->withHeaders($headers)->delete($url, [])->assertStatus(400);
     }
 }
