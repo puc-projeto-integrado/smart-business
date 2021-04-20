@@ -1,0 +1,37 @@
+@startuml
+left to right direction
+
+Admin as Admin
+User as User
+
+rectangle "PAINEL DE CONTROLE ADMIN" {
+    (Gerenciar Empresas) as GerEmpresas
+    (Gerenciar Estados) as GerEstados
+    (Gerenciar Cidades) as GerCidades
+    (Gerenciar Categorias) as GerCategorias
+    (Gerenciar Usuários) as GerUsuarios
+    (Ver Estatísticas) as VerEstatisticas
+}
+
+rectangle "PAINEL DE CONTROLE USER" {
+    (Cadastrar Empresa) as CadEmpresa
+    (Gerenciar Empresa) as GerEmpresa
+    (Gerenciar Dados) as GerDados
+}
+
+(Ver Empresas) as VerEmpresas
+(Favoritar Empresa) as FavEmpresa
+
+Admin --> GerEmpresas
+Admin --> GerEstados
+Admin --> GerCidades
+Admin --> GerCategorias
+Admin --> GerUsuarios
+Admin --> VerEmpresas
+Admin --> FavEmpresa
+Admin --> VerEstatisticas
+
+User --> VerEmpresas
+User --> CadEmpresa
+User --> FavEmpresa
+@enduml

@@ -1,0 +1,17 @@
+@startuml
+left to right direction
+title "C8. Usuário edita os seus dados de perfil."
+
+User as "Usuário Comum"
+
+rectangle "USUÁRIO AUTENTICADO" {
+    (Editar dados do perfil) as FavEmpresa
+    (Dashboard) as VerEmpresas
+}
+
+(Login) as Login
+
+User -r--> Login
+Login --> VerEmpresas
+VerEmpresas --> FavEmpresa
+@enduml

@@ -1,0 +1,16 @@
+@startuml
+left to right direction
+title "C3. Usuário encontra empresa de interesse"
+
+User as "Usuário Comum"
+
+(Ver Empresas) as VerEmpresas
+(Detalhes) as Detalhes
+(Filtrar por Cidade) as Filtrar
+
+User --> VerEmpresas
+VerEmpresas -r--> Filtrar
+Filtrar --> Detalhes
+VerEmpresas --> Detalhes
+
+@enduml

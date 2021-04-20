@@ -1,0 +1,27 @@
+@startuml
+left to right direction
+
+User as "Usuário Comum"
+
+rectangle "USUÁRIO AUTENTICADO" {
+    (Favoritar Empresa) as FavEmpresa
+    (Cadastrar Empresa) as CadEmpresa
+    (Gerenciar Empresa) as GerEmpresa
+    (Gerenciar Dados) as GerDados
+    (Gerenciar Favoritos) as GerFavoritos
+}
+
+(Ver Empresas) as VerEmpresas
+(Registrar-se) as Register
+(Login) as Login
+
+User -d--> VerEmpresas
+User -r--> Register
+User --> Login
+Login --> CadEmpresa
+Login --> FavEmpresa
+Login --> GerEmpresa
+Login --> GerDados
+Login --> GerFavoritos
+
+@enduml

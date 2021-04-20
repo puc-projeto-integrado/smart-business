@@ -1,0 +1,20 @@
+@startuml
+left to right direction
+title "C7. Usuário exclui sua empresa"
+
+User as "Usuário Comum"
+
+rectangle "USUÁRIO AUTENTICADO" {
+    (Editar dados da Empresa) as editar
+    (Excluir Empresa) as excluir
+    (Dashboard) as dashboard
+}
+
+(Login) as Login
+
+User -r--> Login
+
+Login --> dashboard
+dashboard -r--> editar
+editar --> excluir
+@enduml

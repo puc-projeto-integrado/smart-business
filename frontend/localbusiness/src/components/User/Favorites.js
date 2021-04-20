@@ -3,6 +3,7 @@ import BusinessItem from "../Business/BusinessItem";
 import Column from "../Column";
 import { BaseContext } from '../ContextProviders/BaseContextProvider';
 import Loading from "../Loading";
+// import {CommonCredentials, CommonUrls} from "../../Common";
 
 const Favorites = ()=>{
 
@@ -26,7 +27,7 @@ const Favorites = ()=>{
     }
     let columnOutput = <Loading/>;
     if(base.categories) {
-        let categories = base.sortAlphabetically(base.categories);
+        let categories = base.categories;
         columnOutput = <Column categories={categories}/>
     }
     if(base.favorites){

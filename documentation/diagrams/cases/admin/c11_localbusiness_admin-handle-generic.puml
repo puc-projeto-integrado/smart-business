@@ -1,0 +1,30 @@
+@startuml
+left to right direction
+title "C11. Administrador gerencia entidades com Master Table"
+
+Admin as "Administrador do Sistema"
+
+rectangle "PAINEL DE CONTROLE ADMIN" {
+    (Gerenciar Entidade) as handle
+    (Excluir) as delete
+    (Editar) as edit
+    (Listar) as list
+    (Criar) as add
+}
+
+note left of (handle)
+  Este comportamento se
+  repete para as entidades:
+  Estado, Cidade, Categoria e Usuário
+end note
+
+(Login) as login
+
+Admin -r--> login
+login --> handle
+handle --> edit
+handle --> delete
+handle --> list
+handle --> add
+
+@enduml
