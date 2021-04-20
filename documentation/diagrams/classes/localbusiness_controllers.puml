@@ -1,0 +1,138 @@
+@startuml
+title "LocalBusiness - Diagrama de Classes"
+
+class Model
+
+package App {
+
+    class User{
+        # Array fillable
+        # Array hidden
+        # Array casts
+        + Relations oauthClient()
+    }
+    class Favorite{
+        + Collection favoritesUser()
+        + Collection favoriteExists()
+    }
+    class State{
+    }
+    class City{
+    }
+    class Business{
+    }
+    class Category{
+    }
+    class OauthClient{
+    # String table
+    }
+
+    package Http {
+
+        package Controllers {
+
+            class Controller{
+            #jsonResponseinUtf8
+            }
+
+            package API {
+                class UserController{
+                    + JsonResponse index()
+                    + JsonResponse add()
+                    + JsonResponse delete()
+                    + JsonResponse update()
+                }
+
+                class BusinessController{
+                    - Array defaultFields
+                    + JsonResponse index()
+                    + JsonResponse show()
+                    + JsonResponse byState()
+                    + JsonResponse byCity()
+                    + JsonResponse byUser()
+                    + JsonResponse byCategory()
+                    + JsonResponse highlights()
+                    + JsonResponse add()
+                    + JsonResponse delete()
+                    + JsonResponse update()
+                }
+
+                class StateController{
+                    + JsonResponse index()
+                    + JsonResponse add()
+                    + JsonResponse delete()
+                    + JsonResponse update()
+                }
+
+                class CityController{
+                    + JsonResponse index()
+                    + JsonResponse add()
+                    + JsonResponse delete()
+                    + JsonResponse update()
+                    + JsonResponse citiesByState()
+                }
+
+                class CategoryController{
+                    + JsonResponse index()
+                    + JsonResponse add()
+                    + JsonResponse delete()
+                    + JsonResponse update()
+                }
+
+                class StatsController{
+                    + JsonResponse byCategory()
+                    + JsonResponse byCity()
+                    + JsonResponse byState()
+                    + JsonResponse byFavorite()
+                    + JsonResponse byRegister()
+                }
+
+                class FavoriteController {
+                    + show()
+                    + add()
+                    + delete()
+                }
+
+                class AuthController{
+                    - baseUrl
+                    - tokenUrl
+                    - Boolean validate()
+                    - JsonResponse clientExceptionHandler()
+                    + construct()
+                    + JsonResponse login()
+                    + JsonResponse sendHttpStatusCode()
+                    + Array getCredentials()
+                    + String getBearerToken()
+                    + JsonResponse addUser()
+                }
+            }
+        }
+    }
+}
+
+Controller <|-- UserController
+Controller <|-- BusinessController
+Controller <|-- StateController
+Controller <|-- CityController
+Controller <|-- CategoryController
+Controller <|-- FavoriteController
+Controller <|-- StatsController
+
+User *---u UserController
+Business *---u BusinessController
+Favorite *---u FavoriteController
+Category *---u CategoryController
+State *---u StateController
+City *---u CityController
+OauthClient *---u AuthController
+Business *---u StatsController
+
+Model <|---u OauthClient
+Model <|---u State
+Model <|---u City
+Model <|---u Category
+Model <|---u Favorite
+Model <|---u User
+Model <|---u Business
+
+@enduml

@@ -27,7 +27,7 @@ const Dashboard = (props)=>{
                         <a href="/admin/business" className="btn btn-secondary btn-block mt-3"><em className="fa fa-cogs"></em> GERENCIAR EMPRESAS</a>
                     </div>
                     <div>
-                        <a href="/admin/stats" className="btn btn-secondary btn-block mt-3"><em className="fa fa-eye"></em> STATÍSTICAS</a>
+                        <a href="/admin/stats" className="btn btn-secondary btn-block mt-3"><em className="fa fa-eye"></em> ESTATÍSTICAS</a>
                     </div>
                 </>
             )
