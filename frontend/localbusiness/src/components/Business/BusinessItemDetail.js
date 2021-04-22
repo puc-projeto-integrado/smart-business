@@ -3,7 +3,8 @@ import React from 'react';
 const BusinessItemDetail = (props)=>{
     
     let business = props.business;
-    
+    // console.log(business);
+
     const rightCase = (str)=>{
 
         let words = str.split(" ");
@@ -24,8 +25,7 @@ const BusinessItemDetail = (props)=>{
     const BlockWebsite = (props)=>{
         return (
             <div>
-                <h5 className="mt-5"><em className="fa fa-globe gray-2"></em> Website</h5>
-                <a href={props.business.website} title={rightCase(props.business.name)}>{props.business.website}</a>
+                <h6 className=""><em className="fa fa-globe gray-2"></em> <a href={props.business.website} title={rightCase(props.business.name)}>{props.business.website}</a></h6>
             </div>
         );
     }
@@ -33,8 +33,8 @@ const BusinessItemDetail = (props)=>{
     const BlockAddress = (props)=>{
         return (
             <div>
-                <h5><em className="fa fa-map-marker gray-2"></em> Endereço</h5>
-                {rightCase(business.address)}
+                <h6><em className="fa fa-map-marker gray-2"></em> {rightCase(business.address)} | {business.cityName}</h6>
+
             </div>
         )
     }
@@ -45,14 +45,22 @@ const BusinessItemDetail = (props)=>{
         )
     }
 
+    const BlockPhone = (props)=>{
+        return (
+            <div>
+                <h6 className="mt-3"><em className="fa fa-phone gray-2"></em> {rightCase(business.phone)}</h6>
+            </div>
+        )
+    }
+
     return (
         <div>
-            <h6>{business.categoryName} em {business.cityName}</h6>
-            <h3>{business.name}</h3>
+            <h4><span className="badge badge-primary">{business.categoryName} em {business.cityName}</span></h4>
+            <h3 className="mt-4">{business.name}</h3>
             <p>{business.description}</p>
 
             <hr className="mt-4 mb-4"/>
-
+            { business.phone ? <BlockPhone business={business}/> : <BlockMessage message="Telefone não informado"/>}
             { business.address ? <BlockAddress business={business}/> : <BlockMessage message="Endereço não informado"/>}            
             { business.website && business.website !== ' ' ? <BlockWebsite business={business}/> : <BlockMessage message="Website não informado"/>}
             

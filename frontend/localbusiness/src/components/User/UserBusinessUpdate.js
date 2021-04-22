@@ -1,12 +1,13 @@
-import React, {useContext, useState} from "react";
-import {BaseContext} from "../../ContextProviders/BaseContextProvider";
-import {UtilsContext} from "../../ContextProviders/UtilsContextProvider";
+import React, {useContext, useState, useEffect} from "react";
+import {BaseContext} from "../ContextProviders/BaseContextProvider";
+import {UtilsContext} from "../ContextProviders/UtilsContextProvider";
 import {useParams} from "react-router";
-import Feedback from "../../Partials/Feedback";
-import Loading from "../../Loading";
-import useGetEntity from "../../Hooks/useGetEntity";
+import Feedback from "../Partials/Feedback";
+import Loading from "../Loading";
+import useGetEntity from "../Hooks/useGetEntity";
+import {CommonCredentials, CommonUrls} from "../Common";
 
-const AdminUpdateCategory = ()=>{
+const UserBusinessUpdate = ()=>{
     const [base] = useContext(BaseContext);
     const [utils] = useContext(UtilsContext);
     const [dataUpdated, setDataUpdated] = useState(false);
@@ -14,17 +15,21 @@ const AdminUpdateCategory = ()=>{
     const [formState, setFormState] = useState(null);
     const {id} = useParams();
     const bearerToken = base.credentials.accessToken;
-    const exceptions = ['created_at', 'updated_at'];
-    const labels = { name : 'Nome'};
+    const exceptions = ['id', 'highlight', 'facebook_address', 'twitter_address', 'ip', 'phone'];
+    const labels = { name : 'Nome', email : 'Email', cnpj : 'CNPJ', website : 'Website', description : 'Descrição', address : 'Endereço', district : 'Bairro', phone : 'Telefone' };
     let rows;
-    let output = <Loading/>;
+    let output;
 
     const deps = {
         bearerToken : bearerToken,
-        url : `${base.urls.categoryDetail}/${id}`,
+        url : `${CommonUrls.businessDetail}/${id}`,
         setInitialFormState : utils.setInitialFormState,
         setInitData : setFormState,
     }
+
+    // useEffect(() => {
+    //     window.scrollTo(0, 0)
+    // }, [])
 
     useGetEntity(deps)
 
@@ -39,7 +44,7 @@ const AdminUpdateCategory = ()=>{
 
     if(formState && !dataUpdated){
         const params = {
-            url : base.urls.categoryUpdate,
+            url : base.urls.businessUpdate,
             labels : labels,
             exceptions : exceptions,
             formState : formState,
@@ -74,6 +79,8 @@ const AdminUpdateCategory = ()=>{
     }else if(formState && dataUpdated){
         window.scrollTo(0, 0);
         output = <Feedback params={feedback}/>
+    }else{
+        output = <Loading/>
     }
 
     return (
@@ -88,4 +95,4 @@ const AdminUpdateCategory = ()=>{
     )
 }
 
-export default AdminUpdateCategory;
+export default UserBusinessUpdate;

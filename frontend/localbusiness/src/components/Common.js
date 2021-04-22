@@ -19,11 +19,22 @@ const sortAlphabetically = (array)=> {
     return array;
 }
 
+const listContains = (list, item)=>{
+    let exists = false;
+    list.forEach((listItem)=>{
+        if(item.trim()===listItem.trim()){
+            exists = true;
+        }
+    })
+    return exists;
+}
+
 const isAuthenticated = ()=> (typeof cookie === 'undefined' || cookie.length === 0) ? false : true;
 const isAdmin = ()=> isAuthenticated() && credentials.roleId===1;
 
 export const CommonFunctions = {
     sortAlphabetically : sortAlphabetically,
+    listContains : listContains,
     isAuthenticated : isAuthenticated,
     isAdmin : isAdmin
 }

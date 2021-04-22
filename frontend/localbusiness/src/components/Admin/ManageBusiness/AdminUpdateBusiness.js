@@ -46,6 +46,7 @@ const AdminUpdateBusiness = ()=>{
             setFeedback :setFeedback,
             bearerToken : bearerToken,
             id : id,
+            method : 'PUT',
             setMyStates : setMyStates
         }
 
@@ -71,6 +72,7 @@ const AdminUpdateBusiness = ()=>{
             </>
         );
     }else if(formState && dataUpdated){
+        window.scrollTo(0, 0);
         output = <Feedback params={feedback}/>
     }else{
         output = <Loading/>

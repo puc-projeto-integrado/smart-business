@@ -31,7 +31,7 @@ const AdminUpdateUser = ()=>{
         if(result.status!==200){
             setFeedback({active: true, message : 'Houve um erro na atualização dos dados.', status:'error'});
         }else{
-            setFeedback({active: true, message : 'Dados atualizadps com sucesso!', status:'success'});
+            setFeedback({active: true, message : 'Dados atualizados com sucesso!', status:'success'});
             setDataUpdated(true);
         }
     }
@@ -49,6 +49,7 @@ const AdminUpdateUser = ()=>{
         setFeedback :setFeedback,
         bearerToken : bearerToken,
         id : id,
+        method : 'PUT',
         setMyStates : setMyStates
     }
 

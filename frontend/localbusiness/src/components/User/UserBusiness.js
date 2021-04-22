@@ -4,6 +4,7 @@ import Loading from "../Loading";
 import {BaseContext} from "../ContextProviders/BaseContextProvider";
 import BusinessItemDetail from "../Business/BusinessItemDetail";
 import Feedback from "../Partials/Feedback";
+import { CommonUrls, CommonCredentials } from "../Common";
 
 const UserBusiness = (props)=>{
 
@@ -13,22 +14,18 @@ const UserBusiness = (props)=>{
     let output;
 
     useEffect(() => {
-        if(base.urls) {
             let businessHeaders = new Headers();
             businessHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-            businessHeaders.append("Authorization", `Bearer ${base.credentials.accessToken}`);
+            businessHeaders.append("Authorization", `Bearer ${CommonCredentials.accessToken}`);
 
-            let requestOptions = {
-                method: 'GET',
-                headers: businessHeaders,
-            };
+            let requestOptions = { method: 'GET', headers: businessHeaders };
 
-            fetch(base.urls.businessByUser, requestOptions)
+            fetch(CommonUrls.businessByUser, requestOptions)
                 .then(response => response.status !== 200 ? null : response.json())
                 .then(data => setBusiness(data))
                 .catch(error => console.log('error', error));
-        }
-    }, [base]);
+
+    }, []);
 
     const removeBusiness = ()=>{
             var myHeaders = new Headers();
@@ -61,10 +58,11 @@ const UserBusiness = (props)=>{
         }
     }
 
-    let columnOutput = <Loading/>;
-    if(base.categories) {
-        columnOutput = <Column categories={base.categories}/>
+    const editBusiness = ()=>{
+        window.location=`/user/business/update/${business.id}`;
     }
+
+    let columnOutput = (base.categories) ? <Column categories={base.categories}/> : <Loading/>
 
     if (business === 'loading') {
         output = <Loading/>
@@ -76,12 +74,14 @@ const UserBusiness = (props)=>{
             description : business.description,
             address : business.address,
             website : business.website,
+            phone : business.phone
         }
 
         output = (
             <>
                 <BusinessItemDetail business={propsObj}/>
                 <div className="mt-5">
+                    <button type="button" onClick={editBusiness} className="btn btn-secondary ml-3"><em className="fa fa-edit"></em> Editar Dados</button>
                     <button type="button" onClick={removeBusiness} className="btn btn-danger ml-3"><em className="fa fa-times"></em> Remover Empresa</button>
                 </div>
             </>

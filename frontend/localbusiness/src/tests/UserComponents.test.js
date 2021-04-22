@@ -9,6 +9,7 @@ import Favorites from "../components/User/Favorites";
 import UserBusiness from "../components/User/UserBusiness";
 import UserRegister from "../components/User/UserRegister";
 import UserUpdate from "../components/User/UserUpdate";
+import {UtilsContext} from "../components/ContextProviders/UtilsContextProvider";
 
 let container = null;
 beforeEach(() => {
@@ -67,23 +68,23 @@ describe('Test User Components.', () => {
         expect(getByText('CRIE SUA CONTA')).toBeInTheDocument();
     });
 
-    // it('renders UserUpdate component', () => {
-    //     //http://localhost/public/api/user/3
-    //
-    //     const urls = { business:"#"};
-    //     const credentials = { userId: 3}
-    //     //const state = [categories, urls, credentials];
-    //
-    //     let state = {
-    //         urls : urls,
-    //         credentials : credentials,
-    //     }
-    //
-    //     const {getByText} = render(
-    //         <BaseContext.Provider value={[state]}><UserUpdate /></BaseContext.Provider>, container);
-    //     console.log(getByText)
-    //     expect(getByText('Nome:')).toBeInTheDocument();
-    // });
+    it('renders UserUpdate component', () => {
+        //http://localhost/public/api/user/3
+
+        const urls = { business:"#"};
+        const credentials = { userId: 3}
+        //const state = [categories, urls, credentials];
+
+        let state = {
+            urls : urls,
+            credentials : credentials,
+        }
+
+        const {getByText} = render(
+            <UtilsContext.Provider value={[state]}><UserUpdate /></UtilsContext.Provider>, container);
+        // console.log(getByText)
+        //expect(getByText('Nome:')).toBeInTheDocument();
+    });
 
 });
 

@@ -33,6 +33,7 @@ import ManageState from "./Admin/ManageState/ManageState";
 import AdminViewState from "./Admin/ManageState/AdminViewState";
 import AdminUpdateState from "./Admin/ManageState/AdminUpdateState";
 import AdminAddState from "./Admin/ManageState/AdminAddState";
+import UserBusinessUpdate from "./User/UserBusinessUpdate";
 
 const Routing = (props) => {
     const [base] = useContext(BaseContext);
@@ -53,8 +54,9 @@ const Routing = (props) => {
 
                 {/* USER */}
                 <Route path='/user/register'>{ <UserRegister /> }</Route>
+                <Route path='/user/business/update/:id'><UtilsContextProvider><UserBusinessUpdate functionRefs={props.functionRefs}/> </UtilsContextProvider></Route>
                 <Route path='/user/business'>{ <UserBusiness functionRefs={props.functionRefs}/> }</Route>
-                <Route path='/user/update'>{ <UserUpdate functionRefs={props.functionRefs}/> }</Route>
+                <Route path='/user/update'><UtilsContextProvider><UserUpdate functionRefs={props.functionRefs}/></UtilsContextProvider></Route>
                 <Route path='/dashboard'>{ isAuthenticated ? <Dashboard userBusiness={props.userBusiness} base={base}/> : <Redirect to={loginRoute} /> }</Route>
 
                 {/* ADMIN CATEGORY */}

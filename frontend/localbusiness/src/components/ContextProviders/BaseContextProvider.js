@@ -7,9 +7,7 @@ export const BaseContextProvider = props => {
     const [favorites, setFavorites] = useState(null);
     const [userBusiness, setUserBusiness] = useState(null);
     const [categories, setCategories] = useState(null);
-
     const [credentials] = useState(CommonCredentials);
-
     const [urls] = useState(CommonUrls);
 
     if(userBusiness && urls){
