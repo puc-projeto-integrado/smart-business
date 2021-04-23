@@ -21,7 +21,7 @@ class UserController extends Controller
         return $this->jsonResponseinUtf8($user);
     }
 
-    public function detail($id){
+    public function show($id){
         $fields = ['name', 'email', 'created_at'];
         $user = User::select($fields)
             ->where('id', '=', $id)

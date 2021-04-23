@@ -1,0 +1,36 @@
+@startuml
+title "LocalBusiness - Diagrama de Estado (Usuário Comum)"
+
+state "Criar Conta" as register
+state "Login" as login
+state "Lista Empresas" as list
+state c <<choice>>
+state c2 <<choice>>
+state "Adicionar/Remover\n dos Favoritos" as handleFav
+
+state "Autenticado" as loggedOn{
+    state "Cadastrando Empresa" as cadBusiness
+    state "Dashboard" as dashboard
+    state "Remover Empresa" as delBusiness
+    state "Editar Perfil" as editProfile
+    state "Editar Empresa" as editBusiness
+
+}
+
+[*] -d-> list
+[*] -> login
+login -> c2
+c2 -> register : sem cadastro
+c2 -> dashboard : Já possui conta
+register -> dashboard : conta criada com sucesso
+dashboard -> cadBusiness
+dashboard -d-> editBusiness
+editBusiness -> delBusiness
+dashboard -> editProfile
+list -r-> handleFav
+handleFav -> c
+c -> Sucesso : Logado
+c -> login : Não logado
+login -d-> handleFav
+
+@enduml

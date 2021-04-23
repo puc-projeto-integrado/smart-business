@@ -1,0 +1,31 @@
+@startuml
+title OVERVIEW
+skinparam component{
+  BackgroundColor lightgray
+}
+
+component "App Rest API" as appApi
+
+node FRONTEND as Frontend{
+
+component "ReactJs App" as App{
+
+        component Router as Router
+        component Header as Header
+        component Content as Content{
+'                component "Data Grid" as DataGrid
+'                component "Dashboard" as Dashboard
+'                component "Master Table" as MasterTable{
+'                    component "Table Actions" as TableActions
+'                }
+
+        }
+        component Sidebar as Sidebar
+        component Footer as Footer
+
+
+    }
+}
+
+App ..> appApi : uses
+@enduml

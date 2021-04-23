@@ -1,0 +1,42 @@
+@startuml
+title "LocalBusiness - Diagrama de Estado (Administrador)"
+
+state "Login" as login
+state "Lista Empresas" as list
+state c <<choice>>
+state "Adicionar/Remover\n dos Favoritos" as handleFav
+
+state "Autenticado" as loggedOn{
+    state "Cadastrar Empresa" as cadBusiness
+    state "Dashboard" as dashboard #lightgray
+    state "Remover Empresa" as delBusiness
+    state "Editar Perfil" as editProfile
+    state "Editar Empresa" as editBusiness
+    state "Gerenciar" as manage #lightgray
+    state "Usuários" as user
+    state "Empresas" as business
+    state "Estados" as state
+    state "Cidades" as city
+    state "Categorias" as category
+    state "Estatísticas" as stats
+}
+
+[*] -d-> list
+[*] -> login
+login -> loggedOn
+dashboard -u-> cadBusiness
+dashboard -d-> editBusiness
+dashboard -> delBusiness
+dashboard -d-> editProfile
+dashboard -r-> stats
+list -r-> handleFav
+handleFav -> c
+c -> Sucesso : Logado
+c -> login : Não logado
+login -d-> handleFav
+manage -> user
+manage -u-> business
+manage -l-> state
+manage -d-> city
+manage -d-> category
+@enduml

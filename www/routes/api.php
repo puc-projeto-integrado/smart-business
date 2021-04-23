@@ -75,7 +75,7 @@ Route::group(['namespace'=>'Api', 'middleware'=>['cors']],
 Route::group(['prefix'=>'user/', 'namespace'=>'Api', 'middleware'=>['cors', 'auth']],
     function() {
         Route::get('/', 'UserController@index')->name('userList');
-        Route::get('/{id}', 'UserController@detail')->name('userDetail');
+        Route::get('/{id}', 'UserController@show')->name('userDetail');
         Route::delete('/delete', 'UserController@delete')->name('userDelete');
         Route::put('/update', 'UserController@update')->name('userUpdate');
         Route::post('/add/', 'AuthController@addUser')->name('userAdd');

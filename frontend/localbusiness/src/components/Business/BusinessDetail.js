@@ -4,12 +4,13 @@ import Column from '../Column';
 import Loading from '../Loading';
 import BusinessItemDetail from "../Business/BusinessItemDetail";
 import { BaseContext } from '../ContextProviders/BaseContextProvider';
+import {CommonUrls} from "../Common";
 
 const BusinessDetail = () => {
 
     const {id} = useParams();
     const [base] = useContext(BaseContext);
-    const url = `${base.urls.businessDetail}/${id}`;
+    const url = `${CommonUrls.businessDetail}/${id}`;
     const [business, setBusiness] = useState(null);
     let output = <Loading/>;
 
@@ -25,7 +26,7 @@ const BusinessDetail = () => {
 
     let columnOutput = <Loading/>;
     if(base.categories) {
-        let categories = base.sortAlphabetically(base.categories);
+        let categories = base.categories;
         columnOutput = <Column categories={categories}/>
     }
 

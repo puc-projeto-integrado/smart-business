@@ -1,0 +1,70 @@
+@startuml
+title "LocalBusiness - Diagrama de Interfaces"
+
+interface User{
+    +  index() JsonResponse
+    +  show() JsonResponse
+    +  add() JsonResponse
+    +  delete() JsonResponse
+    +  update() JsonResponse
+}
+
+interface Business{
+    +  index() JsonResponse
+    +  show() JsonResponse
+    +  add() JsonResponse
+    +  delete() JsonResponse
+    +  update() JsonResponse
+    +  highlights() JsonResponse
+    +  byState() JsonResponse
+    +  byCity() JsonResponse
+    +  byUser() JsonResponse
+    +  byCategory() JsonResponse
+}
+
+interface State{
+    + index() JsonResponse
+    + add() JsonResponse
+    + delete() JsonResponse
+    + update() JsonResponse
+}
+
+interface City{
+    + index() JsonResponse
+    + add() JsonResponse
+    + delete() JsonResponse
+    + update() JsonResponse
+    + citiesByState() JsonResponse
+}
+
+interface Category{
+    + index() JsonResponse
+    + add() JsonResponse
+    + delete() JsonResponse
+    + update() JsonResponse
+}
+
+interface Stats{
+    + byCategory() JsonResponse
+    + byCity() JsonResponse
+    + byState() JsonResponse
+    + byFavorite() JsonResponse
+    + byRegister() JsonResponse
+}
+
+interface Favorite {
+    + show() JsonResponse
+    + add() JsonResponse
+    + delete() JsonResponse
+}
+
+interface Auth{
+    + login() JsonResponse
+    + sendHttpStatusCode()
+    + getCredentials() Array
+    + getBearerToken() String
+    + addUser() JsonResponse
+}
+
+
+@enduml
