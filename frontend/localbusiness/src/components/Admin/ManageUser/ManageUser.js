@@ -1,23 +1,23 @@
 import React, {useContext, useState} from "react";
-import {BaseContext} from "../../ContextProviders/BaseContextProvider";
 import {UtilsContext} from "../../ContextProviders/UtilsContextProvider";
 import Loading from "../../Loading";
 import TableActions from "../../Partials/TableActions";
 import MasterTable from "../../Partials/MasterTable";
 import Feedback from "../../Partials/Feedback";
 import useGetEntity from "../../Hooks/useGetEntity";
+import{CommonCredentials, CommonUrls} from "../../Common";
 
 const ManageUser = ()=>{
-    const [base] = useContext(BaseContext);
+
     const [utils] = useContext(UtilsContext);
     const [user, setUser] = useState(null);
     const [feedback, setFeedback] = useState({active: false, message : '', status : ''});
-    const bearerToken = base.credentials.accessToken;
+    const bearerToken = CommonCredentials.accessToken;
     let output;
 
     const deps = {
-        bearerToken : base.credentials.accessToken,
-        url : base.urls.userList,
+        bearerToken : bearerToken,
+        url : CommonUrls.userList,
         setInitialFormState : setUser,
         setInitData : null,
     }
@@ -31,11 +31,8 @@ const ManageUser = ()=>{
     }
 
     if(user) {
-        let tableLabels = [
-            ['NOME',40],
-            ['EMAIL',40],
-            ['AÇÕES',20]
-        ];
+        let tableLabels = [['NOME',40], ['EMAIL',40], ['AÇÕES',20]];
+
 
         let rows = user.map((item) => {
             return (
@@ -49,7 +46,7 @@ const ManageUser = ()=>{
                                 edit="/admin/user/update/"
                                 itemDeleteCallback={utils.itemDelete}
                                 processItemDeleteCallback={processItemDelete}
-                                urlItemDelete={base.urls.userDelete}
+                                urlItemDelete={CommonUrls.userDelete}
                                 bearerToken={bearerToken}
                             />
                 </tr>
@@ -60,7 +57,6 @@ const ManageUser = ()=>{
                     <div className="table-responsive">
                         <MasterTable labels={tableLabels} rows={rows}/>
                     </div> )
-
     }else{
         output = <Loading/>
     }

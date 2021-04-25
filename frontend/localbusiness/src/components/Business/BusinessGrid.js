@@ -57,6 +57,7 @@ const BusinessGrid = (props) => {
     }
 
     const FilterSelect = ()=>{
+        console.log('CITIES ', citiesInBusiness)
         return (
             <div className="row">
             <div className="col-md-12 col-sm-12">

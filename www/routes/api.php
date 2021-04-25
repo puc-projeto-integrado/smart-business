@@ -66,6 +66,12 @@ Route::group(['prefix'=>'city/', 'namespace'=>'Api', 'middleware'=>['cors']],
         Route::get('/state/{id}', 'CityController@citiesByState')->name('citiesByState');
     });
 
+// PDF
+Route::group(['prefix'=>'pdf/', 'namespace'=>'Api', 'middleware'=>['cors']],
+    function() {
+        Route::get('city/{id}/{categoryId?}', 'PdfController@show')->name('pdfShow');
+    });
+
 Route::group(['namespace'=>'Api', 'middleware'=>['cors']],
     function() {
         Route::post('/login/', 'AuthController@login')->name('login');

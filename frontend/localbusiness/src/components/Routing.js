@@ -34,8 +34,9 @@ import AdminViewState from "./Admin/ManageState/AdminViewState";
 import AdminUpdateState from "./Admin/ManageState/AdminUpdateState";
 import AdminAddState from "./Admin/ManageState/AdminAddState";
 import UserBusinessUpdate from "./User/UserBusinessUpdate";
+import Foo from "./Foo";
 
-const Routing = (props) => {
+const Routing = React.memo(props => {
     const [base] = useContext(BaseContext);
     const loginRoute = '/login';
     const isAuthenticated = CommonFunctions.isAuthenticated();
@@ -45,6 +46,7 @@ const Routing = (props) => {
     return (
         <Router>
             <Switch>
+                <Route path='/foo'><Foo/></Route>
                 <Route path='/login'><Login functionRefs={props.functionRefs}/></Route>
                 <Route path='/logout'>{props.functionRefs.logout}</Route>
                 <Route path='/business/:id'><BusinessDetail /></Route>
@@ -95,5 +97,5 @@ const Routing = (props) => {
             </Switch>
         </Router>
     );
-}
+});
 export default Routing;

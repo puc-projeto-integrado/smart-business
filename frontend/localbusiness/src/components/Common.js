@@ -10,6 +10,19 @@ const credentials = {
     roleId : cookie.roleId
 };
 
+const getDefaultHeaders = ()=>{
+    let defaultHeaders = new Headers();
+    defaultHeaders.append("Authorization", `Bearer ${credentials.bearerToken}`);
+    return defaultHeaders;
+}
+
+const getDefaultRequestOptions = ()=>{
+    return {
+        method: 'GET',
+        headers: getDefaultHeaders(),
+    };
+}
+
 const sortAlphabetically = (array)=> {
     array.sort(function (a, b) {
         if (a.name < b.name) { return -1;}
@@ -36,7 +49,9 @@ export const CommonFunctions = {
     sortAlphabetically : sortAlphabetically,
     listContains : listContains,
     isAuthenticated : isAuthenticated,
-    isAdmin : isAdmin
+    isAdmin : isAdmin,
+    getDefaultHeaders : getDefaultHeaders,
+    getDefaultRequestOptions : getDefaultRequestOptions
 }
 export const CommonCredentials = credentials;
 export const CommonUrls = {
@@ -56,12 +71,15 @@ export const CommonUrls = {
             favoritesDelete: `${baseUrlApi}/favorites/delete`,
             favoritesAdd: `${baseUrlApi}/favorites/add`,
             uf: `${baseUrlApi}/state`,
+            state: `${baseUrlApi}/state`,
             stateAdd: `${baseUrlApi}/state/add`,
             citiesByState: `${baseUrlApi}/city/state`,
             business: `${baseUrlApi}/business`,
             businessHighlight: `${baseUrlApi}/business/highlight`,
             businessByUser: `${baseUrlApi}/business/user/${credentials.userId}`,
             businessCategory: `${baseUrlApi}/business/category`,
+            businessByCity: `${baseUrlApi}/business/city`,
+            businessByState: `${baseUrlApi}/business/state`,
             businessDelete: `${baseUrlApi}/business/delete`,
             businessAdd: `${baseUrlApi}/business/add`,
             businessDetail: `${baseUrlApi}/business`,

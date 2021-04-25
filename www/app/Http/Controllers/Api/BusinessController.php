@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
 use App\Http\Controllers\Api\AuthController;
+use App\Service\BusinessService;
 
 class BusinessController extends Controller
 {
@@ -36,22 +37,12 @@ class BusinessController extends Controller
         return $this->jsonResponseinUtf8($business);
     }
 
-    public function byState(Request $request, $id){
-        $business = Business::where('category_id',$id)
-        ->select($this->defaultFields)
-        ->join('cities', 'businesses.city_id', '=', 'cities.id')
-        ->join('categories', 'businesses.category_id', '=', 'categories.id')
-        ->orderBy('businesses.id', 'DESC')->paginate(20);
-        return $this->jsonResponseinUtf8($business);
+    public function byState(BusinessService $businessService, $id){
+        return $this->jsonResponseinUtf8($businessService::getBusinessByState($id));
     }
 
-    public function byCity(Request $request, $id){
-        $business = Business::where('city_id',$id)
-        ->select($this->defaultFields)
-        ->join('cities', 'businesses.city_id', '=', 'cities.id')
-        ->join('categories', 'businesses.category_id', '=', 'categories.id')
-        ->orderBy('businesses.id', 'DESC')->paginate(20);
-        return $this->jsonResponseinUtf8($business);
+    public function byCity(BusinessService $businessService, $id){
+        return $this->jsonResponseinUtf8($businessService::getBusinessByCity($id));
     }
 
     public function byUser($id){

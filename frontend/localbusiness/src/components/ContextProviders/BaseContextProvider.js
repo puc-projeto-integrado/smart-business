@@ -7,20 +7,30 @@ export const BaseContextProvider = props => {
     const [favorites, setFavorites] = useState(null);
     const [userBusiness, setUserBusiness] = useState(null);
     const [categories, setCategories] = useState(null);
-    const [credentials] = useState(CommonCredentials);
+    const [initData, setInitData] = useState({
+        favorites : null,
+        userBusiness : null,
+        categories : null
+    });
+    // const [credentials] = useState(CommonCredentials);
     const [urls] = useState(CommonUrls);
 
-    if(userBusiness && urls){
-        urls.businessUserDetail = `/business/${userBusiness.id}`;
+    let tmpInitData = initData;
+    const setTempFavorites = (data)=>{ tmpInitData.favorites = data; }
+    const setTempUserBusiness = (data)=>{ tmpInitData.userBusiness = data; }
+    const setTempCategories = (data)=>{ tmpInitData.categories = data; }
+
+    if(initData.userBusiness && urls){
+        urls.businessUserDetail = `/business/${initData.userBusiness.id}`;
     }else{
         urls.businessUserDetail = null;
     }
 
     useEffect(() => {
 
-        if(credentials.userId && urls){
+        if(CommonCredentials.userId && urls){
             let favoritesHeaders = new Headers();
-            favoritesHeaders.append("Authorization", `Bearer ${credentials.accessToken}`);
+            favoritesHeaders.append("Authorization", `Bearer ${CommonCredentials.accessToken}`);
 
             let requestOptions = {
                 method: 'GET',
@@ -29,13 +39,14 @@ export const BaseContextProvider = props => {
 
             fetch(urls.favorites, requestOptions)
                 .then(response => response.json())
-                .then(response =>setFavorites(response.data))
+                // .then(response => setTempFavorites(response.data))
+                .then(response => setFavorites(response.data))
                 .catch(error => console.log('error', error));
         }
 
-        if (!userBusiness && credentials.accessToken) {
+        if (!userBusiness && CommonCredentials.accessToken) {
             let businessHeaders = new Headers();
-            businessHeaders.append("Authorization", `Bearer ${credentials.accessToken}`);
+            businessHeaders.append("Authorization", `Bearer ${CommonCredentials.accessToken}`);
             businessHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
             let requestOptionsUserBusiness = {
@@ -44,8 +55,8 @@ export const BaseContextProvider = props => {
             };
 
             fetch(urls.businessByUser, requestOptionsUserBusiness)
-                // .then(response => console.log('RESP ', response.status))
                 .then(response => response.status!==200 ? null : response.json())
+                // .then(data => setTempUserBusiness(data))
                 .then(data => setUserBusiness(data))
                 .catch(error => console.log('error', error));
         }
@@ -53,12 +64,18 @@ export const BaseContextProvider = props => {
         if(!categories) {
             fetch(urls.category)
                 .then(response => response.json())
+                // .then(data => setTempCategories(CommonFunctions.sortAlphabetically(data)))
                 .then(data => setCategories(CommonFunctions.sortAlphabetically(data)))
                 .catch(error => console.log('error', error));
         }
 
-    }, [credentials, urls, categories, userBusiness]);
+    }, []);
 
+    if(tmpInitData.favorites && tmpInitData.categories && tmpInitData.userBusiness){
+        // console.log('TMP FAV ', favorites)
+        console.log('Fire...')
+        setInitData(tmpInitData)
+    }
     const queryIsFavorite = (id)=>{
         let isFavorite = false;
         if(favorites){
@@ -76,7 +93,7 @@ export const BaseContextProvider = props => {
 
     let obj = {
         urls : urls,
-        credentials : credentials,
+        credentials : CommonCredentials,
         favorites : favorites,
         userBusiness : userBusiness,
         categories : categories,

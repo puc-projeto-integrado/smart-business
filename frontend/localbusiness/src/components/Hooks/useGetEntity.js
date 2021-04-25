@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 
 const useGetEntity = (deps)=>{
     useEffect(() => {
+        console.log("Called...")
         let myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${deps.bearerToken}`);
 
@@ -14,7 +15,7 @@ const useGetEntity = (deps)=>{
             .then(response => response.json())
             .then(data => deps.setInitialFormState(data, deps.setInitData))
             .catch(error => console.log('error', error));
-    }, [deps.url, deps.bearerToken, deps.setInitialFormState, deps.setInitData]);
+    }, []);
 }
 
 export default useGetEntity;

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Category;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Response;
+use App\Service\CategoryService;
 
 class CategoryController extends Controller
 {
@@ -15,8 +16,7 @@ class CategoryController extends Controller
         return Category::all();
     }
     public function show($id){
-        $category = Category::where('id', $id)
-            ->get();
+        $category = CategoryService::getCategoryById($id);
         return $this->jsonResponseinUtf8($category);
     }
 

@@ -14,7 +14,7 @@ const Dashboard = (props)=>{
         }
 
         setBusinessCanRegister(userBusiness);
-    }, [CommonCredentials.roleId, userBusiness]);
+    }, [userBusiness]);
 
         let statsPanel = <Loading/>;
         let adminButtons;

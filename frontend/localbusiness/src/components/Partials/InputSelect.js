@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 
 const InputSelect = (props)=>{
-
+console.log('InputSelect ', props.selectedOption)
     const options = props.options;
     if(options) {
 
