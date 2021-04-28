@@ -34,12 +34,12 @@ class CityController extends Controller
     }
 
     public function citiesByState(int $id, $onlyWithBusiness=Null){
-//        $cities = City::where('state_id', '=', $id)->get()->toArray();
-        $cities = City::where('id', $id)
-            ->select('*')
-            ->join('business', 'states.id', '=', 'cities.state_id')
-            ->join('categories', 'businesses.category_id', '=', 'categories.id')
-            ->orderBy('businesses.id', 'DESC')->paginate(40);
+        $cities = City::where('state_id', '=', $id)->get()->toArray();
+//        $cities = City::where('cities.state_id', $id)
+//            ->select('*')
+//            ->join('businesses', 'businesses.city_id', '=', 'cities.id')
+//            ->join('categories', 'businesses.category_id', '=', 'categories.id')
+//            ->orderBy('businesses.id', 'DESC')->paginate(40);
 
 
 

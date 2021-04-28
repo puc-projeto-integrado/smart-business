@@ -168,7 +168,7 @@ class AuthController
                 $oauthClient->redirect = $this->baseUrl;
                 $oauthClient->personal_access_client = 0;
                 $oauthClient->revoked = 0;
-
+                $oauthClient->user_id = $savedUser[0]->id;
                 $oauthClient->save();
 
             } catch (QueryException $exception) {

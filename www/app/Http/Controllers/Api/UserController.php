@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Database\QueryException;
 use App\User;
+use App\Service\UserService;
+use App\Service\PermissionsService;
 
 class UserController extends Controller
 {
@@ -57,6 +59,17 @@ class UserController extends Controller
         }
         User::where('id', $request->id)->forceDelete();
         return Response::json(['status'=>'success'], 200);
+    }
+
+    public function getDataFromToken(Request $request, UserService $userService){
+        $bearerToken = $request->bearerToken();
+
+        //return $request->path();
+
+        return PermissionsService::getUserRoleId($bearerToken);
+        $routes = PermissionsService::getPermissionsRoutes($bearerToken);
+        return $routes;
+
     }
 
 }

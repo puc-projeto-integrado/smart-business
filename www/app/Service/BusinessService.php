@@ -28,16 +28,7 @@ class BusinessService{
     }
 
     public static function getBusinessByState($id){
-        try{
-            $business = State::where('states.id',$id)
-                ->select(BusinessConstants::getDefaultFields())
-                ->join('cities', 'cities.state_id', '=', 'states.id')
-                ->join('businesses', 'businesses.city_id', '=', 'cities.id')
-                ->join('categories', 'businesses.category_id', '=', 'categories.id')
-                ->orderBy('businesses.id', 'DESC')->paginate(20);
-        }catch (QueryException | Exception $e){
-            return $e->getMessage();
-        }
+        c
         return $business;
     }
 

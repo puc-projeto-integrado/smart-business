@@ -18,7 +18,7 @@ Route::group(['prefix'=>'business/', 'namespace'=>'Api', 'middleware'=>['cors']]
         Route::post('/add', 'BusinessController@add')->name('businessAdd')->middleware('auth');
         Route::get('/user/{id}', 'BusinessController@byUser')->name('businessByUser')->middleware('auth');
         Route::delete('/delete', 'BusinessController@delete')->name('businessDelete')->middleware('auth');
-        Route::put('/update', 'BusinessController@update')->name('businessUpdate')->middleware('auth');
+        Route::put('/update', 'BusinessController@update')->name('businessUpdate')->middleware('auth', 'permissions');
     });
 
 // STATS
@@ -69,20 +69,26 @@ Route::group(['prefix'=>'city/', 'namespace'=>'Api', 'middleware'=>['cors']],
 // PDF
 Route::group(['prefix'=>'pdf/', 'namespace'=>'Api', 'middleware'=>['cors']],
     function() {
-        Route::get('city/{id}/{categoryId?}', 'PdfController@show')->name('pdfShow');
+        Route::get('state/{id}/{categoryId?}', 'PdfController@byState')->name('pdfByState');
+        Route::get('city/{id}/{categoryId?}', 'PdfController@byCity')->name('pdfByCity');
     });
 
 Route::group(['namespace'=>'Api', 'middleware'=>['cors']],
     function() {
         Route::post('/login/', 'AuthController@login')->name('login');
-        Route::get('/oauth', 'FooController@index')->name('category');
     });
 
-Route::group(['prefix'=>'user/', 'namespace'=>'Api', 'middleware'=>['cors', 'auth']],
+Route::group(['prefix'=>'user', 'namespace'=>'Api', 'middleware'=>['cors', 'auth']],
     function() {
         Route::get('/', 'UserController@index')->name('userList');
-        Route::get('/{id}', 'UserController@show')->name('userDetail');
         Route::delete('/delete', 'UserController@delete')->name('userDelete');
         Route::put('/update', 'UserController@update')->name('userUpdate');
-        Route::post('/add/', 'AuthController@addUser')->name('userAdd');
+        Route::post('/add', 'AuthController@addUser')->name('userAdd');
+        Route::get('/{id}', 'UserController@show')->name('userDetail');
     });
+
+Route::group(['prefix'=>'auth', 'namespace'=>'Api', 'middleware'=>['cors', 'auth']],
+    function() {
+        Route::get('/getDataFromToken', 'UserController@getDataFromToken')->name('userListFoo');
+    });
+

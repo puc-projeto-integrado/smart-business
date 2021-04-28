@@ -28,12 +28,9 @@ class Authenticate extends Middleware
             return $next($request);
         }
 
-        $message = ["message" => "Permission Denied"];
+        $message = ["message" => "Unauthorized."];
         return response($message, 401);
         //return $next($request);
     }
-//    public function handle($request, $next)
-//    {
 
-//    }
 }

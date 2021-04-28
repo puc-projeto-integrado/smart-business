@@ -9,11 +9,17 @@ class PdfController{
 
     //http://localhost/public/api/pdf/city/1
 
-    public function show($id, $categoryId=Null){
-        $data = BusinessService::getBusinessByState($id, $allData=True);
-
+    public function byCity($id, $categoryId=Null){
+        $data = BusinessService::getBusinessByCity($id, $allData=True);
         $html = $this->htmlBuilder($data, $categoryId);
         $this->toPdf($html);
+    }
+
+    public function byState($id, $categoryId=Null){
+        $data = BusinessService::getBusinessByState($id, $allData=True);
+        $html = $this->htmlBuilder($data, $categoryId);
+//        $this->toPdf($html);
+        var_dump($this->toJsonResponse($data));
     }
 
     private function toPdf($html){
@@ -24,6 +30,7 @@ class PdfController{
         $dompdf->stream();
     }
 
+    /* Tests purposer */
     private function toJsonResponse($data){
         return response()->json(
             $data,
@@ -40,6 +47,14 @@ class PdfController{
         }
 
         $output = '
+        <style>
+        body{ font-family: sans-serif;}
+        table{width: 100%; padding:0px; border-spacing:0px; border: 1px solid; border-right: 0px;}
+        table thead{ background: #ccc; font-weight: bold;}
+        td{ padding: 10px; border-right: 1px solid; border-bottom: 1px solid #ccc;}
+        </style>
+
+        <body>
         <h1 style="margin-bottom:0px;">LocalBusiness</h1>
         <a href="puc.gabrielguerra.me">www.localbusiness.com.br</a>
         <h2>'.$categoryName.'Fornecedores em '.$this->getCityName($data).'</h2>
@@ -48,6 +63,7 @@ class PdfController{
             <thead>
                 <tr>
                     <td>EMPRESA</td>
+                    <td>CIDADE</td>
                     <td>TELEFONE</td>
                 </tr>
             </thead>
@@ -57,18 +73,22 @@ class PdfController{
         if($categoryId) {
             foreach ($data as $item) {
                 if ($item->phone !== '' && $item->category_id==$categoryId) {
-                    $output .= '<tr><td>' . $item->name . '</td><td>' . $item->phone . '</td></tr>';
+                    $output .= '<tr><td>' . $item->name . '</td>';
+                    $output .= '<td>' . $item->city_name . '</td>';
+                    $output .= '<td>' . $item->phone . '</td></tr>';
                 }
             }
         }else{
             foreach ($data as $item) {
                 if ($item->phone !== '') {
-                    $output .= '<tr><td>' . $item->name . '</td><td>' . $item->phone . '</td></tr>';
+                    $output .= '<tr><td>' . $item->name . '</td>';
+                    $output .= '<td>' . $item->city_name . '</td>';
+                    $output .= '<td>' . $item->phone . '</td></tr>';
                 }
             }
         }
 
-        $output .= '</tbody></table>';
+        $output .= '</tbody></table></body>';
         return $output;
     }
 
@@ -80,5 +100,6 @@ class PdfController{
         }
         return '';
     }
+
 }
 

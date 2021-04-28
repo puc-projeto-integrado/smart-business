@@ -5,11 +5,8 @@ import {delete_cookie} from "sfcookies";
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Routing from './components/Routing';
-import RoutingOpt from "./components/RoutingOpt";
 
 export default function App() {
-    //console.log('ENV ', process.env.NODE_ENV)
-
     const [base] = useContext(BaseContext);
     const [mustRedirect, setMustRedirect] = useState(false);
     let isAuthenticated = CommonFunctions.isAuthenticated();

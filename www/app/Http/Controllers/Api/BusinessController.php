@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
 use App\Http\Controllers\Api\AuthController;
 use App\Service\BusinessService;
+use App\Service\PermissionsService;
 
 class BusinessController extends Controller
 {

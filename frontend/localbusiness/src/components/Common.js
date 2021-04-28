@@ -89,4 +89,5 @@ export const CommonUrls = {
             statsByCity: `${baseUrlApi}/stats/city`,
             statsByFavorite: `${baseUrlApi}/stats/favorite`,
             statsByRegister: `${baseUrlApi}/stats/register`,
+            pdfByState: `${baseUrlApi}/pdf/state`,
         };

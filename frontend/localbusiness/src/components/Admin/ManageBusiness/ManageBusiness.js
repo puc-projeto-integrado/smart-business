@@ -9,7 +9,7 @@ import FilterSelect from "../../Partials/FilterSelect";
 import {CommonUrls, CommonCredentials, CommonFunctions} from "../../Common";
 
 const ManageBusiness = React.memo(()=>{
-    let output = <Loading/>;
+    let output;
     const [base] = useContext(BaseContext);
     const [utils] = useContext(UtilsContext);
     const [business, setBusiness] = useState(null);
@@ -88,15 +88,13 @@ const ManageBusiness = React.memo(()=>{
                 </tr>
             )
         })
-        const exportPdf = ()=>{
-            console.log('Exportar....')
-            window.open('http://localhost/public/api/pdf/city/'+myRef.current);
-            //http://localhost/public/api/business/623
-        }
+
+        const exportPdf = ()=> window.open(`${CommonUrls.pdfByState}/${myRef.current}`);
+
         output = (
             <>
             <div>
-               <button onClick={exportPdf}>Exportar PDF</button>
+                <button onClick={exportPdf} className="btn btn-primary btn-block mt-3"><em className="fa fa-file-pdf"></em> EXPORTAR PDF</button>
             </div>
             <div className="table-responsive">
                 <MasterTable labels={tableLabels} rows={rows}/>
@@ -111,6 +109,7 @@ const ManageBusiness = React.memo(()=>{
                 <div className="col-sm-12 col-md-12  pt-5">
                     <h2>Gerenciar Empresas</h2>
                     <Feedback params={feedback}/>
+                    <p><span className="fa fa-exclamation-circle"></span> Selecione um Estado para começar:</p>
                     <FormCombo/>
                     {output}
                 </div>
