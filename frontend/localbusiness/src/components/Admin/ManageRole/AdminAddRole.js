@@ -2,42 +2,66 @@ import React, {useContext, useState} from "react";
 import Feedback from "../../Partials/Feedback";
 import {UtilsContext, UtilsContextProvider} from "../../ContextProviders/UtilsContextProvider";
 import InputText from "../../Partials/InputText";
+import {CommonCredentials} from "../../Common";
 
 const AdminAddRole = ()=>{
     const [utils] = useContext(UtilsContext);
     const [formState, setFormState] = useState({'name': ''});
     const [roleActions, setRoleActions] = useState([]);
     const [counter, setCounter] = useState(1);
-    const labels = { name : 'Nome'};
+    let output;
 
     const handleSubmit = ()=>{
-        return true;
+
+        let roleActionsArray = [];
+        for(let i=1; i<roleActions.length+1; i++){
+            let rowRoleActions = {
+                'name' : formState['role_action_name_'+i],
+                'route' : formState['route_'+i]
+            }
+            roleActionsArray.push(rowRoleActions);
+
+        }
+
+        let obj = { 'role_name':formState["name"], 'roleActions' : roleActionsArray }
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${CommonCredentials.accessToken}`);
+        myHeaders.append("Content-Type", "application/json");
+        var requestOptions = { method: 'POST', headers: myHeaders, body: JSON.stringify(obj) };
+
+        fetch("http://localhost/public/api/role/add", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+
     }
 
-    const removeRoleAction = (e, id)=>{
-        console.log('ID ', id)
-        return true;
-    }
+    const removeRoleAction = (e, idFilter)=> setRoleActions(roleActions.filter(item => item.id !== idFilter));
 
     const handleAddRoleAction = ()=>{
-        let tmp = counter;
-        setCounter(tmp+1);
+        setCounter(counter+1);
         let obj = {'id':counter, 'name':'', 'route':''}
         let arrayTmp = roleActions.concat(obj);
         setRoleActions(arrayTmp);
-        console.log('ROLES ', roleActions)
     }
 
-    let output;
     if(roleActions.length>0){
         output = roleActions.map((item)=>{
             return (
                 <div className="row" key={item.id}>
-                    <div className="col-5"><InputText label="Nome da Permissão"/></div>
-                    <div className="col-5"><InputText label="Path (rota)"/></div>
-                    <div className="col-1">
-                        <button style={{"position":"absolute", "bottom":"0px"}} onClick={(e)=>removeRoleAction(e, item.id)} className="btn btn-outline-primary">remover</button>
-                    </div>
+                    <div className="col-5">
+                        <InputText
+                            handleChange={(e)=>utils.handleFormChange(e, setFormState)}
+                            value={formState[`role_action_name_${item.id}`]}
+                            name={`role_action_name_${item.id}`}
+                            label="Nome da Permissão"/></div>
+                    <div className="col-5">
+                        <InputText
+                            handleChange={(e)=>utils.handleFormChange(e, setFormState)}
+                            value={formState[`route_${item.id}`]}
+                            name={`route_${item.id}`}
+                            label="Path (rota)"/></div>
+                    <div className="col-1"><button style={{"position":"absolute", "bottom":"0px"}} onClick={(e)=>removeRoleAction(e, item.id)} className="btn btn-outline-primary">remover</button></div>
                 </div>
             )
         });
