@@ -2,10 +2,6 @@
 
 use Illuminate\Http\Request;
 
-//Route::middleware('auth:api')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
-
 // BUSINESS
 Route::group(['prefix'=>'business/', 'namespace'=>'Api', 'middleware'=>['cors']],
     function(){
@@ -90,5 +86,18 @@ Route::group(['prefix'=>'user', 'namespace'=>'Api', 'middleware'=>['cors', 'auth
 Route::group(['prefix'=>'auth', 'namespace'=>'Api', 'middleware'=>['cors', 'auth']],
     function() {
         Route::get('/getDataFromToken', 'UserController@getDataFromToken')->name('userListFoo');
+    });
+
+Route::group(['prefix'=>'role', 'namespace'=>'Api', 'middleware'=>['cors', 'auth', 'permissions']],
+    function() {
+        Route::get('/', 'RoleController@index')->name('roleIndex');
+        Route::get('/{id}', 'RoleController@show')->name('roleShow');
+        Route::post('/add', 'RoleController@add')->name('roleAdd');
+        Route::delete('/delete', 'RoleController@delete')->name('roleDelete');
+    });
+
+Route::group(['prefix'=>'roleaction', 'namespace'=>'Api', 'middleware'=>['cors', 'auth', 'permissions']],
+    function() {
+        Route::get('/role/{id}', 'RoleActionController@byRoleId')->name('roleActionByRole');
     });
 

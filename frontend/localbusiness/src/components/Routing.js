@@ -35,6 +35,9 @@ import AdminUpdateState from "./Admin/ManageState/AdminUpdateState";
 import AdminAddState from "./Admin/ManageState/AdminAddState";
 import UserBusinessUpdate from "./User/UserBusinessUpdate";
 import Foo from "./Foo";
+import AdminAddRole from "./Admin/ManageRole/AdminAddRole";
+import ManageRole from "./Admin/ManageRole/ManageRole";
+import AdminViewRole from "./Admin/ManageRole/AdminViewRole";
 
 const Routing = React.memo(props => {
     const [base] = useContext(BaseContext);
@@ -91,6 +94,11 @@ const Routing = React.memo(props => {
 
                 {/* STATS */}
                 <Route path='/admin/stats'>{ isAdmin ? <Stats /> : <Redirect to={loginRoute} /> }</Route>
+
+                {/* ROLES */}
+                <Route path='/admin/role/add'><UtilsContextProvider>{ isAdmin ? <AdminAddRole /> : <Redirect to={loginRoute} /> }</UtilsContextProvider></Route>
+                <Route path='/admin/role/:id'><UtilsContextProvider>{ isAdmin ? <AdminViewRole /> : <Redirect to={loginRoute} /> }</UtilsContextProvider></Route>
+                <Route path='/admin/role/'><UtilsContextProvider>{ isAdmin ? <ManageRole /> : <Redirect to={loginRoute} /> }</UtilsContextProvider></Route>
 
                 {/* HOME */}
                 <Route path='/'><ModalContextProvider><Home /></ModalContextProvider></Route>

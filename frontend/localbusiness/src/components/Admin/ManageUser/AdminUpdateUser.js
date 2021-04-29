@@ -75,7 +75,7 @@ const AdminUpdateUser = ()=>{
         <div className="container mt-5">
             <div className="row">
                 <div className="col-md-8 offset-md-2">
-                    <h2 className="mb-5">Editar Dados</h2>
+                    <h2 className="mb-5">Editar Usuário</h2>
                     {output}
                 </div>
             </div>

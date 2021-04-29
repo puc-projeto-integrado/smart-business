@@ -10,7 +10,6 @@ export const UtilsContextProvider = props => {
     }
 
     const setInitialFormState = (data, setFormState)=>{
-        console.log(setFormState)
         let obj = {};
         data.forEach((item)=>Object.keys(item).forEach((key)=>obj[key]=item[key]));
         setFormState(obj)
@@ -28,7 +27,6 @@ export const UtilsContextProvider = props => {
             headers: headers,
             body: urlencoded
         };
-console.log('urlencoded ', urlencoded)
         fetch(url, requestOptions)
             .then(response=>console.log(response))
             .then(response => callback(response,id))

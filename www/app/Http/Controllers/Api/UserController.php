@@ -15,20 +15,11 @@ use App\Service\PermissionsService;
 class UserController extends Controller
 {
     public function index(){
-        $fields = ['id', 'name', 'email', 'created_at'];
-        $user = User::select($fields)
-        ->where('role_id', '!=', 1)
-        ->orderBy('created_at', 'desc')
-        ->get();
-        return $this->jsonResponseinUtf8($user);
+        return $this->jsonResponseinUtf8(UserService::getUsers());
     }
 
-    public function show($id){
-        $fields = ['name', 'email', 'created_at'];
-        $user = User::select($fields)
-            ->where('id', '=', $id)
-            ->get();
-        return $this->jsonResponseinUtf8($user);
+    public function show(int $id){
+        return $this->jsonResponseinUtf8(UserService::getUserById($id));
     }
 
     public function update(Request $request)
@@ -36,20 +27,13 @@ class UserController extends Controller
         if (!isset($request->id) || empty($request->id)){
             return Response::json(['status'=>'failed', 'reason'=>'id is null'], 400);
         }
-        $userId = $request->id;
-        $updateData['name'] = $request->name;
-        $updateData['email'] = $request->email;
-        $passUpdated = 'false';
-        if(isset($request->password) && !empty($request->password)){
-            $updateData['password'] = Hash::make($request->password);
-            $passUpdated = 'true';
-        }
 
-        try {
-            User::where('id', $userId)->update($updateData);
-            return Response::json(['status'=>'success', 'passStatus'=>$passUpdated], 200);
-        }catch(QueryException $e){
-            return Response::json(['status'=>'failed', 'reason'=>$e->getMessage()], 422);
+        $update = UserService::updateUser($request);
+
+        if($update['status']==1){
+            return Response::json(['status'=>'success', 'passStatus'=>$update['passUpdated']], 200);
+        }else{
+            return Response::json(['status'=>'failed', 'reason'=>$update['passUpdated']], 422);
         }
     }
 
@@ -57,19 +41,11 @@ class UserController extends Controller
         if (!isset($request->id) || empty($request->id)){
             return Response::json(['status'=>'failed', 'reason'=>'id is null'], 400);
         }
-        User::where('id', $request->id)->forceDelete();
-        return Response::json(['status'=>'success'], 200);
-    }
+        if(UserService::deleteUser($request->id)>0){
+            return Response::json(['status'=>'success'], 200);
+        }else{
 
-    public function getDataFromToken(Request $request, UserService $userService){
-        $bearerToken = $request->bearerToken();
-
-        //return $request->path();
-
-        return PermissionsService::getUserRoleId($bearerToken);
-        $routes = PermissionsService::getPermissionsRoutes($bearerToken);
-        return $routes;
+        }
 
     }
-
 }

@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 
 const useGetEntity = (deps)=>{
     useEffect(() => {
-        console.log("Called...")
         let myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${deps.bearerToken}`);
 

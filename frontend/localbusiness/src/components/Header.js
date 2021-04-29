@@ -20,13 +20,13 @@ const Header = (props) => {
             <div className="menu-admin">
                 <div className="container">
                     <ul>
-                        <li><em className="fa fa-cogs"></em> <b>Gerencie:</b> </li>
+                        <li><em className="fa fa-cogs"></em></li>
                         <li><a href="/admin/user">Usuários</a></li>
+                        <li><a href="/admin/role">Perfis de Acesso</a></li>
                         <li><a href="/admin/category">Categorias</a></li>
                         <li><a href="/admin/state">Estados</a></li>
                         <li><a href="/admin/city">Cidades</a></li>
                         <li><a href="/admin/business">Empresas</a></li>
-                        <li><a href="/admin/review">Reviews</a></li>
                     </ul>
                 </div>
             </div>
