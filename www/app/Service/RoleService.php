@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\User;
 use Exception;
 use App\RoleAction;
 use Doctrine\DBAL\Query\QueryException;
@@ -20,11 +21,11 @@ class RoleService{
         try {
             $roleId = RoleService::addRole($requestObj);
             RoleService::addRoleActions($requestObj, $roleId);
-            DB::commit();
         }catch (QueryException | Exception $e){
             DB::rollBack();
             Throw new Exception($e->getMessage());
         }
+        DB::commit();
     }
 
     public static function addRole(\stdClass $request){
@@ -46,11 +47,26 @@ class RoleService{
         RoleAction::insert($roleActionsList);
     }
 
-    public static function deleteRole(int $id){
-        if($id==1 || $id==2){
+    public static function deleteRole(int $roleId){
+        if($roleId==1 || $roleId==2){
             throw new Exception('Role cannot be deleted.');
         }
-        return Role::where('id', $id)->forceDelete();
+
+        DB::beginTransaction();
+        try{
+            $users = UserService::getUsersByRoleId($roleId);
+            if(count($users->toArray())>0){
+                $updateData['role_id'] = 2;
+                foreach ($users as $user){
+                    User::where('id', $user->id)->update($updateData);
+                }
+            };
+            Role::where('id', $roleId)->forceDelete();
+        }catch (QueryException | Exception $e){
+            DB::rollBack();
+            Throw new Exception($e->getMessage());
+        }
+        DB::commit();
     }
 
     public static function getRoles(){

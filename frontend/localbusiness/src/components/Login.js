@@ -4,8 +4,8 @@ import {CommonUrls} from "./Common";
 
 const Login = (props) => {
     // console.log('LOGIN PROPS ', props)
-    const [email, setEmail] = useState('gab@gab.com');
-    const [password, setPassword] = useState('admin123');
+    const [email, setEmail] = useState('tcc@pucminas.br');
+    const [password, setPassword] = useState('123456');
     const [feedbackActive, setFeedbackActive] = useState(false);
     const [feedbackMessage, setFeedbackMessage] = useState('');
 

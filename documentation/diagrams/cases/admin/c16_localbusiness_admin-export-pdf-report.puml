@@ -1,0 +1,18 @@
+@startuml
+left to right direction
+title "C16. Administrador exporta um relatório em PDF"
+Admin as "Administrador do Sistema"
+
+rectangle "PAINEL DE CONTROLE ADMIN" {
+    (Gerenciar Empresas) as handleBusiness
+    (Selecionar Estado) as selectUf
+    (Exportar PDF) as export
+}
+
+(Login) as login
+
+Admin -r--> login
+login -d--> handleBusiness
+handleBusiness --> selectUf
+selectUf -l--> export
+@enduml

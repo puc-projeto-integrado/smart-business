@@ -25,6 +25,13 @@ class UserService{
             ->get();
     }
 
+    public static function getUsersByRoleId(int $id){
+        $fields = ['name', 'email', 'created_at'];
+        return User::select($fields)
+            ->where('role_id', '=', $id)
+            ->get();
+    }
+
     public static function updateUser(Request $request){
         $userId = $request->id;
         $updateData['name'] = $request->name;

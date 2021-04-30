@@ -68,7 +68,7 @@ const ManageRole = ()=>{
                     <Feedback params={feedback}/>
                     <div className="row">
                         <div className="col-md-12" style={{textAlign:"right"}}>
-                            <a href="/admin/role/add" className="btn btn-primary mt-3"><em className="fa fa-plus"></em> Criar novo</a>
+                            <a href="/admin/role/add" className="btn btn-primary mt-3"><em className="fa fa-plus"></em> Novo Perfil de Acesso</a>
                         </div>
                     </div>
                     {output}
