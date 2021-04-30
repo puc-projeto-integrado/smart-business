@@ -173,16 +173,14 @@ class AuthController
         return $this->sendHttpStatusCode(200, 'Success', 'User saved');
     }
 
-    //https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=784p4owi2ycdf8&redirect_uri=http://5d64dbafe68b.ngrok.io/public/api/oauth&state=xpto&scope=r_liteprofile%20r_emailaddress
-    // http://5d64dbafe68b.ngrok.io/public/api/oauth?code=AQTbExlLfFahDsfokmMCwI-7OhzzpTVz9JGmjkXprnvnv3YnL0RQPYWYjqQuXnCpOok3p6nqbk6rDcfyF-TBV1QjLXXEVx5y9ZLR0Cg9Sx422UxKE-fP49Q5vBJxpfsUGCRglG_1AvzbjZ_iPX8Ly2shuehnA18pVr-Kw--8KnWZbj-E61ZtzxGt2z4zJNeJmoKzn_ah-A2n0IjaUBk&state=xpto
-
     public function social(){
         $step1 = 'https://www.linkedin.com/oauth/v2/accessToken';
         $step2 = 'https://api.linkedin.com/v2/me';
         $step3 = 'https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))';
         $clientId = '784p4owi2ycdf8';
         $clientSecret = '6p2dKwhJ6hNhMcE7';
-        $redirectUrl = 'http://5d64dbafe68b.ngrok.io/public/api/oauth';
+//        $redirectUrl = 'http://5d64dbafe68b.ngrok.io/public/api/oauth';
+        $redirectUrl = 'http://puc-api.gabrielguerra.me/api/oauth';
         $client = new Client();
 
         if(isset($_GET["code"]) && !empty($_GET["code"])){
@@ -230,54 +228,15 @@ class AuthController
 
                 $content = json_decode($responseStep3->getBody()->getContents(), true);
                 $email = $content["elements"][0]["handle~"]["emailAddress"];
+                $name = $firstName.' '.$lastName;
+//                $finalUrl = 'http://localhost:3000/oauth/handoff/'.$email.'/'.$name;
+                $finalUrl = 'http://www.puc.gabrielguerra.me/oauth/handoff/'.$email.'/'.$name;
 
-                $request = new Request();
-                $request->name = $firstName.' '.$lastName;
-                $request->email = $email;
-
-
-//                $password = rand(9999,9999);
-//                $request->password = $password;
-
-//                $this->addUser($request);
-//
-//                // Step 4
-//                $step4 = url('/').'/api/login';
-//                try {
-//                    $responseStep4 = $client->post($step4, [
-//                        'headers' => [
-//                            'Authorization' => 'Bearer '.$accessToken
-//                        ],
-//                        'form_params' => [
-//                            'email' => $email,
-//                            'password' => $password
-//                        ]
-//                    ]);
-//                } catch (ClientException | Exception $e) {
-//                    echo $e->getMessage();
-//                }
-//                var_dump($responseStep4->getBody()->getContents());
+                header("Location:$finalUrl");
+                die();
             }
         }
 
     }
 
-//    public function checkLogin($email, $password){
-////        var_dump($request);
-//        if (Auth::attempt(['email' => $email, 'password' => $password)) {
-//            return 'hit';
-////            $credentials = $this->getCredentials($request->email);
-////
-////            if(!$credentials){ Throw Exception('Unauthorized');}
-////
-////            $content = $this->getBearerToken($credentials['oauthClientId'], $credentials['secret'], $request->email, $request->password);
-////            $content = json_decode($content, false);
-////            $content->name = $credentials['name'];
-////            $content->id = $credentials['id'];
-////            $content->roleId = $credentials['roleId'];
-////            return $content;
-//        }
-//        return 'Miss';
-////        return False;
-//    }
 }

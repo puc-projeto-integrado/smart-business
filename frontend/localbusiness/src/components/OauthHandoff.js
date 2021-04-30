@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {useParams} from "react-router";
 import {CommonUrls} from "./Common";
 import {bake_cookie, delete_cookie} from "sfcookies";
@@ -24,7 +24,6 @@ const OauthHandoff = ()=>{
         .then(response => response.json())
         .then(data => doLogin(data))
         .catch(error => console.log('error', error));
-
 
     const doLogin = (result)=>{
         let headers = new Headers();
@@ -58,7 +57,14 @@ const OauthHandoff = ()=>{
     }
 
     return (
-        <div>Concluindo o processo de autenticação. Por favor, aguarde.</div>
+        <div className="container mt-5">
+            <div className="row">
+                <div className="col-md-8 offset-md-2">
+                    <h2 className="mb-5">Ver Dados</h2>
+                    <p>Concluindo o processo de autenticação. Por favor, aguarde.</p>
+                </div>
+            </div>
+        </div>
     )
 }
 
