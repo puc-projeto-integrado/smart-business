@@ -27,7 +27,7 @@ class PermissionsService{
     }
 
     public static function getUserPermissions($bearerToken){
-        $id = 2;//PermissionsService::getUserId($bearerToken);
+        $id = PermissionsService::getUserId($bearerToken);
 
         try{
             $fields = [

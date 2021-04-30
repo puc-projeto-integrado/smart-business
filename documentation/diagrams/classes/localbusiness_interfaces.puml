@@ -1,79 +1,94 @@
 @startuml
 title "LocalBusiness - Diagrama de Interfaces"
 
-interface User{
-    +  index() JsonResponse
-    +  show() JsonResponse
-    +  add() JsonResponse
-    +  delete() JsonResponse
-    +  update() JsonResponse
+interface UserService{
+    + getUsers() Collection
+    + getUserById(id) Collection
+    + updateUser(Request) int
+    + deleteUser(Request) int
 }
 
-interface Business{
-    +  index() JsonResponse
-    +  show() JsonResponse
-    +  add() JsonResponse
-    +  delete() JsonResponse
-    +  update() JsonResponse
-    +  highlights() JsonResponse
-    +  byState() JsonResponse
-    +  byCity() JsonResponse
-    +  byUser() JsonResponse
-    +  byCategory() JsonResponse
+interface BusinessService{
+    + getBusiness() Collection
+    + getBusinessByCity(int) Collection
+    + getBusinessByState(int) Collection
+    + getBusinessById(int) Collection
+    + getBusinessByUser(int) Collection
+    + getBusinessByCategory(int) Collection
+    + getBusinessHighlights() Collection
+    + addBusiness(Request) void
+    + deleteBusiness(Request) int
+    + updateBusiness(Request) int
 }
 
-interface State{
-    + index() JsonResponse
-    + add() JsonResponse
-    + delete() JsonResponse
-    + update() JsonResponse
+interface StateService{
+    + getState() Collection
+    + getStateById(int) Collection
+    + addState(Request) void
+    + updateState(Request) int
+    + deleteState(Request) int
 }
 
-interface City{
-    + index() JsonResponse
-    + add() JsonResponse
-    + delete() JsonResponse
-    + update() JsonResponse
-    + citiesByState() JsonResponse
+interface CityService{
+    + getCity() Collection
+    + getCityByState(int) Collection
 }
 
-interface Category{
-    + index() JsonResponse
-    + add() JsonResponse
-    + delete() JsonResponse
-    + update() JsonResponse
+interface CategoryService{
+    + getCategories() Collection
+    + getCategoryById(int) Collection
+    + updateCategory(Request) int
+    + addCategory(string) void
+    + deleteCategory(int) int
 }
 
-interface Stats{
-    + byCategory() JsonResponse
-    + byCity() JsonResponse
-    + byState() JsonResponse
-    + byFavorite() JsonResponse
-    + byRegister() JsonResponse
+interface StatsService{
+    + getStatsByCateogry() Collection
+    + getStatsByCity() Collection
+    + getStatsByState() Collection
+    + getStatsByFavorite() Collection
+    + getStatsByRegisters() Collection
 }
 
-interface Favorite {
-    + show() JsonResponse
-    + add() JsonResponse
-    + delete() JsonResponse
+interface FavoriteService {
+    + favoriteUser(int) Collection
+    + favoriteExists(int, int) Collection
+    + favoriteDelete(int) int
 }
 
-interface Auth{
+interface AuthService{
     + login() JsonResponse
     + sendHttpStatusCode()
     + getCredentials() Array
     + getBearerToken() String
     + addUser() JsonResponse
+    + social()
 }
 
-interface Role{
-    + addRoleAndActions(Object request) void
-    + addRole(Object request) int
-    + addRoleActions(Object request, int id) void
-    + deleteRole(int id) int
+interface RoleService{
+    + addRoleAndActions(Request) void
+    + addRole(Request) int
+    + addRoleActions(Request, int) void
+    + deleteRole(int) int
     + getRoles() Collection
-    + getRoleById(int id) Collection
+    + getRoleById(int) Collection
 }
 
+interface RoleActionService{
+    + getRoleActionsByRoleId(int) Collection
+}
+
+interface PdfService{
+    + htmlBuilder(array, int) string
+}
+
+interface PermissionService{
+    + hasPermission(string) Boolean
+    + getUserRoleId(string) int
+    + getPermissionsRoutes(string) Array
+    + getUserPermissions(string) Collection
+    + getUserId(string) int
+    + getUserDataFromToken(string) Collection
+}
 
 @enduml

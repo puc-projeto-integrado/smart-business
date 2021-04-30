@@ -5,26 +5,26 @@ class Model
 
 package App {
 
-    class User{
-        # Array fillable
-        # Array hidden
-        # Array casts
-        + Relations oauthClient()
-    }
-    class Favorite{
-        + Collection favoritesUser()
-        + Collection favoriteExists()
-    }
-    class State{
-    }
-    class City{
-    }
-    class Business{
-    }
-    class Category{
-    }
-    class OauthClient{
-    # String table
+    package Model{
+        class User{
+            #  fillable Array
+            # hidden Array
+            # casts Array
+        }
+        class Favorite{
+            + Collection favoritesUser()
+            + Collection favoriteExists()
+        }
+        class State{
+        }
+        class City{
+        }
+        class Business
+        class Business
+        class Category
+        class Role
+        class RoleAction
+        class Model
     }
 
     package Http {
@@ -32,59 +32,59 @@ package App {
         package Controllers {
 
             class Controller{
-            #jsonResponseinUtf8
+                #jsonResponseinUtf8
             }
 
             package API {
                 class UserController{
-                    + JsonResponse index()
-                    + JsonResponse add()
-                    + JsonResponse delete()
-                    + JsonResponse update()
+                    +  index()
+                    +  add()
+                    +  delete()
+                    +  update()
                 }
 
                 class BusinessController{
                     - Array defaultFields
-                    + JsonResponse index()
-                    + JsonResponse show()
-                    + JsonResponse byState()
-                    + JsonResponse byCity()
-                    + JsonResponse byUser()
-                    + JsonResponse byCategory()
-                    + JsonResponse highlights()
-                    + JsonResponse add()
-                    + JsonResponse delete()
-                    + JsonResponse update()
+                    +  index()
+                    +  show()
+                    +  byState()
+                    +  byCity()
+                    +  byUser()
+                    +  byCategory()
+                    +  highlights()
+                    +  add()
+                    +  delete()
+                    +  update()
                 }
 
                 class StateController{
-                    + JsonResponse index()
-                    + JsonResponse add()
-                    + JsonResponse delete()
-                    + JsonResponse update()
+                    +  index()
+                    +  add()
+                    +  delete()
+                    +  update()
                 }
 
                 class CityController{
-                    + JsonResponse index()
-                    + JsonResponse add()
-                    + JsonResponse delete()
-                    + JsonResponse update()
-                    + JsonResponse citiesByState()
+                    +  index()
+                    +  add()
+                    +  delete()
+                    +  update()
+                    +  citiesByState()
                 }
 
                 class CategoryController{
-                    + JsonResponse index()
-                    + JsonResponse add()
-                    + JsonResponse delete()
-                    + JsonResponse update()
+                    +  index()
+                    +  add()
+                    +  delete()
+                    +  update()
                 }
 
                 class StatsController{
-                    + JsonResponse byCategory()
-                    + JsonResponse byCity()
-                    + JsonResponse byState()
-                    + JsonResponse byFavorite()
-                    + JsonResponse byRegister()
+                    +  byCategory()
+                    +  byCity()
+                    +  byState()
+                    +  byFavorite()
+                    +  byRegister()
                 }
 
                 class FavoriteController {
@@ -97,15 +97,124 @@ package App {
                     - baseUrl
                     - tokenUrl
                     - Boolean validate()
-                    - JsonResponse clientExceptionHandler()
+                    -  clientExceptionHandler()
                     + construct()
-                    + JsonResponse login()
-                    + JsonResponse sendHttpStatusCode()
+                    +  login()
+                    +  sendHttpStatusCode()
                     + Array getCredentials()
                     + String getBearerToken()
-                    + JsonResponse addUser()
+                    +  addUser()
+                }
+                class PdfController {
+                    + byCity()
+                    + byState()
+                    - toPdf(string)
+                }
+                class RoleActionController {
+                    + byRoleId(int)
+                }
+                class RoleController {
+                    + index()
+                    + add(int)
+                    + show(Request)
+                    + delete(Request)
                 }
             }
+        }
+    }
+    package Middleware{
+        class Permissions{}
+    }
+
+    package Service{
+        interface UserService{
+            + getUsers() Collection
+            + getUserById(id) Collection
+            + updateUser(Request) int
+            + deleteUser(Request) int
+        }
+
+        interface BusinessService{
+            + getBusiness() Collection
+            + getBusinessByCity(int) Collection
+            + getBusinessByState(int) Collection
+            + getBusinessById(int) Collection
+            + getBusinessByUser(int) Collection
+            + getBusinessByCategory(int) Collection
+            + getBusinessHighlights() Collection
+            + addBusiness(Request) void
+            + deleteBusiness(Request) int
+            + updateBusiness(Request) int
+        }
+
+        interface StateService{
+            + getState() Collection
+            + getStateById(int) Collection
+            + addState(Request) void
+            + updateState(Request) int
+            + deleteState(Request) int
+        }
+
+        interface CityService{
+            + getCity() Collection
+            + getCityByState(int) Collection
+        }
+
+        interface CategoryService{
+            + getCategories() Collection
+            + getCategoryById(int) Collection
+            + updateCategory(Request) int
+            + addCategory(string) void
+            + deleteCategory(int) int
+        }
+
+        interface StatsService{
+            + getStatsByCateogry() Collection
+            + getStatsByCity() Collection
+            + getStatsByState() Collection
+            + getStatsByFavorite() Collection
+            + getStatsByRegisters() Collection
+        }
+
+        interface FavoriteService {
+            + favoriteUser(int) Collection
+            + favoriteExists(int, int) Collection
+            + favoriteDelete(int) int
+        }
+
+        interface AuthService{
+            + login() JsonResponse
+            + sendHttpStatusCode()
+            + getCredentials() Array
+            + getBearerToken() String
+            + addUser() JsonResponse
+            + social()
+        }
+
+        interface RoleService{
+            + addRoleAndActions(Request) void
+            + addRole(Request) int
+            + addRoleActions(Request, int) void
+            + deleteRole(int) int
+            + getRoles() Collection
+            + getRoleById(int) Collection
+        }
+
+        interface RoleActionService{
+            + getRoleActionsByRoleId(int) Collection
+        }
+
+        interface PdfService{
+            + htmlBuilder(array, int) string
+        }
+
+        interface PermissionService{
+            + hasPermission(string) Boolean
+            + getUserRoleId(string) int
+            + getPermissionsRoutes(string) Array
+            + getUserPermissions(string) Collection
+            + getUserId(string) int
+            + getUserDataFromToken(string) Collection
         }
     }
 }
@@ -117,22 +226,52 @@ Controller <|-- CityController
 Controller <|-- CategoryController
 Controller <|-- FavoriteController
 Controller <|-- StatsController
+Controller <|-- RoleController
+Controller <|-- RoleActionController
 
-User *---u UserController
-Business *---u BusinessController
-Favorite *---u FavoriteController
-Category *---u CategoryController
-State *---u StateController
-City *---u CityController
-OauthClient *---u AuthController
-Business *---u StatsController
+UserService *---u UserController
+User *---u UserService
 
-Model <|---u OauthClient
+BusinessService *---u BusinessController
+Business *---u BusinessService
+
+FavoriteService *---u FavoriteController
+Favorite *---u FavoriteService
+
+CategoryService *---u CategoryController
+Category *---u CategoryService
+
+StateService *---u StateController
+State *---u StateService
+
+CityService *---u CityController
+City *---u CityService
+
+AuthService *---u AuthController
+User *---u AuthService
+
+PermissionService *---u Permissions
+User *---u PermissionService
+
+StatsService *---u StatsController
+Business *---u StatsService
+
+PdfService *---u PdfController
+
+BusinessService *---u StatsController
+
+RoleService *---u RoleController
+Role *---u RoleService
+
+RoleActionService *---u RoleActionController
+RoleAction *---u RoleActionService
+
 Model <|---u State
 Model <|---u City
 Model <|---u Category
 Model <|---u Favorite
 Model <|---u User
 Model <|---u Business
+Model <|---u RoleAction
 
 @enduml
