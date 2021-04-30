@@ -72,20 +72,22 @@ Route::group(['prefix'=>'pdf/', 'namespace'=>'Api', 'middleware'=>['cors']],
 Route::group(['namespace'=>'Api', 'middleware'=>['cors']],
     function() {
         Route::post('/login/', 'AuthController@login')->name('login');
+        Route::get('/oauth', 'AuthController@social')->name('category');
     });
 
-Route::group(['prefix'=>'user', 'namespace'=>'Api', 'middleware'=>['cors', 'auth']],
+Route::group(['prefix'=>'user', 'namespace'=>'Api', 'middleware'=>['cors']],
     function() {
-        Route::get('/', 'UserController@index')->name('userList');
-        Route::delete('/delete', 'UserController@delete')->name('userDelete');
-        Route::put('/update', 'UserController@update')->name('userUpdate');
+        Route::get('/', 'UserController@index')->name('userList')->middleware('auth');
+        Route::delete('/delete', 'UserController@delete')->name('userDelete')->middleware('auth');
+        Route::put('/update', 'UserController@update')->name('userUpdate')->middleware('auth');
         Route::post('/add', 'AuthController@addUser')->name('userAdd');
-        Route::get('/{id}', 'UserController@show')->name('userDetail');
+        Route::get('/{id}', 'UserController@show')->name('userDetail')->middleware('auth');
     });
 
 Route::group(['prefix'=>'auth', 'namespace'=>'Api', 'middleware'=>['cors', 'auth']],
     function() {
         Route::get('/getDataFromToken', 'UserController@getDataFromToken')->name('userListFoo');
+        Route::post('/testCheckLogin', 'AuthController@checkLogin')->name('test');
     });
 
 Route::group(['prefix'=>'role', 'namespace'=>'Api', 'middleware'=>['cors', 'auth', 'permissions']],

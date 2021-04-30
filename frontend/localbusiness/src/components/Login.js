@@ -71,7 +71,12 @@ const Login = (props) => {
                         <input type="email" name="email" className="form-control" value={email} onChange={handleChange}/>
                         <label htmlFor="password" className="mt-3">Senha:</label>
                         <input type="password" name="password" className="form-control" value={password} onChange={handleChange}/>
-                        <button type="submit" className="btn btn-primary btn-block mt-3">ENVIAR</button>
+                        <div className="row">
+                            <div className="col-12"><button type="submit" className="btn btn-primary btn-block mt-3">Entrar</button></div>
+                        </div>
+                        <div className="row">
+                            <div className="col-12"><a href="https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=784p4owi2ycdf8&redirect_uri=http://5d64dbafe68b.ngrok.io/public/api/oauth&state=xpto&scope=r_liteprofile%20r_emailaddress" className="btn btn-secondary btn-block mt-3"><em className="fa fa-key"></em> Entrar com Linkedin</a></div>
+                        </div>
                     </form>
 
                     <p className="mt-4"><em className="fa fa-user-circle gray-4"></em> <a href="/user/register">Criar uma conta gratuitamente agora.</a></p>

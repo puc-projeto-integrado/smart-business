@@ -4,61 +4,28 @@ namespace App\Http\Controllers\Api;
 
 use App\Business;
 use App\Http\Controllers\Controller;
+use App\Service\StatsService;
 use Illuminate\Support\Facades\DB;
 
 class StatsController extends Controller
 {
-
     public function byCategory(){
-        $business = Business::select(DB::raw('categories.name, count(businesses.id) as num_registers'))
-            ->from('businesses')
-            ->leftjoin('categories', 'categories.id', '=', 'businesses.category_id')
-            ->groupBy('businesses.category_id')
-            ->orderBy('num_registers', 'desc')
-            ->limit(5)
-            ->get();
-        return $this->jsonResponseinUtf8($business);
+        return $this->jsonResponseinUtf8(StatsService::getStatsByCateogry());
     }
 
     public function byCity(){
-        $business = Business::select(DB::raw('cities.name, count(businesses.id) as num_registers'))
-            ->from('businesses')
-            ->leftjoin('cities', 'cities.id', '=', 'businesses.city_id')
-            ->groupBy('cities.name')
-            ->orderBy('num_registers', 'desc')
-            ->limit(5)
-            ->get();
-        return $this->jsonResponseinUtf8($business);
+        return $this->jsonResponseinUtf8(StatsService::getStatsByCity());
     }
 
     public function byState(){
-        $business = Business::select(DB::raw('states.name, count(businesses.id) as num_registers'))
-            ->from('businesses')
-            ->leftjoin('cities', 'cities.id', '=', 'businesses.city_id')
-            ->leftjoin('states', 'cities.state_id', '=', 'states.id')
-            ->groupBy('states.name')
-            ->orderBy('num_registers', 'desc')
-            ->limit(5)
-            ->get();
-        return $this->jsonResponseinUtf8($business);
+        return $this->jsonResponseinUtf8(StatsService::getStatsByState());
     }
 
     public function byFavorite(){
-        $business = Business::select(DB::raw('businesses.name, count(favorites.business_id) as num_registers'))
-            ->from('businesses')
-            ->leftjoin('favorites', 'favorites.business_id', '=', 'businesses.id')
-            ->groupBy('businesses.name')
-            ->orderBy('num_registers', 'desc')
-            ->limit(5)
-            ->get();
-        return $this->jsonResponseinUtf8($business);
+        return $this->jsonResponseinUtf8(StatsService::getStatsByFavorite());
     }
 
     public function byRegisters(){
-        $business = Business::select(DB::raw('YEAR(created_at) as year, MONTH(created_at) as month ,COUNT(*) as total'))
-            ->from('businesses')
-            ->groupBy('year', 'month')
-            ->get();
-        return $this->jsonResponseinUtf8($business);
+        return $this->jsonResponseinUtf8(StatsService::getStatsByRegisters());
     }
 }

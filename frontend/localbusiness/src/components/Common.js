@@ -91,5 +91,6 @@ export const CommonUrls = {
             statsByRegister: `${baseUrlApi}/stats/register`,
             pdfByState: `${baseUrlApi}/pdf/state`,
             role: `${baseUrlApi}/role`,
+            roleAdd: `${baseUrlApi}/role/add`,
             roleActionsByRoleId: `${baseUrlApi}/roleaction/role`,
         };

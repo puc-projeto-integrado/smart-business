@@ -32,6 +32,7 @@ const AdminUpdateState = ()=>{
         if(result.status!==200){
             setFeedback({active: true, message : 'Houve um erro na atualização dos dados.', status:'error'});
         }else{
+            window.scrollTo(0, 0);
             setFeedback({active: true, message : 'Dados atualizadps com sucesso!', status:'success'});
             setDataUpdated(true);
         }

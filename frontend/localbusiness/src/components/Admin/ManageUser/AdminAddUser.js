@@ -21,6 +21,7 @@ const AdminAddUser = ()=>{
         if(result.status!==200){
             setFeedback({active: true, message : 'Houve um erro na atualização dos dados.', status:'error'});
         }else{
+            window.scrollTo(0, 0);
             setFeedback({active: true, message : 'Registro criado com sucesso!', status:'success'});
             setDataCreated(true);
         }

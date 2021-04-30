@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Service\StateService;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Database\Eloquent\Model;
@@ -13,64 +14,41 @@ use Illuminate\Support\Facades\Response;
 class StateController extends Controller
 {
     function index(){
-        $states = State::all();
-        return $this->jsonResponseinUtf8($states);
+        return $this->jsonResponseinUtf8(StateService::getState());
     }
 
     function show(int $id){
-        $state = State::where('id', '=', $id)->get();
-        return $this->jsonResponseinUtf8($state);
+        return $this->jsonResponseinUtf8(StateService::getStateById($id));
     }
 
     public function add(Request $request){
-
-        $state = new State;
-        $exceptionalFields = ['id'];
-
-        foreach ($request->request as $key => $value) {
-            if (!in_array($key, $exceptionalFields, true))
-                $state->$key = $value;
-        }
-
         try {
-            $state->save();
-            return Response::json(['status'=>200, 'message'=>'saved'], 200);
-        }catch (QueryException | \Exception $e){
-            return Response::json(['message'=>'failed', 'reason'=>$e->getMessage()], 422);
+            StateService::addState($request);
+        }catch (QueryException | Exception $e){
+            abort(422, $e->getMessage());
         }
+        return Response::json(['status'=>200, 'message'=>'saved'], 200);
     }
 
-    public function update(Request $request)
-    {
-        if (!isset($request->id) || empty($request->id)){
-            return Response::json(['status'=>'failed', 'reason'=>'id is null'], 400);
-        }
-
-        $updateData = [];
-        $updateData["id"] = $request->id;
-
-        foreach ($request->request as $key => $value) {
-            $updateData[$key] = $value;
-        }
+    public function update(Request $request){
+        abort_if(!$request->id, 400, 'Missing parameter.');
 
         try {
-            State::where('id', $request->id)->update($updateData);
-            return Response::json(['status'=>'success'], 200);
+            StateService::updateState($request);
         }catch(QueryException | Exception $e){
-            return Response::json(['status'=>'failed', 'reason'=>$e->getMessage()], 422);
+            abort(422, $e->getMessage());
         }
+        return Response::json(['status'=>'success'], 200);
     }
 
     public function delete(Request $request){
-        if (!isset($request->id) || empty($request->id)){
-            return Response::json(['status'=>'failed', 'reason'=>'id is null'], 400);
-        }
+        abort_if(!$request->id, 400, 'Missing parameter.');
 
         try {
-            State::where('id', $request->id)->forceDelete();
-            return Response::json(['status'=>'success'], 200);
+            StateService::deleteState($request);
         }catch(QueryException | Exception $e){
-            return Response::json(['status'=>'failed', 'reason'=>$e->getMessage()], 422);
+            abort(422, $e->getMessage());
         }
+        return Response::json(['status'=>'success'], 200);
     }
 }

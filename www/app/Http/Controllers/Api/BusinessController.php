@@ -2,139 +2,138 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Business;
 use App\Http\Controllers\Controller;
 use Doctrine\DBAL\Query\QueryException;
 use Exception;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
-use App\Http\Controllers\Api\AuthController;
 use App\Service\BusinessService;
-use App\Service\PermissionsService;
 
 class BusinessController extends Controller
 {
-
     private $defaultFields = [
         'categories.name as category_name', 'businesses.id', 'businesses.name', 'businesses.cnpj', 'businesses.email', 'businesses.website', 'businesses.description', 'businesses.facebook_address', 'businesses.twitter_address', 'businesses.address', 'businesses.district', 'businesses.category_id', 'businesses.ip', 'businesses.newsletter', 'businesses.phone', 'businesses.highlight', 'businesses.created_at',  'cities.id as city_id', 'cities.name as city_name'];
 
+    private function handleResponse($method){
+        try{
+            $business = $method();
+            if($business){
+                return $this->jsonResponseinUtf8($business);
+            }
+            return Response::json(['status'=>'failed', 'reason'=>'empty'], 204);
+        }catch (QueryException | Exception $e){
+            return Response::json(['status'=>'failed', 'reason'=>$e->getMessage()], 422);
+        }
+    }
+
     public function index(Request $request){
-        $business = Business::where('highlight','!=','S')
-        ->select($this->defaultFields)
-        ->join('cities', 'businesses.city_id', '=', 'cities.id')
-        ->join('categories', 'businesses.category_id', '=', 'categories.id')
-        ->orderBy('businesses.id', 'DESC')->paginate(20);
-        return $this->jsonResponseinUtf8($business);
+        try{
+            return $this->jsonResponseinUtf8(BusinessService::getBusiness());
+        }catch (QueryException | Exception $e){
+            return Response::json(['status'=>'failed', 'reason'=>$e->getMessage()], 422);
+        }
     }
 
     public function show($id){
-        $business = Business::where('businesses.id', $id)
-        ->select($this->defaultFields)
-        ->join('cities', 'businesses.city_id', '=', 'cities.id')
-        ->join('categories', 'businesses.category_id', '=', 'categories.id')
-        ->get();
-        return $this->jsonResponseinUtf8($business);
+        try{
+            $business = BusinessService::getBusinessById($id);
+            if($business){
+                return $this->jsonResponseinUtf8($business);
+            }
+            return Response::json(['status'=>'failed', 'reason'=>'empty'], 204);
+        }catch (QueryException | Exception $e){
+            return Response::json(['status'=>'failed', 'reason'=>$e->getMessage()], 422);
+        }
     }
 
     public function byState(BusinessService $businessService, $id){
-        return $this->jsonResponseinUtf8($businessService::getBusinessByState($id));
+        try{
+            $business = $businessService::getBusinessByState($id);
+            if($business){
+                return $this->jsonResponseinUtf8($business);
+            }
+            return Response::json(['status'=>'failed', 'reason'=>'empty'], 204);
+        }catch (QueryException | Exception $e){
+            return Response::json(['status'=>'failed', 'reason'=>$e->getMessage()], 422);
+        }
     }
 
     public function byCity(BusinessService $businessService, $id){
-        return $this->jsonResponseinUtf8($businessService::getBusinessByCity($id));
+        try{
+            $business = $businessService::getBusinessByCity($id);
+            if($business){
+                return $this->jsonResponseinUtf8($business);
+            }
+            return Response::json(['status'=>'failed', 'reason'=>'empty'], 204);
+        }catch (QueryException | Exception $e){
+            return Response::json(['status'=>'failed', 'reason'=>$e->getMessage()], 422);
+        }
     }
 
     public function byUser($id){
-        $result = Business::where('user_id', $id)
-        ->select($this->defaultFields)
-        ->join('cities', 'businesses.city_id', '=', 'cities.id')
-        ->join('categories', 'businesses.category_id', '=', 'categories.id')
-        ->orderBy('created_at')->first();
-
-        if($result){
-            return $this->jsonResponseinUtf8($result);
+        try{
+            $business = BusinessService::getBusinessByUser($id);
+            if($business){
+                return $this->jsonResponseinUtf8($business);
+            }
+            return Response::json(['status'=>'failed', 'reason'=>'empty'], 204);
+        }catch (QueryException | Exception $e){
+            return Response::json(['status'=>'failed', 'reason'=>$e->getMessage()], 422);
         }
-
-        return Response::json(['status'=>'failed', 'reason'=>'empty'], 204);
-
     }
 
     public function byCategory($id){
-
-        $result = Business::where('category_id', $id)
-            ->select($this->defaultFields)
-            ->join('cities', 'businesses.city_id', '=', 'cities.id')
-            ->join('categories', 'businesses.category_id', '=', 'categories.id')
-            ->orderBy('businesses.id', 'DESC')->paginate(40);
-
-        return $this->jsonResponseinUtf8($result);
+        try{
+            $business = BusinessService::getBusinessByCategory($id);
+            if($business){
+                return $this->jsonResponseinUtf8($business);
+            }
+            return Response::json(['status'=>'failed', 'reason'=>'empty'], 204);
+        }catch (QueryException | Exception $e){
+            return Response::json(['status'=>'failed', 'reason'=>$e->getMessage()], 422);
+        }
     }
 
     public function highlights(Request $request){
-        $business = Business::where('highlight','S')
-        ->select($this->defaultFields)
-        ->join('cities', 'businesses.city_id', '=', 'cities.id')
-        ->join('categories', 'businesses.category_id', '=', 'categories.id')
-        ->orderBy('businesses.id', 'DESC')->paginate(20);
-        return $this->jsonResponseinUtf8($business);
+        try{
+            $business = BusinessService::getBusinessHighlights();
+            if($business){
+                return $this->jsonResponseinUtf8($business);
+            }
+            return Response::json(['status'=>'failed', 'reason'=>'empty'], 204);
+        }catch (QueryException | Exception $e){
+            return Response::json(['status'=>'failed', 'reason'=>$e->getMessage()], 422);
+        }
     }
 
     public function add(Request $request){
-        $business = new Business;
-        $exceptionalFields = ['id'];
-
-        foreach ($request->request as $key => $value) {
-            if (!in_array($key, $exceptionalFields, true)) {
-                $business->$key = $value;
-            }
-        }
-
         try{
-            $business->save();
-            $lastInsertedId = $business->id;
-            return Response::json(['status'=>200, 'message'=>'saved', 'id'=>$lastInsertedId], 200);
+            $businessId = BusinessService::addBusiness($request);
+            return Response::json(['status'=>200, 'message'=>'saved', 'id'=>$businessId], 200);
         }catch (QueryException | Exception $e){
             return Response::json(['message'=>'failed', 'reason'=>$e->getMessage()], 422);
         }
     }
 
     public function delete(Request $request){
-
-        if (!isset($request->id) || empty($request->id)){
-            return Response::json(['status'=>'failed', 'reason'=>'id is null'], 400);
-        }
-
+        abort_if(!$request->id, 400, "Bad request.");
         try {
-            Business::where('id', $request->id)
-                //->where('user_id', $userId)
-                ->forceDelete();
+            BusinessService::deleteBusiness($request);
             return Response::json(['status'=>200, 'message'=>'deleted'], 200);
         }catch(QueryException $e){
             return Response::json(['message'=>'failed', 'reason'=>$e->getMessage()], 422);
         }
     }
 
-    public function update(Request $request)
-    {
-        if (!isset($request->id) || empty($request->id)){
-            return Response::json(['status'=>'failed', 'reason'=>'id is null'], 400);
-        }
-
-        $updateData = [];
-        $updateData["id"] = $request->id;
-
-        foreach ($request->request as $key => $value) {
-            $updateData[$key] = $value;
-        }
-
+    public function update(Request $request){
+        abort_if(!$request->id, 400, "Bad request.");
         try {
-            Business::where('id', $request->id)->update($updateData);
+            BusinessService::updateBusiness($request);
             return Response::json(['status'=>'success'], 200);
-        }catch(\Illuminate\Database\QueryException $e){
+        }catch(QueryException $e){
             return Response::json(['status'=>'failed', 'reason'=>$e->getMessage()], 422);
         }
     }
+
 
 }

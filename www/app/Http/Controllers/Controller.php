@@ -15,4 +15,5 @@ class Controller extends BaseController
     return response()->json($data, $code,
         ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
     }
+
 }

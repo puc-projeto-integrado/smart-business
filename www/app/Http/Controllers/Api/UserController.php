@@ -24,9 +24,7 @@ class UserController extends Controller
 
     public function update(Request $request)
     {
-        if (!isset($request->id) || empty($request->id)){
-            return Response::json(['status'=>'failed', 'reason'=>'id is null'], 400);
-        }
+        abort_if(!$request->id, 400, "Bad request.");
 
         $update = UserService::updateUser($request);
 
@@ -38,14 +36,11 @@ class UserController extends Controller
     }
 
     public function delete(Request $request){
-        if (!isset($request->id) || empty($request->id)){
-            return Response::json(['status'=>'failed', 'reason'=>'id is null'], 400);
-        }
+        abort_if(!$request->id, 400, "Bad request.");
+
         if(UserService::deleteUser($request->id)>0){
             return Response::json(['status'=>'success'], 200);
-        }else{
-
         }
-
+        return Response::json(['status'=>'not found'], 204);
     }
 }

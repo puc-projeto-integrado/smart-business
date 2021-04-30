@@ -38,6 +38,7 @@ import Foo from "./Foo";
 import AdminAddRole from "./Admin/ManageRole/AdminAddRole";
 import ManageRole from "./Admin/ManageRole/ManageRole";
 import AdminViewRole from "./Admin/ManageRole/AdminViewRole";
+import OauthHandoff from "./OauthHandoff";
 
 const Routing = React.memo(props => {
     const [base] = useContext(BaseContext);
@@ -99,6 +100,9 @@ const Routing = React.memo(props => {
                 <Route path='/admin/role/add'><UtilsContextProvider>{ isAdmin ? <AdminAddRole /> : <Redirect to={loginRoute} /> }</UtilsContextProvider></Route>
                 <Route path='/admin/role/:id'><UtilsContextProvider>{ isAdmin ? <AdminViewRole /> : <Redirect to={loginRoute} /> }</UtilsContextProvider></Route>
                 <Route path='/admin/role/'><UtilsContextProvider>{ isAdmin ? <ManageRole /> : <Redirect to={loginRoute} /> }</UtilsContextProvider></Route>
+
+                {/* HOME */}
+                <Route path='/oauth/handoff/:email/:name'><OauthHandoff/></Route>
 
                 {/* HOME */}
                 <Route path='/'><ModalContextProvider><Home /></ModalContextProvider></Route>

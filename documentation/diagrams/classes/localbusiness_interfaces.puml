@@ -66,5 +66,14 @@ interface Auth{
     + addUser() JsonResponse
 }
 
+interface Role{
+    + addRoleAndActions(Object request) void
+    + addRole(Object request) int
+    + addRoleActions(Object request, int id) void
+    + deleteRole(int id) int
+    + getRoles() Collection
+    + getRoleById(int id) Collection
+}
+
 
 @enduml
