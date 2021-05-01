@@ -1,0 +1,46 @@
+@startuml
+title "Autenticação com OAuth/Linkedin"
+skinparam sequenceMessageAlign center
+actor User as user
+'participant LocalBusiness as localbusiness
+participant Login as login
+control "Callback URI" as callback
+boundary "Linkedin API" as lapi
+database MySQL as database
+
+box "LocalBusiness"
+    user -> login
+    activate login
+    login -> lapi: Usuário autoriza o acesso do App
+    activate callback
+end box
+
+activate lapi
+callback <-- lapi: Código de Autorização
+callback -> lapi: Requisitar Access Token
+callback <-- lapi: Access Token
+callback ->> lapi : Acessar nome completo
+callback ->> lapi : Acessar email
+lapi --> callback : Email do usuário
+lapi --> callback : Nome completo do usuário
+deactivate lapi
+
+callback -> database : Salvar token representando\ndados do usuário
+
+activate database
+database --> callback
+deactivate database
+
+callback -> react : Token
+activate react
+react -> database : Token
+activate database
+database --> react: Email / Nome completo
+react -> database : Cria a conta
+database --> react : Sucesso
+react -> database : Exclui o Token
+database --> react : Sucesso
+deactivate database
+react -> react : Autentica o usuário no App
+
+@enduml

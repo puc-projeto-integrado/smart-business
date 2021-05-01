@@ -16,7 +16,6 @@ export const UtilsContextProvider = props => {
     }
 
     const itemDelete = (id, bearerToken, url, callback)=>{
-        console.log('Item delete...', url)
         let headers = new Headers();
         let urlencoded = new URLSearchParams();
         headers.append("Content-Type", "application/x-www-form-urlencoded");
@@ -39,7 +38,6 @@ export const UtilsContextProvider = props => {
 
         Object.keys(params.formState).forEach((key)=>{
             if(!params.formState[key] && !listContains(params.exceptions, key)){
-                console.log('Failed field ', key)
                 canProceed = false;
                 params.setFeedback({active: true, message : 'Todos os campos são obrigatórios.', status:'error'});
             }
@@ -65,7 +63,6 @@ export const UtilsContextProvider = props => {
             };
 
             fetch(params.url, requestOptions)
-                // .then(log => console.log('RES ', log.json()))
                 .then(data => params.setMyStates(data))
                 .catch(error => console.log('error', error));
         }
@@ -79,7 +76,6 @@ export const UtilsContextProvider = props => {
     }
 
     const removeItemFromList = (list, id)=>{
-        console.log('LIST ', list)
         return list.filter((item)=> item.id !== id);
     }
 

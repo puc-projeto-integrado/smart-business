@@ -92,5 +92,6 @@ export const CommonUrls = {
             pdfByState: `${baseUrlApi}/pdf/state`,
             role: `${baseUrlApi}/role`,
             roleAdd: `${baseUrlApi}/role/add`,
+            roleDelete: `${baseUrlApi}/role/delete`,
             roleActionsByRoleId: `${baseUrlApi}/roleaction/role`,
         };

@@ -3,7 +3,6 @@ import React from 'react';
 const BusinessItemDetail = (props)=>{
     
     let business = props.business;
-    // console.log(business);
 
     const rightCase = (str)=>{
 

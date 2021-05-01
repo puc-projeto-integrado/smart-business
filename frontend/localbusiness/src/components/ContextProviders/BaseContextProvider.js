@@ -12,13 +12,9 @@ export const BaseContextProvider = props => {
         userBusiness : null,
         categories : null
     });
-    // const [credentials] = useState(CommonCredentials);
     const [urls] = useState(CommonUrls);
 
     let tmpInitData = initData;
-    const setTempFavorites = (data)=>{ tmpInitData.favorites = data; }
-    const setTempUserBusiness = (data)=>{ tmpInitData.userBusiness = data; }
-    const setTempCategories = (data)=>{ tmpInitData.categories = data; }
 
     if(initData.userBusiness && urls){
         urls.businessUserDetail = `/business/${initData.userBusiness.id}`;
@@ -72,8 +68,6 @@ export const BaseContextProvider = props => {
     }, []);
 
     if(tmpInitData.favorites && tmpInitData.categories && tmpInitData.userBusiness){
-        // console.log('TMP FAV ', favorites)
-        console.log('Fire...')
         setInitData(tmpInitData)
     }
     const queryIsFavorite = (id)=>{
@@ -86,10 +80,6 @@ export const BaseContextProvider = props => {
             return isFavorite;
         }
     }
-
-    // const isAuthenticated = () => {
-    //     return (typeof cookie === 'undefined' || cookie.length === 0) ? false : true;
-    // };
 
     let obj = {
         urls : urls,

@@ -61,12 +61,13 @@ class RoleService{
                     User::where('id', $user->id)->update($updateData);
                 }
             };
-            Role::where('id', $roleId)->forceDelete();
+            $deleted = Role::where('id', $roleId)->forceDelete();
         }catch (QueryException | Exception $e){
             DB::rollBack();
             Throw new Exception($e->getMessage());
         }
         DB::commit();
+        return $deleted;
     }
 
     public static function getRoles(){

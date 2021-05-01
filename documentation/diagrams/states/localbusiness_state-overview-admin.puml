@@ -19,6 +19,7 @@ state "Autenticado" as loggedOn{
     state "Cidades" as city
     state "Categorias" as category
     state "Estatísticas" as stats
+    state "Perfis de Acesso" as roles
 }
 
 [*] -d-> list
@@ -39,4 +40,5 @@ manage -u-> business
 manage -l-> state
 manage -d-> city
 manage -d-> category
+manage -d-> roles
 @enduml

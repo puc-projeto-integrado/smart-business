@@ -28,12 +28,12 @@ class RoleController extends Controller
     }
 
     public function delete(Request $request){
-        if (empty($request->role_id) || !isset($request->role_id)) {
+        if (empty($request->id) || !isset($request->id)) {
             return Response::json(['status'=>'failed', 'reason'=>'id is null'], 400);
         }
 
         try {
-            $deleted = RoleService::deleteRole($request->role_id);
+            $deleted = RoleService::deleteRole($request->id);
             if($deleted>0) {
                 return Response::json(['status' => 'success'], 200);
             }else{

@@ -16,7 +16,6 @@ const BusinessItem = (props) => {
     }, [props, id, base]);
 
     const setIsFavorite=(status)=>{
-        console.log('changing status to '+status)
 
         if(props.fromFavoritesPage){
             setMustUnload(true)

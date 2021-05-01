@@ -13,8 +13,6 @@ const AdminAddRole = ()=>{
     let output;
 
     const setMyStates = (result)=>{
-        console.log('RES ', result.status)
-        console.log('RES ', result)
         if(result.status!=='success'){
             setFeedback({active: true, message : 'Houve um erro na atualização dos dados.', status:'error'});
         }else{

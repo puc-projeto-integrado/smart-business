@@ -19,7 +19,6 @@ const ManageBusiness = React.memo(()=>{
     const myRef = useRef('');
     // Get States
     useEffect(() => {
-        console.log("Fetch States...")
         fetch(CommonUrls.state, CommonFunctions.getDefaultRequestOptions())
             .then(response => response.json())
             .then(data => setUfStates(data))
@@ -38,7 +37,6 @@ const ManageBusiness = React.memo(()=>{
         const [selectedState, setSelectedState] = useState(null);
 
         if(ufStates){
-            console.log('STATES... ')
             const handleChangeUfState = (event)=>{
                 const { name, value } = event.target;
                 setSelectedState(value)
@@ -66,7 +64,6 @@ const ManageBusiness = React.memo(()=>{
     })
 
     if(business) {
-        console.log('BUS... ', business)
         let tableLabels = [['NOME',30], ['CIDADE',25], ['CATEGORIA',25], ['AÇÕES',20]];
 
         let rows = business.data.map((item) => {

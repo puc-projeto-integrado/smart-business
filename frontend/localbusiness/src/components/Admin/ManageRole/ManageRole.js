@@ -10,7 +10,7 @@ import{CommonCredentials, CommonUrls} from "../../Common";
 const ManageRole = ()=>{
 
     const [utils] = useContext(UtilsContext);
-    const [user, setUser] = useState(null);
+    const [role, setRole] = useState(null);
     const [feedback, setFeedback] = useState({active: false, message : '', status : ''});
     const bearerToken = CommonCredentials.accessToken;
     let output;
@@ -18,23 +18,22 @@ const ManageRole = ()=>{
     const deps = {
         bearerToken : bearerToken,
         url : CommonUrls.role,
-        setInitialFormState : setUser,
+        setInitialFormState : setRole,
         setInitData : null,
     }
 
     useGetEntity(deps);
 
     const processItemDelete = (response, id)=>{
-        let updatedList = utils.removeItemFromList(user, id);
-        setUser(updatedList);
+        let updatedList = utils.removeItemFromList(role, id);
+        setRole(updatedList);
         setFeedback({active: true, message : 'Item removido com sucesso!', status:'success'});
     }
 
-    if(user) {
+    if(role) {
         let tableLabels = [['NOME',80], ['AÇÕES',20]];
 
-
-        let rows = user.map((item) => {
+        let rows = role.map((item) => {
             return (
                 <tr key={item.id}>
                     <td width="24%">{item.name}</td>
@@ -42,10 +41,10 @@ const ManageRole = ()=>{
                         id={item.id}
                         add='/admin/user/add/'
                         view="/admin/role/"
-                        edit="/admin/user/update/"
+                        edit="/admin/role/"
                         itemDeleteCallback={utils.itemDelete}
                         processItemDeleteCallback={processItemDelete}
-                        urlItemDelete={CommonUrls.userDelete}
+                        urlItemDelete={CommonUrls.roleDelete}
                         bearerToken={bearerToken}
                     />
                 </tr>

@@ -48,7 +48,6 @@ const Stats = ()=>{
     }
 
     const prepareDataRegisters = (data)=>{
-        console.log('Prepare data...')
         let summary = {};
         let box = [];
 
@@ -64,8 +63,6 @@ const Stats = ()=>{
             }
         });
         setDataRegisters(box)
-        console.log('SUMM ', summary)
-        console.log('BOX ', box)
     }
 
     // const data = [
@@ -94,7 +91,6 @@ const Stats = ()=>{
     // ];
     // if(dataCategories.length>0 && dataCities.length>0 && dataStates.length>0 && dataFavorites.length>0){
     if(dataCategories.length>0){
-        console.log("FAVORITES ", dataRegisters)
         return (
 
             <div className="container">

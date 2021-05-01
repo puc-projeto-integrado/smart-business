@@ -56,7 +56,6 @@ const AdminUpdateState = ()=>{
 
     let rows;
     if(formState && !dataUpdated){
-        console.log('HIT ', formState)
         rows = Object.keys(formState).map((key)=>{
             if(labels[key]){
                 return (

@@ -3,7 +3,6 @@ import { bake_cookie, delete_cookie } from 'sfcookies';
 import {CommonUrls} from "./Common";
 
 const Login = (props) => {
-    // console.log('LOGIN PROPS ', props)
     const [email, setEmail] = useState('tcc@pucminas.br');
     const [password, setPassword] = useState('123456');
     const [feedbackActive, setFeedbackActive] = useState(false);
@@ -52,7 +51,6 @@ const Login = (props) => {
         }else{
             setFeedbackActive(false);
             delete_cookie('credentials')
-            console.log('-> ', response.body)
             bake_cookie('credentials', response.body);
             props.functionRefs.redirect('/dashboard');
         }

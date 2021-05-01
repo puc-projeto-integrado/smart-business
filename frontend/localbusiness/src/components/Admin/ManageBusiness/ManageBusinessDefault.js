@@ -35,7 +35,6 @@ const ManageBusiness = ()=>{
 
     const getCities = (data)=>{
         let cities = [];
-        console.log('GET Cities ', data);
         data.data.map((dataItem)=>{
             let discard = false;
             cities.forEach((item)=>{
@@ -79,7 +78,6 @@ const ManageBusiness = ()=>{
     }
 
     if(business) {
-        console.log('BUS... ', business)
         let tableLabels = [
             ['NOME',30],
             ['CIDADE',25],

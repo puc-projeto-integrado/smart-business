@@ -44,7 +44,6 @@ const AdminViewRole = ()=>{
         });
 
         let rowsRoleActions = roleActions.map((item)=>{
-           console.log(item)
             return (
                 <div className="mt-3">
                     <div><em className="fa fa-check"></em> {item.name}</div>

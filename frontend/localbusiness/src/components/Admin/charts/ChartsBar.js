@@ -36,8 +36,6 @@ export default class ChartsBar extends PureComponent {
             return '';
         });
 
-        console.log(data);
-
         return (
             <div style={{ width: '100%', height: 300 }}>
                 <ResponsiveContainer>

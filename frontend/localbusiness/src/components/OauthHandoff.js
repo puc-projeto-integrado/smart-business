@@ -50,7 +50,6 @@ const OauthHandoff = ()=>{
 
         }else{
             delete_cookie('credentials')
-            console.log('-> ', response.body)
             bake_cookie('credentials', response.body);
             window.location='/dashboard';
         }

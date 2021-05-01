@@ -5,10 +5,9 @@ import {ModalContext} from "../ContextProviders/ModalContextProvider";
 const AddFavorites = (props)=>{
     
     const [base] = useContext(BaseContext);
-    const [setModal] = useContext(ModalContext);
+    const [modal, setModal] = useContext(ModalContext);
 
     const addToFavoritesDo = ()=>{
-        console.log("addToFavorites")
         if(base.credentials.userId){
             const userId = base.credentials.userId;
             const businessId = props.businessId;
@@ -34,18 +33,13 @@ const AddFavorites = (props)=>{
                 .then(data => addFavoritesDoPost(data))
                 .catch(error => console.log('error', error));
         }else{
-            console.log('Must be logged in...')
-            console.log(base)
             setModal(true);
         }
 
     }
 
     const addFavoritesDoPost = (data)=>{
-        console.log(base.userBusiness);
-        console.log(data)
         if(data.status==='saved') {
-            console.log('done...')
             props.funcRefs.setIsFavorite(true);
         }
     }

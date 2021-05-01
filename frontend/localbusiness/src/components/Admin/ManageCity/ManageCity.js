@@ -36,13 +36,11 @@ const ManageCity = ()=>{
 
     const handleUfChange = (event) => {
         const { name, value } = event.target;
-        console.log('handleUfChange VALUE ', value)
         setCity(null)
         setSelectedUfId(value);
     }
 
     if(selectedUfId && !city){
-        console.log('if selectedUfId')
         let cityHeaders = new Headers();
         cityHeaders.append("Authorization", `Bearer ${deps.bearerToken}`);
         let requestOptions = { method: 'GET', headers: cityHeaders,};
@@ -54,7 +52,6 @@ const ManageCity = ()=>{
     }
 
     if(city) {
-        console.log('if city')
         let tableLabels = [
             ['NOME',80],
             ['AÇÕES',20]

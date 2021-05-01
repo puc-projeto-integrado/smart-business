@@ -31,9 +31,7 @@ const BusinessGrid = (props) => {
     }, [urlRequest, setCategoryName]);
 
     const handleShowModal = ()=>{
-        console.log('Fired')
         setShowModal(true);
-        console.log(showModal)
     }
 
     const getCities = (data)=>{
@@ -57,7 +55,6 @@ const BusinessGrid = (props) => {
     }
 
     const FilterSelect = ()=>{
-        console.log('CITIES ', citiesInBusiness)
         return (
             <div className="row">
             <div className="col-md-12 col-sm-12">

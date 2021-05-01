@@ -68,7 +68,6 @@ const BusinessRegister = ()=>{
             }
 
             if(canProceed) {
-                console.log('Passed...')
                 var myHeaders = new Headers();
                 myHeaders.append("Authorization", `Bearer ${base.credentials.accessToken}`);
                 myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
@@ -99,7 +98,6 @@ const BusinessRegister = ()=>{
         }
 
         const setMyStates = (result)=>{
-            console.log(result)
             if(result.status!==200){
                 setFeedback({active: true, message : 'Houve um erro.', status:'error'});
             }else{
