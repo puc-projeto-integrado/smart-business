@@ -12,6 +12,7 @@ box "LocalBusiness"
     user -> login
     activate login
     login -> lapi: Usuário autoriza o acesso do App
+    deactivate login
     activate callback
 end box
 
@@ -32,6 +33,7 @@ database --> callback
 deactivate database
 
 callback -> react : Token
+deactivate callback
 activate react
 react -> database : Token
 activate database
@@ -42,5 +44,4 @@ react -> database : Exclui o Token
 database --> react : Sucesso
 deactivate database
 react -> react : Autentica o usuário no App
-
 @enduml

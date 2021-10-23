@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ContentFilters</key>
+	<dict/>
+	<key>auto_connect</key>
+	<true/>
+	<key>data</key>
+	<dict>
+		<key>connection</key>
+		<dict>
+			<key>database</key>
+			<string>meusfornecedores</string>
+			<key>host</key>
+			<string>127.0.0.1</string>
+			<key>kcid</key>
+			<string>-9160107674002841234</string>
+			<key>name</key>
+			<string>127.0.0.1/nasa</string>
+			<key>rdbms_type</key>
+			<string>mysql</string>
+			<key>sslCACertFileLocation</key>
+			<string></string>
+			<key>sslCACertFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslCertificateFileLocation</key>
+			<string></string>
+			<key>sslCertificateFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslKeyFileLocation</key>
+			<string></string>
+			<key>sslKeyFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>type</key>
+			<string>SPTCPIPConnection</string>
+			<key>useSSL</key>
+			<integer>0</integer>
+			<key>user</key>
+			<string>root</string>
+		</dict>
+		<key>session</key>
+		<dict>
+			<key>connectionEncoding</key>
+			<string>utf8mb4</string>
+			<key>contentPageNumber</key>
+			<integer>1</integer>
+			<key>contentSelection</key>
+			<data>
+			YnBsaXN0MDDUAQIDBAUGOTpYJHZlcnNpb25YJG9iamVjdHNZJGFy
+			Y2hpdmVyVCR0b3ASAAGGoK0HCBUWFxgZHSQoLDE2VSRudWxs0wkK
+			CwwQFFdOUy5rZXlzWk5TLm9iamVjdHNWJGNsYXNzow0OD4ACgAOA
+			BKMREhOABYAGgAiADFR0eXBlVHJvd3NUa2V5c18QJlNlbGVjdGlv
+			bkRldGFpbFR5cGVQcmltYXJ5S2V5ZWREZXRhaWxz0wkKCxobHKCg
+			gAfSHh8gIVokY2xhc3NuYW1lWCRjbGFzc2VzXxATTlNNdXRhYmxl
+			RGljdGlvbmFyeaMgIiNcTlNEaWN0aW9uYXJ5WE5TT2JqZWN00goL
+			JSehJoAJgAvSCykqK1lOUy5zdHJpbmeAClJpZNIeHy0uXxAPTlNN
+			dXRhYmxlU3RyaW5noy0vMFhOU1N0cmluZ1hOU09iamVjdNIeHzIz
+			Xk5TTXV0YWJsZUFycmF5ozI0NVdOU0FycmF5WE5TT2JqZWN00h4f
+			IjeiIjhYTlNPYmplY3RfEA9OU0tleWVkQXJjaGl2ZXLROzxUZGF0
+			YYABAAgAEQAaACMALQAyADcARQBLAFIAWgBlAGwAcAByAHQAdgB6
+			AHwAfgCAAIIAhwCMAJEAugDBAMIAwwDFAMoA1QDeAPQA+AEFAQ4B
+			EwEVARcBGQEeASgBKgEtATIBRAFIAVEBWgFfAW4BcgF6AYMBiAGL
+			AZQBpgGpAa4AAAAAAAACAQAAAAAAAAA9AAAAAAAAAAAAAAAAAAAB
+			sA==
+			</data>
+			<key>contentSortColIsAsc</key>
+			<true/>
+			<key>contentViewport</key>
+			<string>{{0, 0}, {694, 448}}</string>
+			<key>isToolbarVisible</key>
+			<true/>
+			<key>queries</key>
+			<string>-- STATS QUERIES
+
+-- Categories
+select c.name, count(b.id) as num_registers
+from businesses b, categories c
+where b.category_id = c.id 
+group by category_id
+order by num_registers desc
+limit 10;
+
+
+-- Cities
+select c.name, count(b.id) as num_registers
+from businesses b, cities c
+where b.city_id = c.id 
+group by c.name
+order by num_registers desc;
+
+-- States
+select s.name, count(b.id) as num_registers
+from businesses b, cities c, states s
+where b.city_id = c.id 
+and c.state_id = s.id
+group by s.name
+order by num_registers desc;
+
+select * from states;
+
+select * 
+from businesses b, cities c, states s
+where b.city_id = c.id
+and s.id = c.state_id
+and s.id = 16;
+
+select * from businesses
+where website like '%https://www.desentupidoraamerica.com.br';
+
+-- Favorites
+select b.name, count(b.id) as num_registers
+from businesses b, favorites f
+where b.id = f.business_id
+group by b.name
+order by num_registers desc;
+
+select if(count(f.business_id) &gt; 0) as num_registers
+from businesses b
+left join favorites as f
+on b.id = f.business_id
+group by b.name
+order by num_registers desc;
+
+-- User Favorites / @TODO
+select b.name, count(b.id) as num_registers
+from businesses b, favorites f
+where b.id = f.business_id
+group by b.name
+order by num_registers desc;
+
+
+select b.name, s.name 
+from businesses b, cities c, states s
+where b.city_id = c.id 
+and c.state_id = s.id;
+-- group by s.name
+/* order by num_registers desc; */
+
+select city_id, count(*) 
+from businesses
+group by city_id;
+
+-- END
+
+SELECT YEAR(created_at) as year_val, MONTH(created_at) as month_val ,COUNT(*) as total
+FROM businesses
+GROUP BY year_val, month_val;
+
+SELECT DATE_FORMAT(created_at, '%Y') as 'year',
+DATE_FORMAT(created_at, '%m') as 'month',
+COUNT(id) as 'total'
+FROM businesses
+GROUP BY DATE_FORMAT(created_at, '%Y%m');
+
+
+select catgories.name, count(business.id)
+from businesses, categories
+where businesses.category_id = id
+group by businesses.category_id;
+
+select categories.name, count(businesses.id) as num_registers 
+from `businesses` 
+left join `cities` on `cities`.`id` = `businesses`.`city_id` 
+group by `categories`.`name`
+
+</string>
+			<key>table</key>
+			<string>businesses</string>
+			<key>view</key>
+			<string>SP_VIEW_CUSTOMQUERY</string>
+			<key>windowVerticalDividerPosition</key>
+			<real>214</real>
+		</dict>
+	</dict>
+	<key>encrypted</key>
+	<false/>
+	<key>format</key>
+	<string>connection</string>
+	<key>queryFavorites</key>
+	<array/>
+	<key>queryHistory</key>
+	<array>
+		<string>select YEAR(created_at) as year_val, MONTH(created_at) as month_val ,COUNT(*) as total 
+from `businesses` 
+group by year_val, month_val</string>
+		<string>select YEAR(created_at) as year_val, MONTH(created_at) as month_val ,COUNT(*) as total 
+from `businesses` 
+group by year_val</string>
+		<string>select YEAR(created_at) as year_val, MONTH(created_at) as month_val ,COUNT(*) as total 
+from `businesses` 
+group by `year_val`</string>
+		<string>select YEAR(created_at) as year_val, MONTH(created_at) as month_val ,COUNT(*) as total 
+from `businesses` 
+group by `year_val, month_val`</string>
+		<string>SELECT YEAR(created_at) as year_val, MONTH(created_at) as month_val ,COUNT(*) as total
+FROM businesses
+GROUP BY year_val, month_val</string>
+		<string>-- END
+
+SELECT YEAR(created_at) as year_val, MONTH(created_at) as month_val ,COUNT(*) as total
+FROM businesses
+GROUP BY year_val, month_val</string>
+		<string>-- END
+
+SELECT YEAR(created_at) as year_val, MONTH(created_at) as month_val ,COUNT(*) as total
+FROM businesses
+GROUP BY YEAR(created_at), month_val</string>
+		<string>-- END
+
+SELECT YEAR(created_at) as year_val, MONTH(created_at) as month_val ,COUNT(*) as total
+FROM businesses
+GROUP BY MONTH(created_at)</string>
+		<string>SELECT YEAR(created_at) as year_val, MONTH(created_at) as month_val ,COUNT(*) as total
+FROM businesses
+GROUP BY YEAR(created_at), MONTH(created_at)</string>
+		<string>SELECT YEAR(created_at) as year_val, MONTH(created) as month_val ,COUNT(*) as total
+FROM businesses
+GROUP BY YEAR(created), MONTH(created)</string>
+		<string>-- END
+
+SELECT YEAR(created_at) as year_val, MONTH(created) as month_val ,COUNT(*) as total
+FROM businesses
+GROUP BY YEAR(created), MONTH(created)</string>
+		<string>SELECT YEAR(created) as year_val, MONTH(created) as month_val ,COUNT(*) as total
+FROM businesses
+GROUP BY YEAR(created), MONTH(created)</string>
+		<string>-- END
+
+SELECT DATE_FORMAT(created_at, '%Y') as 'year',
+DATE_FORMAT(created_at, '%m') as 'month',
+COUNT(id) as 'total'
+FROM businesses
+GROUP BY DATE_FORMAT(created_at, '%Y%m')</string>
+		<string>SELECT DATE_FORMAT(created_at, '%Y') as 'year',
+DATE_FORMAT(created_at, '%m') as 'month',
+COUNT(id) as 'total'
+FROM businesses
+GROUP BY DATE_FORMAT(total, '%Y%m')</string>
+		<string>-- END
+
+SELECT DATE_FORMAT(created_at, '%Y') as 'year',
+DATE_FORMAT(created_at, '%m') as 'month',
+COUNT(id) as 'total'
+FROM businesses
+GROUP BY DATE_FORMAT(total, '%Y%m')
+
+
+select catgories.name, count(business.id)
+from businesses, categories
+where businesses.category_id = id
+group by businesses.category_id</string>
+		<string>SELECT DATE_FORMAT(created_at, '%Y') as 'year',
+DATE_FORMAT(created_at, '%m') as 'month',
+COUNT(id) as 'total'
+FROM businesses
+GROUP BY DATE_FORMAT(created_at, '%Y%m')</string>
+		<string>select if(count(f.business_id) &gt; 0,true)</string>
+		<string>select if(count(f.business_id) &gt; 0,true)
+from businesses b
+left join favorites as f
+on b.id = f.business_id
+group by b.name
+order by num_registers desc</string>
+		<string>select count(f.business_id) as num_registers
+from businesses b
+left join favorites as f
+on b.id = f.business_id
+group by b.name
+order by num_registers desc</string>
+		<string>select b.name, count(f.business_id) as num_registers
+from businesses b
+left join favorites as f
+on b.id = f.business_id
+group by b.name
+order by num_registers desc</string>
+	</array>
+	<key>rdbms_type</key>
+	<string>mysql</string>
+	<key>rdbms_version</key>
+	<string>5.7.31</string>
+	<key>version</key>
+	<integer>1</integer>
+</dict>
+</plist>
