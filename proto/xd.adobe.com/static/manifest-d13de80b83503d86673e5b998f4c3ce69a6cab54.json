@@ -1,0 +1,10 @@
+{
+  "icons": [
+    {
+      "src": "/static/images/xd_android_webclip_192-f68ab947e37c09acf69cea3122e60893bcc15cb4.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "display": "standalone"
+}
