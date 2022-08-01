@@ -1,0 +1,20 @@
+@startuml
+left to right direction
+title "UC9. Usuário remove um favorito."
+scale 2
+
+User as "Usuário Comum"
+
+rectangle "USUÁRIO AUTENTICADO" {
+    (Favoritos) as favoritos
+    (Dashboard) as VerEmpresas
+    (Remover Favorito) as remove
+}
+
+(Login) as Login
+
+User -r--> Login
+Login --> VerEmpresas
+VerEmpresas -r--> favoritos
+favoritos --> remove
+@enduml

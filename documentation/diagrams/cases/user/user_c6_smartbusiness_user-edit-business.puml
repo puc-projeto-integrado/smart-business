@@ -1,0 +1,18 @@
+@startuml
+left to right direction
+title "UC6. Usuário edita os dados sua empresa"
+scale 2
+
+User as "Usuário Comum"
+
+rectangle "USUÁRIO AUTENTICADO" {
+    (Editar dados da Empresa) as FavEmpresa
+    (Dashboard) as VerEmpresas
+}
+
+(Login) as Login
+
+User -r--> Login
+Login --> VerEmpresas
+VerEmpresas --> FavEmpresa
+@enduml

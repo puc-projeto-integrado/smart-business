@@ -1,0 +1,18 @@
+@startuml
+left to right direction
+title "UC5. Usuário cadastra sua empresa"
+scale 2
+
+User as "Usuário Comum"
+
+rectangle "USUÁRIO AUTENTICADO" {
+    (Cadastrar Empresa) as CadEmpresa
+    (Dashboard) as Dashboard
+}
+
+(Login) as Login
+
+User -r--> Login
+Login --> Dashboard
+Dashboard --> CadEmpresa
+@enduml

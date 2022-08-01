@@ -1,0 +1,28 @@
+@startuml
+left to right direction
+title "AC3. Administrador visualiza estatísticas"
+Admin as "Administrador do Sistema"
+scale 2
+
+rectangle "PAINEL DE CONTROLE ADMIN" {
+    (Dashboard) as handle
+    (Estatísticas) as stats
+    (Empresas por Estado) as state
+    (Empresas por Cidade) as city
+    (Empresas por Categoria) as category
+    (Empresas Favoritadas) as favorites
+    (Núm. de Cadastros) as registers
+}
+
+(Login) as login
+
+Admin -r--> login
+login --> handle
+handle -r--> stats
+stats --> state
+stats --> city
+stats --> category
+stats --> favorites
+stats --> registers
+
+@enduml

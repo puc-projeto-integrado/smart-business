@@ -1,0 +1,14 @@
+@startuml
+left to right direction
+title "UC1. Usuário cria conta no sistema"
+scale 2
+
+User as "Usuário Comum"
+
+(Criar Conta no Sistema) as Register
+(Feedback) as Feedback
+
+User -r--> Register
+Register --> Feedback
+
+@enduml

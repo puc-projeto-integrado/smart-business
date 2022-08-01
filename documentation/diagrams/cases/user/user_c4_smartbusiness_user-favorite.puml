@@ -1,0 +1,18 @@
+@startuml
+left to right direction
+title "UC4. Usuário adiciona uma empresa aos Favoritos"
+scale 2
+
+User as "Usuário Comum"
+
+rectangle "USUÁRIO AUTENTICADO" {
+    (Adicionar Empresa aos Favoritos) as FavEmpresa
+}
+
+(Ver Empresas) as VerEmpresas
+(Login) as Login
+
+User -r--> Login
+Login --> VerEmpresas
+VerEmpresas --> FavEmpresa
+@enduml

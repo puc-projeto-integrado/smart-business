@@ -1,0 +1,22 @@
+@startuml
+left to right direction
+title "AC1. Administrador gerencia Empresas com Master Table"
+Admin as "Administrador do Sistema"
+scale 2
+
+rectangle "PAINEL DE CONTROLE ADMIN" {
+    (Gerenciar Empresas) as handle
+    (Excluir) as delete
+    (Editar) as edit
+    (Listar) as list
+}
+
+(Login) as login
+
+Admin -r--> login
+login --> handle
+handle --> edit
+handle --> delete
+handle --> list
+
+@enduml

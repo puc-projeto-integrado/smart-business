@@ -1,0 +1,21 @@
+@startuml
+left to right direction
+title "AC5. Administrador adiciona um Perfil de Acesso"
+Admin as "Administrador do Sistema"
+scale 2
+
+rectangle "PAINEL DE CONTROLE ADMIN" {
+    (Perfis de acesso) as roles
+    (Definir Permissões) as roleActions
+    (Salvar) as save
+    (Novo Perfil de Acesso) as add
+}
+
+(Login) as login
+
+Admin -r--> login
+login -d--> roles
+roles --> add
+add -l--> roleActions
+roleActions -d--> save
+@enduml

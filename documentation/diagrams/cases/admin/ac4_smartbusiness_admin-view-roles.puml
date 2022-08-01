@@ -1,0 +1,24 @@
+@startuml
+left to right direction
+title "AC4. Administrador visualiza Perfis de Acesso"
+Admin as "Administrador do Sistema"
+scale 2
+
+rectangle "PAINEL DE CONTROLE ADMIN" {
+    (Perfis de acesso) as roles
+    (Ver) as view
+    (Editar) as edit
+    (Excluir) as delete
+    (Novo) as add
+}
+
+(Login) as login
+
+Admin -r--> login
+login --> roles
+roles --> view
+roles --> edit
+roles --> delete
+roles --> add
+
+@enduml
