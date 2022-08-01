@@ -1,5 +1,5 @@
 @startuml
-title "LocalBusiness - Diagrama de Estado (Administrador)"
+title "SmartBusiness - Diagrama de Estado (Administrador)"
 
 state "Login" as login
 state "Lista Empresas" as list

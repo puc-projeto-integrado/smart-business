@@ -1,5 +1,5 @@
 @startuml
-title OVERVIEW
+title FRONTEND
 skinparam component{
   BackgroundColor lightgray
 }

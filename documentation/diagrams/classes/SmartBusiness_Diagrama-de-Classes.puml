@@ -1,5 +1,5 @@
 @startuml
-title "LocalBusiness - Diagrama de Classes"
+title "SmartBusiness - Diagrama de Classes"
 
 class Model
 
@@ -15,12 +15,10 @@ package App {
             + Collection favoritesUser()
             + Collection favoriteExists()
         }
-        class State{
-        }
-        class City{
-        }
+        class State
+        class City
         class Business
-        class Business
+        class Proposal
         class Category
         class Role
         class RoleAction
@@ -52,6 +50,16 @@ package App {
                     +  byUser()
                     +  byCategory()
                     +  highlights()
+                    +  add()
+                    +  delete()
+                    +  update()
+                }
+
+                class ProposalController{
+                    - Array defaultFields
+                    +  byStatus()
+                    +  byRequester()
+                    +  byOwner()
                     +  add()
                     +  delete()
                     +  update()
@@ -147,6 +155,15 @@ package App {
             + updateBusiness(Request) int
         }
 
+        interface ProposalService{
+            + getProposalByOwner(int) Collection
+            + getProposalByRequester(int) Collection
+            + getProposalByStatus(int, string) Collection
+            + addProposal(Request) void
+            + deleteProposal(Request) void
+            + updateProposalStatus(Request) void
+        }
+
         interface StateService{
             + getState() Collection
             + getStateById(int) Collection
@@ -221,6 +238,7 @@ package App {
 
 Controller <|-- UserController
 Controller <|-- BusinessController
+Controller <|-- ProposalController
 Controller <|-- StateController
 Controller <|-- CityController
 Controller <|-- CategoryController
@@ -234,6 +252,9 @@ User *---u UserService
 
 BusinessService *---u BusinessController
 Business *---u BusinessService
+
+ProposalService *---u ProposalController
+Proposal *---u ProposalService
 
 FavoriteService *---u FavoriteController
 Favorite *---u FavoriteService
@@ -272,6 +293,7 @@ Model <|---u Category
 Model <|---u Favorite
 Model <|---u User
 Model <|---u Business
+Model <|---u Proposal
 Model <|---u RoleAction
 
 @enduml

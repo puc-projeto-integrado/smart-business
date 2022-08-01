@@ -1,5 +1,5 @@
 @startuml
-title "LocalBusiness - Diagrama de Estado (Usuário Comum)"
+title "SmartBusiness - Diagrama de Estado (Usuário Comum)"
 
 state "Criar Conta" as register
 state "Login" as login

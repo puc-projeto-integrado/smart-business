@@ -1,5 +1,5 @@
 @startuml
-title "LocalBusiness - Diagrama de Interfaces"
+title "SmartBusiness - Diagrama de Interfaces"
 
 interface UserService{
     + getUsers() Collection
@@ -19,6 +19,15 @@ interface BusinessService{
     + addBusiness(Request) void
     + deleteBusiness(Request) int
     + updateBusiness(Request) int
+}
+
+interface ProposalService{
+    + getProposalByOwner(int) Collection
+    + getProposalByRequester(int) Collection
+    + getProposalByStatus(int, string) Collection
+    + addProposal(Request) void
+    + deleteProposal(Request) void
+    + updateProposalStatus(Request) void
 }
 
 interface StateService{

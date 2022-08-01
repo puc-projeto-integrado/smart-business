@@ -1,7 +1,7 @@
 <section class="mb-5">
     <div class="container">
-        <h3 class="light gray-5"><span class="fas fa-search"></span> ENCONTRE SEU FORNECEDOR</h3>
-        <p class="gray-5 txt-2">Mais de 4000 fornecedores, classificados e organizados por segmento e cidade em todo o Brasil.</p>
+        <h3 class="light gray-5"><span class="fas fa-search"></span> ENCONTRE UMA EMPRESA</h3>
+        <p class="gray-5 txt-2">Mais de 4000 parceiros, em vários segmentos.</p>
         <form action="">
             <div class="row">
                 <div class="col-8">
