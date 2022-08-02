@@ -1,0 +1,22 @@
+@startuml
+left to right direction
+title "UC12. Usuário responde a uma solicitação de proposta."
+scale 2
+
+User as "Usuário Comum"
+
+rectangle "USUÁRIO AUTENTICADO" {
+    (Listar Propostas) as lista
+    (Dashboard) as VerEmpresas
+    (Selecionar Proposta) as proposta
+    (Responder Proposta) as resposta
+}
+
+(Login) as Login
+
+User -r--> Login
+Login --> VerEmpresas
+VerEmpresas -r--> lista
+lista -r--> proposta
+proposta -r--> resposta
+@enduml

@@ -1,0 +1,19 @@
+@startuml
+left to right direction
+title "UC10. Usuário solicita proposta."
+scale 2
+
+User as "Usuário Comum"
+
+rectangle "USUÁRIO AUTENTICADO" {
+    (Solicitar Proposta) as proposta
+    (Empresa) as VerEmpresas
+}
+
+(Login) as Login
+
+User -r--> Login
+Login --> VerEmpresas
+VerEmpresas -r--> proposta
+
+@enduml

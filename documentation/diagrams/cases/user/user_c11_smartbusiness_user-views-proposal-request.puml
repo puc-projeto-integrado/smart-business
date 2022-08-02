@@ -1,0 +1,20 @@
+@startuml
+left to right direction
+title "UC11. Usuário visualiza solicitação de proposta."
+scale 2
+
+User as "Usuário Comum"
+
+rectangle "USUÁRIO AUTENTICADO" {
+    (Listar Propostas) as lista
+    (Dashboard) as VerEmpresas
+    (Selecionar Proposta) as proposta
+}
+
+(Login) as Login
+
+User -r--> Login
+Login --> VerEmpresas
+VerEmpresas -r--> lista
+lista -r--> proposta
+@enduml
